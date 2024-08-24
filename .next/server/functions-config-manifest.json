@@ -1,1 +1,1 @@
-{"version":1,"functions":{"/auth/signin":{},"/auth/signup":{},"/blog/blog-details":{},"/blog":{},"/docs":{},"/error":{},"/":{},"/support":{}}}
+{"version":1,"functions":{"/auth/signin":{},"/auth/signup":{},"/blog":{},"/docs":{},"/blog/blog-details":{},"/support":{},"/":{},"/error":{}}}

@@ -14,8 +14,8 @@ import Blog from "@/components/Blog";
 import Testimonial from "@/components/Testimonial";
 
 export const metadata: Metadata = {
-  title: "Next.js Starter Template for SaaS Startups - Dataverse SaaS Boilerplate",
-  description: "This is Home for Dataverse Pro",
+  title: "Dataverse",
+  description: "This is Home for Dataverse",
   // other metadata
 };
 
