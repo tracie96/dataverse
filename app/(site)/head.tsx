@@ -1,10 +1,10 @@
 export default function Head() {
   return (
     <>
-      <title> Dataverse | Next.js Template for Startup and SaaS</title>
+      <title> Dataverse</title>
       <meta content="width=device-width, initial-scale=1" name="viewport" />
-      <meta name="description" content="Built with Next.js and TypeScript" />
-      <link rel="icon" href="/images/favicon.ico" />
+      <meta name="description" content="" />
+      <link rel="icon" href="" />
     </>
   );
 }

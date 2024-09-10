@@ -20,6 +20,12 @@ const menuData: Menu[] = [
     path: "/blog",
   },
 
+  {
+    id: 3.1,
+    title: "Our Initiative",
+    newTab: false,
+    path: "/about",
+  },
 
 
   {

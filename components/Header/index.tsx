@@ -37,8 +37,21 @@ const Header = () => {
     >
       <div className="relative mx-auto max-w-c-1390 items-center justify-between px-4 md:px-8 xl:flex 2xl:px-0">
         <div className="flex w-full items-center justify-between xl:w-1/4">
-          <a href="/">
-           Logo
+        <a href="/">
+            <Image
+              src="/images/logo/dataverse_logo.svg"
+              alt="logo"
+              width={119.03}
+              height={30}
+              className="hidden w-full dark:block"
+            />
+            <Image
+              src="/images/logo/dataverse_logo.svg"
+              alt="logo"
+              width={119.03}
+              height={30}
+              className="w-full dark:hidden"
+            />
           </a>
 
           {/* <!-- Hamburger Toggle BTN --> */}
@@ -144,7 +157,6 @@ const Header = () => {
             <Link
               href="https://nextjstemplates.com/templates/solid"
               className="flex items-center justify-center rounded-full bg-primary px-7.5 py-2.5 text-regular text-white duration-300 ease-in-out hover:bg-primaryho"
-              style={{background:'#006241'}}
             >
               Join the Community 🔥
             </Link>

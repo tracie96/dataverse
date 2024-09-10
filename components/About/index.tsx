@@ -1,5 +1,6 @@
 "use client";
 
+import { Player } from "@lottiefiles/react-lottie-player";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -182,17 +183,19 @@ const About = () => {
               viewport={{ once: true }}
               className="animate_right relative mx-auto hidden aspect-[588/526.5] md:block md:w-1/2"
             >
-              <Image
-                src="./images/about/about-light-02.svg"
-                alt="About"
+              <Player
+                autoplay
+                loop
+                src="https://lottie.host/ae44c372-f025-45bf-bc98-d4fc57d39f6b/4vcLrqbWDt.json"
+                style={{ height: "400px" }}
                 className="dark:hidden"
-                fill
               />
-              <Image
-                src="./images/about/about-dark-02.svg"
-                alt="About"
+              <Player
+                autoplay
+                loop
+                src="https://lottie.host/ae44c372-f025-45bf-bc98-d4fc57d39f6b/4vcLrqbWDt.json"
+                style={{ height: "400px", background: "#181C31" }}
                 className="hidden dark:block"
-                fill
               />
             </motion.div>
           </div>

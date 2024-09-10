@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-
+import { Player } from "@lottiefiles/react-lottie-player";
 const Hero = () => {
   const [email, setEmail] = useState("");
 
@@ -20,7 +20,7 @@ const Hero = () => {
               </h4>
               <h1 className="mb-5 pr-16 text-3xl font-bold text-black dark:text-white xl:text-hero ">
                 Africa's Fastest Growing Network for Tech{" "}
-                <span className="relative inline-block before:absolute before:bottom-2.5 before:left-0 before:-z-1 before:h-3 before:w-full before:bg-titlebg dark:before:bg-titlebgdark ">
+                <span className="relative inline-block before:absolute before:bottom-2.5 before:left-0 before:-z-1 before:h-3 before:w-full before:bg-titlebg dark:before:bg-titlebgdark">
                   Innovators
                 </span>
               </h1>
@@ -48,7 +48,7 @@ const Hero = () => {
             <div className="animate_right hidden md:w-1/2 lg:block">
               <div className="relative 2xl:-mr-7.5">
                 <Image
-                  src="/images/shape/shape-01.png"
+                  src="/images/shape/shape-dotted-light-02.svg"
                   alt="shape"
                   width={46}
                   height={246}
@@ -69,17 +69,19 @@ const Hero = () => {
                   className="absolute -right-6.5 bottom-0 z-1"
                 />
                 <div className=" relative aspect-[700/444] w-full">
-                  <Image
+                  <Player
+                    autoplay
+                    loop
+                    src="https://lottie.host/83f37706-f5fe-4926-ad27-82ed5e4aa2b0/TLgNj5jRUh.json"
+                    style={{ height: "400px"}} 
                     className="shadow-solid-l dark:hidden"
-                    src=""
-                    alt="Hero"
-                    fill
                   />
-                  <Image
+                  <Player
                     className="hidden shadow-solid-l dark:block"
-                    src=""
-                    alt="Hero"
-                    fill
+                    autoplay
+                    loop
+                    src="https://lottie.host/83f37706-f5fe-4926-ad27-82ed5e4aa2b0/TLgNj5jRUh.json"
+                    style={{ height: "400px", background:'#181C31'}} 
                   />
                 </div>
               </div>

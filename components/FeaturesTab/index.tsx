@@ -1,19 +1,15 @@
 "use client";
-import Image from "next/image";
-import { useState } from "react";
-import FeaturesTabItem from "./FeaturesTabItem";
-import featuresTabData from "./featuresTabData";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 const FeaturesTab = () => {
-  const [currentTab, setCurrentTab] = useState("tabOne");
-
   return (
     <>
-      {/* <!-- ===== Features Tab Start ===== --> */}
-      <section className="relative pb-20 pt-18.5 lg:pb-22.5">
+      {/* <!-- ===== About Us Section Start ===== --> */}
+      <section className="overflow-hidden pb-20 pt-35 md:pt-40 xl:pb-25 xl:pt-46">
         <div className="relative mx-auto max-w-c-1390 px-4 md:px-8 2xl:px-0">
+          {/* Background Dotted Shapes */}
           <div className="absolute -top-16 -z-1 mx-auto h-[350px] w-[90%]">
             <Image
               fill
@@ -29,119 +25,54 @@ const FeaturesTab = () => {
             />
           </div>
 
-          {/* <!-- Tab Menues Start --> */}
-          <motion.div
-            variants={{
-              hidden: {
-                opacity: 0,
-                y: -20,
-              },
+          {/* About Us Content */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-4">About Us</h2>
+            <p className="text-lg text-gray-700 dark:text-gray-300">
+              We are a passionate team dedicated to bringing you the best
+              solutions in our field. Our mission is to innovate and inspire,
+              providing top-notch services and products to our clients.
+            </p>
+          </div>
 
-              visible: {
-                opacity: 1,
-                y: 0,
-              },
-            }}
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="animate_top mb-15 flex flex-wrap justify-center rounded-[10px] border border-stroke bg-white shadow-solid-5 dark:border-strokedark dark:bg-blacksection dark:shadow-solid-6 md:flex-nowrap md:items-center lg:gap-7.5 xl:mb-21.5 xl:gap-12.5"
-          >
-            <div
-              onClick={() => setCurrentTab("tabOne")}
-              className={`relative flex w-full cursor-pointer items-center gap-4 border-b border-stroke px-6 py-2 last:border-0 dark:border-strokedark md:w-auto md:border-0 xl:px-13.5 xl:py-5 ${
-                currentTab === "tabOne"
-                  ? "active before:absolute before:bottom-0 before:left-0 before:h-1 before:w-full before:rounded-tl-[4px] before:rounded-tr-[4px] before:bg-primary"
-                  : ""
-              }`}
-            >
-              <div className="flex h-12.5 w-12.5 items-center justify-center rounded-[50%] border border-stroke dark:border-strokedark dark:bg-blacksection">
-                <p className="text-metatitle3 font-medium text-black dark:text-white">
-                  01
-                </p>
-              </div>
-              <div className="md:w-3/5 lg:w-auto">
-                <button className="text-sm font-medium text-black dark:text-white xl:text-regular">
-                  Clean User Interface
-                </button>
-              </div>
+          {/* Mission, Aims, and Objectives Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {/* Mission Statement */}
+            <div className="text-center p-6 bg-white shadow-lg rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">Mission Statement</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Our mission is to revolutionize the industry by delivering
+                innovative solutions that empower our clients and enhance their
+                experiences.
+              </p>
             </div>
-            <div
-              onClick={() => setCurrentTab("tabTwo")}
-              className={`relative flex w-full cursor-pointer items-center gap-4 border-b border-stroke px-6 py-2 last:border-0 dark:border-strokedark md:w-auto md:border-0 xl:px-13.5 xl:py-5 ${
-                currentTab === "tabTwo"
-                  ? "active before:absolute before:bottom-0 before:left-0 before:h-1 before:w-full before:rounded-tl-[4px] before:rounded-tr-[4px] before:bg-primary"
-                  : ""
-              }`}
-            >
-              <div className="flex h-12.5 w-12.5 items-center justify-center rounded-[50%] border border-stroke dark:border-strokedark dark:bg-blacksection">
-                <p className="text-metatitle3 font-medium text-black dark:text-white">
-                  02
-                </p>
-              </div>
-              <div className="md:w-3/5 lg:w-auto">
-                <button className="text-sm font-medium text-black dark:text-white xl:text-regular">
-                  Essential Business Pages
-                </button>
-              </div>
-            </div>
-            <div
-              onClick={() => setCurrentTab("tabThree")}
-              className={`relative flex w-full cursor-pointer items-center gap-4 border-b border-stroke px-6 py-2 last:border-0 dark:border-strokedark md:w-auto md:border-0 xl:px-13.5 xl:py-5 ${
-                currentTab === "tabThree"
-                  ? "active before:absolute before:bottom-0 before:left-0 before:h-1 before:w-full before:rounded-tl-[4px] before:rounded-tr-[4px] before:bg-primary"
-                  : ""
-              }`}
-            >
-              <div className="flex h-12.5 w-12.5 items-center justify-center rounded-[50%] border border-stroke dark:border-strokedark dark:bg-blacksection">
-                <p className="text-metatitle3 font-medium text-black dark:text-white">
-                  03
-                </p>
-              </div>
-              <div className="md:w-3/5 lg:w-auto">
-                <button className="text-sm font-medium text-black dark:text-white xl:text-regular">
-                  Fully Functional Integrations
-                </button>
-              </div>
-            </div>
-          </motion.div>
-          {/* <!-- Tab Menues End --> */}
 
-          {/* <!-- Tab Content Start --> */}
-          <motion.div
-            variants={{
-              hidden: {
-                opacity: 0,
-                y: -20,
-              },
+            {/* Aims */}
+            <div className="text-center p-6 bg-white shadow-lg rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">Aims</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                We aim to exceed expectations through exceptional service,
+                foster a culture of continuous improvement, and build lasting
+                partnerships.
+              </p>
+            </div>
 
-              visible: {
-                opacity: 1,
-                y: 0,
-              },
-            }}
-            initial="hidden"
-            whileInView="visible"
-            transition={{ duration: 0.5, delay: 0.5 }}
-            viewport={{ once: true }}
-            className="animate_top mx-auto max-w-c-1154"
-          >
-            {featuresTabData.map((feature, key) => (
-              <div
-                className={feature.id === currentTab ? "block" : "hidden"}
-                key={key}
-              >
-                <FeaturesTabItem featureTab={feature} />
-              </div>
-            ))}
-          </motion.div>
-          {/* <!-- Tab Content End --> */}
+            {/* Objectives */}
+            <div className="text-center p-6 bg-white shadow-lg rounded-lg">
+              <h3 className="text-xl font-semibold mb-4">Objectives</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Our objectives include expanding our market presence, advancing
+                our technology, and promoting sustainable practices.
+              </p>
+            </div>
+          </div>
+      
         </div>
       </section>
-      {/* <!-- ===== Features Tab End ===== --> */}
+      {/* <!-- ===== About Us Section End ===== --> */}
     </>
   );
 };
 
 export default FeaturesTab;
+
