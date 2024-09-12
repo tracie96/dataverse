@@ -12,12 +12,12 @@ const Integration = () => {
           <SectionHeader
             headerInfo={{
               title: `Meet the team`,
-              subtitle: `Our pictures should be here i guess.`,
+              subtitle: `Our pictures should go here.`,
               description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor eros. Donec vitae tortor lacus. Phasellus aliquam ante in maximus.`,
             }}
           />
-    {/* Team Section */}
-    <motion.div
+          {/* Team Section */}
+          <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -26,7 +26,7 @@ const Integration = () => {
             {/* Example Team Members */}
             <div className="team-member text-center">
               <Image
-                src="/images/team/member1.jpg"
+                src="https://picsum.photos/200/200?random=1"
                 width={200}
                 height={200}
                 className="rounded-full mx-auto mb-4"
@@ -38,7 +38,7 @@ const Integration = () => {
 
             <div className="team-member text-center">
               <Image
-                src="/images/team/member2.jpg"
+                src="https://picsum.photos/200/200?random=2"
                 width={200}
                 height={200}
                 className="rounded-full mx-auto mb-4"
@@ -50,7 +50,7 @@ const Integration = () => {
 
             <div className="team-member text-center">
               <Image
-                src="/images/team/member3.jpg"
+                src="https://picsum.photos/200/200?random=3"
                 width={200}
                 height={200}
                 className="rounded-full mx-auto mb-4"
@@ -62,11 +62,11 @@ const Integration = () => {
           </motion.div>
           {/* <!-- Section Title End --> */}
         </div>
-
-      
       </section>
     </>
   );
 };
 
 export default Integration;
+
+

@@ -4,23 +4,23 @@ const featuresData: Feature[] = [
   {
     id: 1,
     icon: "/images/icon/icon-01.svg",
-    title: "Membership",
+    title: "Vision Statement",
     description:
-      "Collaborate with young makers, developers, innovators, hackers, and founders now.",
+      "Empowering Africa's digital future through data-driven innovation, inclusivity, and technological advancement, transforming industries, and improving lives.",
   },
   {
     id: 2,
     icon: "/images/icon/icon-02.svg",
-    title: "Partner With Us",
+    title: "Mission Statement",
     description:
-      "Get involved in some of our initiatives either as a sponsor or a partner.",
+      "Our mission is to drive business growth, improve decision-making, and stimulate economic development in Africa.",
   },
   {
     id: 3,
     icon: "/images/icon/icon-03.svg",
-    title: "Support Us",
+    title: " Partner With Us",
     description:
-      "Help us further our cause with a tax-deductible donation, every $1 goes a long way.",
+      "Help us further our cause with a tax-deductible donation, every $1 goes a long way. (Content needed here)",
   },
 ];
 

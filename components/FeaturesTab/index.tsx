@@ -1,78 +1,120 @@
 "use client";
-
-import Image from "next/image";
+import React from "react";
+import featuresData from "./featuresTabData";
+import SingleFeature from "./SingleFeature";
+import SectionHeader from "../Common/SectionHeader";
 import { motion } from "framer-motion";
+import SectionContent from "../Common/SectionContent";
 
 const FeaturesTab = () => {
   return (
     <>
-      {/* <!-- ===== About Us Section Start ===== --> */}
-      <section className="overflow-hidden pb-20 pt-35 md:pt-40 xl:pb-25 xl:pt-46">
-        <div className="relative mx-auto max-w-c-1390 px-4 md:px-8 2xl:px-0">
-          {/* Background Dotted Shapes */}
-          <div className="absolute -top-16 -z-1 mx-auto h-[350px] w-[90%]">
-            <Image
-              fill
-              className="dark:hidden"
-              src="/images/shape/shape-dotted-light.svg"
-              alt="Dotted Shape"
-            />
-            <Image
-              fill
-              className="hidden dark:block"
-              src="/images/shape/shape-dotted-dark.svg"
-              alt="Dotted Shape"
-            />
-          </div>
+      {/* <!-- ===== Features Start ===== --> */}
+      <section id="features" className="py-20 lg:py-25 xl:py-30">
+        <div className="mx-auto max-w-c-1315 px-4 md:px-8 xl:px-0">
+          {/* <!-- Section Title Start --> */}
+          <SectionHeader
+            headerInfo={{
+              title: "",
+              subtitle: "About Us",
+              description: `At DataVerse, we’re on a mission to transform Africa through the power of data. 
+              Imagine a future where technology fuels progress, improves lives, and causes growth across the continent.
+              Sure you can imagine that and that future isn't far fetched anymore, that future is now!
+              `,
+            }}
+          />
+          {/* <!-- Section Title End --> */}
 
-          {/* About Us Content */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">About Us</h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300">
-              We are a passionate team dedicated to bringing you the best
-              solutions in our field. Our mission is to innovate and inspire,
-              providing top-notch services and products to our clients.
-            </p>
-          </div>
+          {/* <!-- Quote Grid Start --> */}
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            <motion.div
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: -10,
+                },
 
-          {/* Mission, Aims, and Objectives Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {/* Mission Statement */}
-            <div className="text-center p-6 bg-white shadow-lg rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Mission Statement</h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Our mission is to revolutionize the industry by delivering
-                innovative solutions that empower our clients and enhance their
-                experiences.
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+              }}
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="animate_top z-40 rounded-lg border border-white bg-white p-7.5 shadow-solid-3 transition-all hover:shadow-solid-4 dark:border-strokedark dark:bg-blacksection dark:hover:bg-hoverdark xl:p-12.5"
+            >
+              <h3 className="mb-7 text-sm font-bold text-black dark:text-white sm:text-xl">
+                Our Vision
+              </h3>
+
+              <p className="md:wlg:w-3/5 ">
+                {" "}
+                We envision an Africa where data-driven innovation is the norm.
+                Our commitment is to ensure that everyone, regardless of their
+                background, harnesses the benefits of cutting-edge technology.
+                Where technology is just for the tech gurus we've always known
+                but where even someone with a background that isn't even science
+                can glide through technology and becoming gurus themselves.
               </p>
-            </div>
+            </motion.div>
 
-            {/* Aims */}
-            <div className="text-center p-6 bg-white shadow-lg rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Aims</h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                We aim to exceed expectations through exceptional service,
-                foster a culture of continuous improvement, and build lasting
-                partnerships.
-              </p>
-            </div>
+            <motion.div
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 10,
+                },
 
-            {/* Objectives */}
-            <div className="text-center p-6 bg-white shadow-lg rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Objectives</h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Our objectives include expanding our market presence, advancing
-                our technology, and promoting sustainable practices.
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+              }}
+              initial="hidden"
+              whileInView="visible"
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="animate_top z-40 rounded-lg border border-white bg-white p-7.5 shadow-solid-3 transition-all hover:shadow-solid-4 dark:border-strokedark dark:bg-blacksection dark:hover:bg-hoverdark xl:p-12.5"
+            >
+              <h3 className="mb-7 text-sm font-bold text-black dark:text-white sm:text-xl">
+                Why Choose Dataverse
+              </h3>
+              <p className="md:wlg:w-3/5 ">
+                We don’t just handle data; we make it work for you! Our tools
+                and training are crafted to revolutionize how businesses operate
+                and communities thrive. Whether you’re a startup, a large
+                enterprise, or an individual eager to enhance your skills,
+                DataVerse is your trusted partner in navigating the data
+                landscape.
               </p>
-            </div>
+            </motion.div>
           </div>
-      
+          {/* <!-- Quote Grid End --> */}
+          <SectionContent
+            headerInfo={{
+              title: "",
+              subtitle: "AIMS AND OBJECTIVES OF DATAVERSE AFRICA",
+              description: `
+              `,
+            }}
+          />
+          {/* <!-- Features Grid Start --> */}
+          <div className="mt-12.5 grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:mt-15 lg:grid-cols-3 xl:mt-20 xl:gap-12.5">
+            {/* <!-- Features item Start --> */}
+            {featuresData.map((feature, key) => (
+              <SingleFeature feature={feature} key={key} />
+            ))}
+            {/* <!-- Features item End --> */}
+          </div>
+          {/* <!-- Features Grid End --> */}
         </div>
       </section>
-      {/* <!-- ===== About Us Section End ===== --> */}
+
+      {/* <!-- ===== Features End ===== --> */}
     </>
   );
 };
 
 export default FeaturesTab;
-

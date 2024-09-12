@@ -4,8 +4,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["localhost"],
-    remotePatterns: [
+    domains: ['picsum.photos'],    remotePatterns: [
       {
         protocol: "https",
         hostname: "cdn.sanity.io",

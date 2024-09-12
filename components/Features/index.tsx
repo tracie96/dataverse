@@ -15,9 +15,10 @@ const Feature = () => {
             headerInfo={{
               title: "ABOUT US",
               subtitle: "Who we are",
-              description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-            convallis tortor eros. Donec vitae tortor lacus. Phasellus aliquam
-            ante in maximus.`,
+              description: `At DataVerse, we’re on a mission to transform Africa through the power of data. 
+              Imagine a future where technology fuels progress, improves lives, and causes growth across the continent.
+              Sure you can imagine that and that future isn't far fetched anymore, that future is now!
+              `,
             }}
           />
           {/* <!-- Section Title End --> */}
