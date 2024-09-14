@@ -9,9 +9,9 @@ const menuData: Menu[] = [
   },
   {
     id: 2,
-    title: "Menu",
+    title: "Our Initiative",
     newTab: false,
-    path: "/#features",
+    path: "/about",
   },
   {
     id: 2.1,
@@ -19,14 +19,6 @@ const menuData: Menu[] = [
     newTab: false,
     path: "/blog",
   },
-
-  {
-    id: 3.1,
-    title: "Our Initiative",
-    newTab: false,
-    path: "/about",
-  },
-
 
   {
     id: 4,

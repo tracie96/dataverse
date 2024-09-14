@@ -5,6 +5,7 @@ import SingleFeature from "./SingleFeature";
 import SectionHeader from "../Common/SectionHeader";
 import { motion } from "framer-motion";
 import SectionContent from "../Common/SectionContent";
+import featuresMissionTabData from "./featuresTabData";
 
 const FeaturesTab = () => {
   return (
@@ -108,12 +109,28 @@ const FeaturesTab = () => {
             ))}
             {/* <!-- Features item End --> */}
           </div>
+          <SectionContent
+            headerInfo={{
+              title: "",
+              subtitle: "Mission",
+              description: `
+              `,
+            }}
+          />
+          <div className="mt-12.5 grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:mt-15 lg:grid-cols-3 xl:mt-20 xl:gap-12.5">
+            {/* <!-- Features item Start --> */}
+            {featuresMissionTabData.map((feature, key) => (
+              <SingleFeature feature={feature} key={key} />
+            ))}
+            {/* <!-- Features item End --> */}
+          </div>
           {/* <!-- Features Grid End --> */}
         </div>
       </section>
 
       {/* <!-- ===== Features End ===== --> */}
     </>
+    
   );
 };
 

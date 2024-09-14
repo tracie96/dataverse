@@ -5,7 +5,7 @@ import Image from "next/image";
 const Footer = () => {
   return (
     <>
-      <footer className="border-t border-stroke bg-bgfooter dark:border-strokedark dark:bg-blacksection">
+      <footer className="border-t border-stroke shadow-lg transition duration-100 bg-white dark:border-strokedark dark:bg-blacksection">
         <div className="mx-auto max-w-c-1390 px-4 md:px-8 2xl:px-0">
           {/* <!-- Footer Top --> */}
           <div className="py-20 lg:py-25">
@@ -28,9 +28,25 @@ const Footer = () => {
                 viewport={{ once: true }}
                 className="animate_top w-1/2 lg:w-1/4"
               >
-                <a href="/" className="relative">
-                 Logo
-                </a>
+                      <a href="/" className="relative" style={{width:'70%'}}
+ >
+            <Image
+              src="/images/logo/logo.png"
+              alt="logo"
+              width={70.03}
+              height={30}
+              style={{width:'30%'}}
+              className="hidden dark:block py-2"
+            />
+            <Image
+              src="/images/logo/logo.png"
+              alt="logo"
+              width={70.03}
+              height={30}
+              style={{width:'30%'}}
+              className="w-full dark:hidden py-2"
+            />
+          </a>
 
                 <p className="mb-10 mt-5">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
