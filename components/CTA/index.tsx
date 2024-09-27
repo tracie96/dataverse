@@ -29,14 +29,16 @@ const CTA = () => {
               className="animate_left md:w-[70%] lg:w-1/2"
             >
               <h2 className="mb-4 w-11/12 text-3xl font-bold text-black dark:text-white xl:text-sectiontitle4">
-              Our community guidelines
+                Our community guidelines
               </h2>
               <p>
-                Dataverse is dedicated to providing a harassment-free and inclusive
-                event experience for everyone regardless of gender identity and
-                expression, sexual orientation, disabilities, neurodiversity,
-                physical appearance, body size, ethnicity, nationality, race,
-                age, religion, or other protected category.
+                Our community thrives on respectful collaboration and open
+                communication. Please treat others with kindness and
+                professionalism, even when opinions differ. Harassment,
+                discrimination, or offensive behavior will result in removal
+                from the platform. We are here to learn, grow, and innovate
+                together, so let’s create a positive and supportive environment
+                for all.
               </p>
             </motion.div>
             <motion.div

@@ -27,7 +27,7 @@ const FeaturesTab = () => {
           {/* <!-- Section Title End --> */}
 
           {/* <!-- Quote Grid Start --> */}
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 py-6 lg:gap-12">
             <motion.div
               variants={{
                 hidden: {
@@ -93,6 +93,9 @@ const FeaturesTab = () => {
             </motion.div>
           </div>
           {/* <!-- Quote Grid End --> */}
+          <div className="mt-10 mb-7">
+
+      
           <SectionContent
             headerInfo={{
               title: "",
@@ -101,14 +104,17 @@ const FeaturesTab = () => {
               `,
             }}
           />
+              </div>
           {/* <!-- Features Grid Start --> */}
-          <div className="mt-12.5 grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:mt-15 lg:grid-cols-3 xl:mt-20 xl:gap-12.5">
+          <div className="grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:grid-cols-3 xl:gap-12.5">
             {/* <!-- Features item Start --> */}
             {featuresData.map((feature, key) => (
               <SingleFeature feature={feature} key={key} />
             ))}
             {/* <!-- Features item End --> */}
           </div>
+          <div className="mt-10 mb-7">
+
           <SectionContent
             headerInfo={{
               title: "",
@@ -117,7 +123,8 @@ const FeaturesTab = () => {
               `,
             }}
           />
-          <div className="mt-12.5 grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:mt-15 lg:grid-cols-3 xl:mt-20 xl:gap-12.5">
+          </div>
+          <div className="grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:grid-cols-3 xl:gap-12.5">
             {/* <!-- Features item Start --> */}
             {featuresMissionTabData.map((feature, key) => (
               <SingleFeature feature={feature} key={key} />
