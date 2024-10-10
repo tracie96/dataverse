@@ -5,9 +5,9 @@
   "/(site)/auth/signup/page": "app/(site)/auth/signup/page.js",
   "/(site)/auth/signin/page": "app/(site)/auth/signin/page.js",
   "/(site)/blog/page": "app/(site)/blog/page.js",
-  "/(site)/support/page": "app/(site)/support/page.js",
   "/(site)/page": "app/(site)/page.js",
   "/(site)/error/page": "app/(site)/error/page.js",
-  "/(site)/docs/page": "app/(site)/docs/page.js",
-  "/(site)/blog/blog-details/page": "app/(site)/blog/blog-details/page.js"
+  "/(site)/blog/blog-details/page": "app/(site)/blog/blog-details/page.js",
+  "/(site)/support/page": "app/(site)/support/page.js",
+  "/(site)/docs/page": "app/(site)/docs/page.js"
 }
