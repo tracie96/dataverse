@@ -22,7 +22,13 @@ export default function RootLayout({
   const noLayoutPaths = ["/auth/signin", "/auth/signup"];
 
   if (noLayoutPaths.includes(pathname)) {
-    return <>{children}</>;
+    return (
+      <>
+       
+            {children}
+           
+      </>
+    );
   }
 
   return (
@@ -44,4 +50,3 @@ export default function RootLayout({
     </html>
   );
 }
-

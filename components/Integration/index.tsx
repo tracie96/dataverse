@@ -12,8 +12,8 @@ const Integration = () => {
           <SectionHeader
             headerInfo={{
               title: `Meet the team`,
-              subtitle: `Our pictures should go here.`,
-              description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. In convallis tortor eros. Donec vitae tortor lacus. Phasellus aliquam ante in maximus.`,
+              subtitle: ``,
+              description: ``,
             }}
           />
           {/* Team Section */}
@@ -26,38 +26,46 @@ const Integration = () => {
             {/* Example Team Members */}
             <div className="team-member text-center">
               <Image
-                src="https://picsum.photos/200/200?random=1"
-                width={200}
-                height={200}
-                className="rounded-full mx-auto mb-4"
+                src={"/images/brand/ifiora-francis.png"}
+                width={250}
+                height={250}
+                className="rounded-full mx-auto mb-4 mt-7"
                 alt="Team Member 1"
               />
-              <h3 className="text-xl font-semibold">John Doe</h3>
-              <p className="text-gray-600 dark:text-gray-400">CEO</p>
+              <h3 className="text-xl font-semibold">Francis Ifiora</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                CEO & Co-Founder
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">Francis is the visionary behind our company, leading the team with a passion for innovation and growth. With extensive experience in business development, he oversees the strategic direction and business development of the company.</p>
             </div>
 
             <div className="team-member text-center">
               <Image
-                src="https://picsum.photos/200/200?random=2"
-                width={200}
-                height={200}
-                className="rounded-full mx-auto mb-4"
+                src={"/images/brand/godsent-ndoma.jpeg"}
+                width={250}
+                height={250}
+                className="rounded-full mx-auto mb-4 mt-7"
                 alt="Team Member 2"
               />
-              <h3 className="text-xl font-semibold">Jane Smith</h3>
-              <p className="text-gray-600 dark:text-gray-400">CTO</p>
+              <h3 className="text-xl font-semibold">Godsent Ndoma</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                CGO & Co-Founder
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">Godsent drives our company's growth initiatives, focusing on strategic partnerships and market expansion. As Chief Growth Officer, his expertise in specific areas, like marketing, scaling startups, helps propel our business forward.</p>
+
             </div>
 
             <div className="team-member text-center">
               <Image
-                src="https://picsum.photos/200/200?random=3"
-                width={200}
-                height={200}
-                className="rounded-full mx-auto mb-4"
+                src={"/images/brand/precious.png"}
+                width={250}
+                height={250}
+                className="rounded-full mx-auto mb-4 mt-7"
                 alt="Team Member 3"
               />
-              <h3 className="text-xl font-semibold">Sam Lee</h3>
-              <p className="text-gray-600 dark:text-gray-400">COO</p>
+              <h3 className="text-xl font-semibold">Precious Williams</h3>
+              <p className="text-gray-600 dark:text-gray-400">CTO</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mt-2" >Precious leads the technology and innovation strategy at the company. With a strong background in technology, she ensures that our products are cutting-edge and meet the highest standards of quality and performance.</p>
             </div>
           </motion.div>
           {/* <!-- Section Title End --> */}
@@ -68,5 +76,3 @@ const Integration = () => {
 };
 
 export default Integration;
-
-
