@@ -2,11 +2,12 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { message } from "antd";
 const Hero = () => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (e) => {
-  //   e.preventDefault();
+    e.preventDefault();
   //   Email.send({
   //     Host : "smtp.elasticemail.com",
   //     Username : "Tracy",
@@ -18,6 +19,9 @@ const Hero = () => {
   // })
   //     .then((message) => alert("Email sent successfully!"))
   //     .catch((error) => console.error("Failed to send email:", error));
+  message.success({content:'Email Subscribed Successfully',  style: {
+    zIndex:999999
+  },})
   };
 
   return (

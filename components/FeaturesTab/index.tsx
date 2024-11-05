@@ -99,7 +99,7 @@ const FeaturesTab = () => {
           <SectionContent
             headerInfo={{
               title: "",
-              subtitle: "Aims And Objective Of DataVerse Africa",
+              subtitle: "Aims And Objectives Of DataVerse Africa",
               description: `
               `,
             }}

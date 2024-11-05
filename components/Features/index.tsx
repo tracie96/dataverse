@@ -13,7 +13,7 @@ const Feature = () => {
           {/* <!-- Section Title Start --> */}
           <SectionHeader
             headerInfo={{
-              title: "ABOUT US",
+              title: "",
               subtitle: "Who We Are",
               description: `At DataVerse, we’re on a mission to transform Africa through the power of data. 
               Imagine a future where technology fuels progress, improves lives, and causes growth across the continent.

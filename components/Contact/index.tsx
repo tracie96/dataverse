@@ -1,4 +1,5 @@
 "use client";
+import { message } from "antd";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import React from "react";
@@ -16,6 +17,20 @@ const Contact = () => {
     return null;
   }
 
+  const handleForm=(e)=>{
+    e.preventDefault()
+
+    message.success({
+      content: 'Message sent Successfully',
+      className: 'custom-class',
+      style: {
+        marginTop: '10vh',
+        float:'right',
+        zIndex:999
+      
+      },
+  })
+  };  
   return (
     <>
       {/* <!-- ===== Contact Start ===== --> */}
@@ -61,8 +76,8 @@ const Contact = () => {
               </h2>
 
               <form
-                action="https://formbold.com/s/unique_form_id"
-                method="POST"
+
+              onSubmit={handleForm}
               >
                 <div className="mb-7.5 flex flex-col gap-7.5 lg:flex-row lg:justify-between lg:gap-14">
                   <input
