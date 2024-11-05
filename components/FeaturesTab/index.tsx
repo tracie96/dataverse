@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import featuresData from "./featuresTabData";
+import featuresData, { featuresTabData } from "./featuresTabData";
 import SingleFeature from "./SingleFeature";
 import SectionHeader from "../Common/SectionHeader";
 import { motion } from "framer-motion";
@@ -80,7 +80,7 @@ const FeaturesTab = () => {
               className="animate_top z-40 rounded-lg border border-white bg-white p-7.5 shadow-solid-3 transition-all hover:shadow-solid-4 dark:border-strokedark dark:bg-blacksection dark:hover:bg-hoverdark xl:p-12.5"
             >
               <h3 className="mb-7 text-sm font-bold text-black dark:text-white sm:text-xl">
-                Why Choose Dataverse
+                Why Choose DataVerse
               </h3>
               <p className="md:wlg:w-3/5 ">
                 We don’t just handle data; we make it work for you! Our tools
@@ -99,16 +99,16 @@ const FeaturesTab = () => {
           <SectionContent
             headerInfo={{
               title: "",
-              subtitle: "AIMS AND OBJECTIVES OF DATAVERSE AFRICA",
+              subtitle: "Aims And Objective Of DataVerse Africa",
               description: `
               `,
             }}
           />
               </div>
           {/* <!-- Features Grid Start --> */}
-          <div className="grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:grid-cols-3 xl:gap-12.5">
+          <div className="grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:grid-cols-3 xl:gap-12.5 py-4">
             {/* <!-- Features item Start --> */}
-            {featuresData.map((feature, key) => (
+            {featuresTabData.slice(0,6).map((feature, key) => (
               <SingleFeature feature={feature} key={key} />
             ))}
             {/* <!-- Features item End --> */}

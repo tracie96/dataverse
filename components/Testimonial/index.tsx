@@ -21,7 +21,7 @@ const Testimonial = () => {
             <SectionHeader
               headerInfo={{
                 title: `TESTIMONIALS`,
-                subtitle: ` Stories from the community `,
+                subtitle: ` Stories From The Community `,
               }}
             />
           </div>

@@ -1,13 +1,13 @@
 import { Feature } from "@/types/feature";
 
-const featuresTabData: Feature[] = [
+export const featuresTabData: Feature[] = [
   {
     id: 1,
     icon: "",
     title: "Data-Driven Innovation",
     type: "aim",
     description:
-      " Develop and deploy cutting-edge data analytics technologies to drive business growth and improvement across various industries in Africa.",
+      " Develop and Deploy cutting-edge Data Analytics Technologies to Drive Business Growth and Improvement across various Industries in Africa.",
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ const featuresTabData: Feature[] = [
     title: "Capacity Building",
     type: "aim",
     description:
-      " Provide training and conferences to equip tech enthusiasts with skills in data analytics, machine learning, and other emerging technologies.",
+      " Provide Training and Conferences to Equip Tech Enthusiasts with Skills in Data Analytics, Machine Learning, and Other Emerging Technologies.",
   },
   {
     id: 3,
@@ -23,23 +23,16 @@ const featuresTabData: Feature[] = [
     title: "Technological Advancement",
     type: "aim",
     description:
-      "Foster a culture of innovation and R&D, creating new technologies and intellectual property that solve African problems.",
+      "Foster a Culture of Innovation and R&D, Creating New Technologies and Intellectual Property that Solve African Problems.",
   },
-  {
-    id: 4,
-    icon: "",
-    title: "Community Engagement",
-    type: "aim",
-    description:
-      "Build a vibrant community of data scientists, analysts, and enthusiasts, promoting collaboration, knowledge sharing, and networking.",
-  },
+ 
   {
     id: 5,
     icon: "",
     title: "Thought Leadership",
     type: "aim",
     description:
-      "Establish the company as a thought leader in data analytics and technological innovation, influencing policy and decision-making in Africa.",
+      "Establish the Company as a thought Leader in Data Analytics and Technological Innovation, Influencing Policy and Decision-making in Africa.",
   },
   {
     id: 6,
@@ -47,25 +40,17 @@ const featuresTabData: Feature[] = [
     title: "Economic Empowerment",
     type: "aim",
     description:
-      "Create jobs, stimulate economic growth, and contribute to Africa's digital economy development through data-driven innovations.",
+      "Create jobs, Stimulate Economic Growth, and Contribute to Africa's Digital Economy Development through Data-Driven Innovations.",
   },
 
 
-    {
-    id: 1,
-    icon: "",
-    title: "Data-Driven Innovation",
-    type: "aim",
-    description:
-      " Develop and deploy cutting-edge data analytics technologies to drive business growth and improvement across various industries in Africa.",
-  },
   {
     id: 2,
     icon: "",
     title: "Capacity Building",
     type: "aim",
     description:
-      " Provide training and conferences to equip tech enthusiasts with skills in data analytics, machine learning, and other emerging technologies.",
+      " Provide Training and Conferences to Equip Tech Enthusiasts with Skills in Data Analytics, Machine Learning, and Other Emerging Technologies.",
   },
   {
     id: 3,
@@ -73,23 +58,16 @@ const featuresTabData: Feature[] = [
     title: "Technological Advancement",
     type: "aim",
     description:
-      "Foster a culture of innovation and R&D, creating new technologies and intellectual property that solve African problems.",
+      "Foster a Culture of Innovation and R&D, Creating New Technologies and Intellectual Property that Solve African Problems.",
   },
-  {
-    id: 4,
-    icon: "",
-    title: "Community Engagement",
-    type: "aim",
-    description:
-      "Build a vibrant community of data scientists, analysts, and enthusiasts, promoting collaboration, knowledge sharing, and networking.",
-  },
+  
   {
     id: 5,
     icon: "",
     title: "Thought Leadership",
     type: "aim",
     description:
-      "Establish the company as a thought leader in data analytics and technological innovation, influencing policy and decision-making in Africa.",
+      "Establish the Company as a Thought Leader in Data Analytics and Technological Innovation, Influencing Policy and Decision-making in Africa.",
   },
   {
     id: 6,
@@ -97,7 +75,7 @@ const featuresTabData: Feature[] = [
     title: "Economic Empowerment",
     type: "aim",
     description:
-      "Create jobs, stimulate economic growth, and contribute to Africa's digital economy development through data-driven innovations.",
+      "Create jobs, Stimulate Economic growth, and contribute to Africa's digital economy development through data-driven innovations.",
   },
 ]
 const featuresMissionTabData: Feature[] = [
@@ -107,7 +85,7 @@ const featuresMissionTabData: Feature[] = [
     title: "Innovative Tools",
     type: "aim",
     description:
-      "We develop advanced data solutions that empower businesses to grow and make informed decisions.",
+      "We Develop Advanced Data Solutions that Empower Businesses to Grow and make Informed Decisions.",
   },
   {
     id: 2,
@@ -115,7 +93,7 @@ const featuresMissionTabData: Feature[] = [
     title: "Empowering Leaders",
     type: "aim",
     description:
-      "Our tech innovation conferences equip individuals with essential skills in data analytics, machine learning, and emerging technologies.",
+      "Our Tech Innovation Conferences Equip Individuals with Essential Skills in Data Analytics, Machine Learning, and Emerging Technologies.",
   },
   {
     id: 3,
@@ -123,7 +101,7 @@ const featuresMissionTabData: Feature[] = [
     title: "Fostering Creativity",
     type: "aim",
     description:
-      "We nurture a culture of innovation, creating technologies that address real challenges faced by Africans.",
+      "We Nurture a Culture of Innovation, Creating Technologies that Address Real Challenges faced by Africans.",
   },
   {
     id: 4,
@@ -131,7 +109,7 @@ const featuresMissionTabData: Feature[] = [
     title: "Community Engagement",
     type: "aim",
     description:
-      "Build a vibrant community of data scientists, analysts, and enthusiasts, promoting collaboration, knowledge sharing, and networking.",
+      "Build a Vibrant Community of Data Scientists, Analysts, and Enthusiasts, Promoting Collaboration, Knowledge Sharing, and Networking.",
   },
   {
     id: 5,
@@ -139,7 +117,7 @@ const featuresMissionTabData: Feature[] = [
     title: "Building Community",
     type: "aim",
     description:
-      "Join a vibrant network of data enthusiasts, professionals, and innovators, where sharing, learning, and growth are at the forefront.",
+      "Join a Vibrant Network of Data Enthusiasts, Professionals, and Innovators, where Sharing, Learning, and Growth are at the Forefront.",
   },
   {
     id: 6,
@@ -147,7 +125,7 @@ const featuresMissionTabData: Feature[] = [
     title: "Leading the Charge",
     type: "aim",
     description:
-      " As the voice of data and technology in Africa, we guide the decisions that shape our collective future.",
+      " As the Voice of Data and Technology in Africa, we Guide the Decisions that Shape Our Collective Future.",
   }
 ]
-export default featuresMissionTabData
+export default featuresMissionTabData;

@@ -62,7 +62,7 @@ info@dataverseafrica.org                </a>
               </motion.div>
 
               <div className="flex w-full flex-col gap-8 md:flex-row md:justify-between md:gap-0 lg:w-2/3 xl:w-7/12">
-                <motion.div
+                {/* <motion.div
                   variants={{
                     hidden: {
                       opacity: 0,
@@ -118,9 +118,9 @@ info@dataverseafrica.org                </a>
                       </a>
                     </li>
                   </ul>
-                </motion.div>
+                </motion.div> */}
 
-                <motion.div
+                {/* <motion.div
                   variants={{
                     hidden: {
                       opacity: 0,
@@ -176,7 +176,7 @@ info@dataverseafrica.org                </a>
                       </a>
                     </li>
                   </ul>
-                </motion.div>
+                </motion.div> */}
 
                 <motion.div
                   variants={{
@@ -192,6 +192,7 @@ info@dataverseafrica.org                </a>
                   }}
                   initial="hidden"
                   whileInView="visible"
+                  style={{float:"right"}}
                   transition={{ duration: 1, delay: 0.1 }}
                   viewport={{ once: true }}
                   className="animate_top"
@@ -246,7 +247,7 @@ info@dataverseafrica.org                </a>
 
           {/* <!-- Footer Bottom --> */}
           <div className="flex flex-col flex-wrap items-center justify-center gap-5 border-t border-stroke py-7 dark:border-strokedark lg:flex-row lg:justify-between lg:gap-0">
-            <motion.div
+            {/* <motion.div
               variants={{
                 hidden: {
                   opacity: 0,
@@ -263,8 +264,8 @@ info@dataverseafrica.org                </a>
               transition={{ duration: 1, delay: 0.1 }}
               viewport={{ once: true }}
               className="animate_top"
-            >
-              <ul className="flex items-center gap-8">
+            > */}
+              {/* <ul className="flex items-center gap-8">
                 <li>
                   <a href="#" className="hover:text-primary">
                     English
@@ -280,8 +281,8 @@ info@dataverseafrica.org                </a>
                     Support
                   </a>
                 </li>
-              </ul>
-            </motion.div>
+              </ul> */}
+            {/* </motion.div> */}
 
             <motion.div
               variants={{
@@ -302,7 +303,7 @@ info@dataverseafrica.org                </a>
               className="animate_top"
             >
               <p>
-                &copy; {new Date().getFullYear()} Dataverse. All rights reserved
+                &copy; {new Date().getFullYear()} DataVerse. All rights reserved
               </p>
             </motion.div>
 
@@ -325,32 +326,9 @@ info@dataverseafrica.org                </a>
               className="animate_top"
             >
               <ul className="flex items-center gap-5">
+               
                 <li>
-                  <a href="#" aria-label="social icon">
-                    <svg
-                      className="fill-[#D1D8E0] transition-all duration-300 hover:fill-primary"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g clipPath="url(#clip0_48_1499)">
-                        <path
-                          d="M14 13.5H16.5L17.5 9.5H14V7.5C14 6.47 14 5.5 16 5.5H17.5V2.14C17.174 2.097 15.943 2 14.643 2C11.928 2 10 3.657 10 6.7V9.5H7V13.5H10V22H14V13.5Z"
-                          fill=""
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_48_1499">
-                          <rect width="24" height="24" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" aria-label="social icon">
+                  <a href="https://x.com/DataverseAfrica" aria-label="social icon" target="_blank">
                     <svg
                       className="fill-[#D1D8E0] transition-all duration-300 hover:fill-primary"
                       width="24"
@@ -374,7 +352,7 @@ info@dataverseafrica.org                </a>
                   </a>
                 </li>
                 <li>
-                  <a href="#" aria-label="social icon">
+                  <a href="https://www.linkedin.com/company/dataverseafrica/" target="_blank" aria-label="social icon">
                     <svg
                       className="fill-[#D1D8E0] transition-all duration-300 hover:fill-primary"
                       width="24"

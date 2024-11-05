@@ -20,7 +20,7 @@ const featuresData: Feature[] = [
     icon: "/images/icon/icon-03.svg",
     title: " Partner With Us",
     description:
-      "Your insights and expertise are essential to the growth of our data ecosystem. At Data Verse, we invite you to share your knowledge, ideas, and resources. Every contribution counts, no matter how big or small.",
+      "Your insights and expertise are essential to the growth of our data ecosystem. At DataVerse, we invite you to share your knowledge, ideas, and resources. Every contribution counts, no matter how big or small.",
   },
 ];
 

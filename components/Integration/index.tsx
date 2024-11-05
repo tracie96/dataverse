@@ -11,7 +11,7 @@ const Integration = () => {
           {/* <!-- Section Title Start --> */}
           <SectionHeader
             headerInfo={{
-              title: `Meet the team`,
+              title: `Meet The Team`,
               subtitle: ``,
               description: ``,
             }}
@@ -68,7 +68,6 @@ const Integration = () => {
               <p className="text-gray-600 dark:text-gray-400 text-sm mt-2" >Precious leads the technology and innovation strategy at the company. With a strong background in technology, she ensures that our products are cutting-edge and meet the highest standards of quality and performance.</p>
             </div>
           </motion.div>
-          {/* <!-- Section Title End --> */}
         </div>
       </section>
     </>

@@ -157,10 +157,10 @@ const Header = () => {
             <ThemeToggler />
 
             <Link
-              href="https://nextjstemplates.com/templates/solid"
+              href="https://www.linkedin.com/company/dataverseafrica/"
               className="flex items-center justify-center rounded-full bg-primary px-7.5 py-2.5 text-regular text-white duration-300 ease-in-out hover:bg-primaryho"
             >
-              Join the Community 🔥
+              Join The Community 🔥
             </Link>
           </div>
         </div>

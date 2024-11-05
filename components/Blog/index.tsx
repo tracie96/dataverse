@@ -13,7 +13,7 @@ const Blog = async () => {
             headerInfo={{
               title: `UPCOMING NEWS & EVENTS`,
               subtitle: ``,
-              description: ` Be inspired by all the clever ways developers are using Google technology to push their ideas further. `,
+              description: ` Be inspired by all the clever ways developers are using Technology to push their ideas further. `,
             }}
           />
         </div>
@@ -21,8 +21,7 @@ const Blog = async () => {
       </div>
 
       <div className="mx-auto mt-15 max-w-c-1280 px-4 md:px-8 xl:mt-20 xl:px-0 text-center">
-      No Upcoming News and Events
-
+        No Upcoming News and Events
         <div className="grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:grid-cols-3 xl:gap-10 ">
           {/* {BlogData.slice(0, 3).map((blog, key) => (
       <BlogItem blog={blog} key={key} />

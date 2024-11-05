@@ -129,7 +129,7 @@ const Contact = () => {
                       className="flex max-w-[425px] cursor-pointer select-none pl-5"
                     >
                       By clicking Checkbox, you agree to use our “Form” terms
-                      And consent cookie usage in browser.
+                      and consent cookie usage in browser.
                     </label>
                   </div>
 
@@ -180,9 +180,9 @@ const Contact = () => {
 
               <div className="5 mb-7">
                 <h3 className="mb-4 text-metatitle3 font-medium text-black dark:text-white">
-                  Our Loaction
+                  Our Locaction
                 </h3>
-                <p>290 Maryam Springs 260, Courbevoie, Texas, USA.</p>
+                <p>21 Russell Drive VGC, Lagos State, Nigeria.</p>
               </div>
               <div className="5 mb-7">
                 <h3 className="mb-4 text-metatitle3 font-medium text-black dark:text-white">
@@ -197,7 +197,7 @@ const Contact = () => {
                   Phone Number
                 </h4>
                 <p>
-                  <a href="#">+1 (832) 837-3307</a>
+                  <a href="#">+234 (805) 509-4738</a>
                 </p>
               </div>
             </motion.div>

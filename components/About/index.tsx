@@ -66,7 +66,7 @@ const About = () => {
                   Connect
                 </span>
               </h2>
-              <p>Connect with Others Across Data Verse.</p>
+              <p>Connect With Others Across DataVerse.</p>
               <p>
                 Grow Apply knowledge and connections to build great products and
                 advance your skills, career, and network. Help your community
@@ -144,7 +144,7 @@ const About = () => {
                   Learn
                 </span>
               </h2>
-              <p>Learn and Discover with Data Verse.</p>
+              <p>Learn And Discover With DataVerse.</p>
               <div>
                 <div className="mt-7.5 flex items-center gap-5">
                   <div className="flex h-15 w-15 items-center justify-center rounded-[50%] border border-stroke dark:border-strokedark dark:bg-blacksection">
