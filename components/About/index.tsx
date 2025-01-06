@@ -7,7 +7,6 @@ import Image from "next/image";
 const About = () => {
   return (
     <>
-      {/* <!-- ===== About Start ===== --> */}
       <section className="overflow-hidden">
         <div className="mx-auto max-w-c-1235 px-4 md:px-8 xl:px-0">
           <div className="flex items-center gap-8 lg:gap-32.5">
