@@ -113,7 +113,7 @@ const Contact = () => {
                     rows={4}
                     className="w-full border-b border-stroke bg-transparent focus:border-waterloo focus:placeholder:text-black focus-visible:outline-none dark:border-strokedark dark:focus:border-manatee dark:focus:placeholder:text-white"
                   ></textarea>
-                </div>
+                </div> 
 
                 <div className="flex flex-wrap gap-4 xl:justify-between ">
                   <div className="mb-4 flex md:mb-0">

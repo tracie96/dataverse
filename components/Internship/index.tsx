@@ -1,6 +1,5 @@
 "use client"
-import React, { createContext } from "react";
-import { motion } from "framer-motion";
+import React from "react";
 import Image from "next/image";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Link from "next/link";
@@ -243,8 +242,6 @@ const CurriculumPage = () => {
               </p>
               <Link
                 href="/internship-form"
-                target="_blank"
-
                 className="inline-flex rounded-full bg-black px-6 py-3 mt-6 font-medium text-white hover:opacity-90 dark:bg-white dark:text-black"
                 style={{float:'left'}}
               >
