@@ -262,9 +262,7 @@ export default function InternshipForm() {
                             <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} placeholder="Full name" className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark lg:w-1/2" required />
                             <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email address"  className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark lg:w-1/2" required />
                         </div>
-                        <div className="mb-7.5">
-                            <input type="text" name="experience" value={formData.experience} onChange={handleInputChange} placeholder="Years of experience" className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark" required />
-                        </div>
+                     
                         <div className="mb-7.5">
                             <label htmlFor="resumeFile" className="block mb-2 text-black dark:text-white">Upload Resume</label>
                             <input id="resumeFile" name="resumeFile" type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFileChange} className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark" required />

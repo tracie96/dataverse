@@ -1,16 +1,4 @@
 {
-  "/_not-found": "app/_not-found.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/(site)/about/page": "app/(site)/about/page.js",
-  "/(site)/internship-form/new/entries/page": "app/(site)/internship-form/new/entries/page.js",
   "/(site)/internship-form/page": "app/(site)/internship-form/page.js",
-  "/(site)/internship/page": "app/(site)/internship/page.js",
-  "/(site)/auth/signin/page": "app/(site)/auth/signin/page.js",
-  "/(site)/auth/signup/page": "app/(site)/auth/signup/page.js",
-  "/(site)/docs/page": "app/(site)/docs/page.js",
-  "/(site)/blog/page": "app/(site)/blog/page.js",
-  "/(site)/error/page": "app/(site)/error/page.js",
-  "/(site)/blog/blog-details/page": "app/(site)/blog/blog-details/page.js",
-  "/(site)/page": "app/(site)/page.js",
-  "/(site)/support/page": "app/(site)/support/page.js"
+  "/(site)/internship-form/new/entries/page": "app/(site)/internship-form/new/entries/page.js"
 }
