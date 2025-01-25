@@ -245,7 +245,7 @@ const CurriculumPage = () => {
                 className="inline-flex rounded-full bg-black px-6 py-3 mt-6 font-medium text-white hover:opacity-90 dark:bg-white dark:text-black"
                 style={{float:'left'}}
               >
-                Apply Now
+                Closed
                 <Image
                   width={20}
                   height={20}
