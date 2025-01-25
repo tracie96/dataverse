@@ -245,14 +245,8 @@ const CurriculumPage = () => {
                 className="inline-flex rounded-full bg-black px-6 py-3 mt-6 font-medium text-white hover:opacity-90 dark:bg-white dark:text-black"
                 style={{float:'left'}}
               >
-                Apply Now
-                <Image
-                  width={20}
-                  height={20}
-                  src="/images/icon/icon-arrow-dark.svg"
-                  alt="Arrow"
-                  className="dark:hidden"
-                />
+                Closed
+            
                 <Image
                   width={20}
                   height={20}

@@ -1,6 +1,3 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/(site)/internship/page": "app/(site)/internship/page.js",
-  "/(site)/internship-form/new/entries/page": "app/(site)/internship-form/new/entries/page.js",
-  "/(site)/internship-form/page": "app/(site)/internship-form/page.js"
+  "/(site)/internship/page": "app/(site)/internship/page.js"
 }

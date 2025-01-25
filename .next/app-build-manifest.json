@@ -16,16 +16,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(site)/internship/page.js"
-    ],
-    "/(site)/internship-form/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(site)/internship-form/page.js"
-    ],
-    "/(site)/internship-form/new/entries/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(site)/internship-form/new/entries/page.js"
     ]
   }
 }
