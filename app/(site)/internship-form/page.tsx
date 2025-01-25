@@ -159,6 +159,8 @@ export default function InternshipForm() {
     });
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const isApplicationClosed = true
+
     // Handle input change for text fields
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -253,37 +255,110 @@ export default function InternshipForm() {
 
     return (
         <section id="support">
-                      <div className="relative pt-20 lg:px-15 lg:pt-25 xl:px-20 xl:pt-30">
-                <div className="flex flex-col-reverse flex-wrap gap-8 md:flex-row md:flex-nowrap md:justify-between xl:gap-20">
-                    <div className="animate_top w-full rounded-lg bg-white p-7.5 shadow-solid-8 dark:border dark:border-strokedark dark:bg-black xl:p-15">
-                        <h2 className="text-3xl font-bold mb-6 text-black dark:text-white text-center">Join Our Internship Program</h2>
-                        <p className="mb-8 text-center text-black dark:text-white">Fill out the form below to apply. <strong>Beginners will be prioritized!</strong></p>
-                        <div className="mb-7.5 mt-4 flex flex-col gap-7.5 lg:flex-row lg:justify-between lg:gap-14">
-                            <input type="text" name="fullName" value={formData.fullName} onChange={handleInputChange} placeholder="Full name" className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark lg:w-1/2" required />
-                            <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email address"  className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark lg:w-1/2" required />
-                        </div>
-                     
-                        <div className="mb-7.5">
-                            <label htmlFor="resumeFile" className="block mb-2 text-black dark:text-white">Upload Resume</label>
-                            <input id="resumeFile" name="resumeFile" type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFileChange} className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark" required />
-                        </div>
-                        <div className="mb-12.5">
-                            <label htmlFor="coverLetter" className="block mb-2 text-black dark:text-white">Cover Letter (Optional)</label>
-                            <input id="coverLetter" name="coverLetterFile" type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFileChange} className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark" />
-                            <textarea name="coverLetter" value={formData.coverLetter} onChange={handleInputChange} placeholder="Or type your cover letter" rows={4} className="w-full border-b border-stroke bg-transparent mt-3 focus:border-waterloo dark:border-strokedark"></textarea>
-                        </div>
-                        <div className="mb-12.5">
-                            <label htmlFor="experience" className="block mb-2 text-black dark:text-white">Years of Experience</label>
-                            <input id="experience" aria-required name="experience" value={formData.experience} onChange={handleInputChange} type="number" placeholder="Enter years of experience" className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo focus-visible:outline-none dark:border-strokedark dark:focus:border-manatee dark:focus:placeholder:text-white" required />
-                        </div>
-                        <button type="button" onClick={handleSubmit} disabled={loading} className="w-full bg-green-600 text-white py-3 rounded-md">
-                            {loading ? "Submitting..." : "Submit Application"}
-                        </button>
-                    </div>
+        <div className="relative pt-20 lg:px-15 lg:pt-25 xl:px-20 xl:pt-30">
+          <div className="flex flex-col-reverse flex-wrap gap-8 md:flex-row md:flex-nowrap md:justify-between xl:gap-20">
+            {isApplicationClosed ? (
+              <div className="w-full rounded-lg mb-35 bg-gray-100 p-7.5 shadow-solid-8 text-center dark:bg-black xl:p-15">
+                <h2 className="text-3xl font-bold mb-6 text-black dark:text-white">
+                  Applications Closed
+                </h2>
+                <p className="text-black dark:text-white">
+                  Thank you for your interest in our Internship Program. Unfortunately, we are no longer accepting applications at this time.
+                </p>
+              </div>
+            ) : (
+              <div className="animate_top w-full rounded-lg bg-white p-7.5 shadow-solid-8 dark:border dark:border-strokedark dark:bg-black xl:p-15">
+                <h2 className="text-3xl font-bold mb-6 text-black dark:text-white text-center">
+                  Join Our Internship Program
+                </h2>
+                <p className="mb-8 text-center text-black dark:text-white">
+                  Fill out the form below to apply. <strong>Beginners will be prioritized!</strong>
+                </p>
+                <div className="mb-7.5 mt-4 flex flex-col gap-7.5 lg:flex-row lg:justify-between lg:gap-14">
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                    placeholder="Full name"
+                    className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark lg:w-1/2"
+                    required
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Email address"
+                    className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark lg:w-1/2"
+                    required
+                  />
                 </div>
-            </div>
-
-            <SuccessModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
-        </section>
+                <div className="mb-7.5">
+                  <label htmlFor="resumeFile" className="block mb-2 text-black dark:text-white">
+                    Upload Resume
+                  </label>
+                  <input
+                    id="resumeFile"
+                    name="resumeFile"
+                    type="file"
+                    accept=".pdf,.doc,.docx,.txt"
+                    onChange={handleFileChange}
+                    className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark"
+                    required
+                  />
+                </div>
+                <div className="mb-12.5">
+                  <label htmlFor="coverLetter" className="block mb-2 text-black dark:text-white">
+                    Cover Letter (Optional)
+                  </label>
+                  <input
+                    id="coverLetter"
+                    name="coverLetterFile"
+                    type="file"
+                    accept=".pdf,.doc,.docx,.txt"
+                    onChange={handleFileChange}
+                    className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark"
+                  />
+                  <textarea
+                    name="coverLetter"
+                    value={formData.coverLetter}
+                    onChange={handleInputChange}
+                    placeholder="Or type your cover letter"
+                    rows={4}
+                    className="w-full border-b border-stroke bg-transparent mt-3 focus:border-waterloo dark:border-strokedark"
+                  ></textarea>
+                </div>
+                <div className="mb-12.5">
+                  <label htmlFor="experience" className="block mb-2 text-black dark:text-white">
+                    Years of Experience
+                  </label>
+                  <input
+                    id="experience"
+                    aria-required
+                    name="experience"
+                    value={formData.experience}
+                    onChange={handleInputChange}
+                    type="number"
+                    placeholder="Enter years of experience"
+                    className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo focus-visible:outline-none dark:border-strokedark dark:focus:border-manatee dark:focus:placeholder:text-white"
+                    required
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={loading}
+                  className="w-full bg-green-600 text-white py-3 rounded-md"
+                >
+                  {loading ? "Submitting..." : "Submit Application"}
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+        <SuccessModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+      </section>
+      
     );
 }
