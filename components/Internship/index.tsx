@@ -1,252 +1,211 @@
-"use client"
+"use client" // Keep this at the very top if this component uses client-side features.
+
 import React from "react";
 import Image from "next/image";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Link from "next/link";
 
+// --- Data Definition (Moved outside component for clarity and potential reusability) ---
+// It's often good practice to define static data outside of the component function
+// if it doesn't depend on props or state, as it won't be redefined on every render.
+const curriculumData = [
+  {
+    week: 1,
+    icon: "/images/icon/icon-01.svg", // Consider making icons more distinct if possible
+    title: "Business Data Cleaning & Analysis with Excel",
+    objective: "Understand how to clean and preprocess raw data for analysis.",
+    project: {
+      description: "A retail company provides sales data containing missing values, duplicates, and errors.",
+      tasks: [
+        "Clean the data (remove duplicates, handle missing values).",
+        "Use advanced formulas (e.g., VLOOKUP, IF, SUMIFS) to calculate KPIs like total revenue, average sales per region, and product trends.",
+      ],
+      deliverables: ["Cleaned dataset", "KPI calculations"],
+    },
+  },
+  {
+    week: 2,
+    title: "Advanced Excel Visualization",
+    icon: "/images/icon/icon-01.svg",
+    objective: "Create professional dashboards in Excel.",
+    project: {
+      description: "Visualize sales performance using slicers, pivot tables, and charts.",
+      tasks: [
+        "Design a dynamic dashboard that shows top-performing products, sales by region, and monthly trends.",
+      ],
+      deliverables: ["Interactive Excel dashboard"],
+    },
+  },
+  {
+    week: 3,
+    title: "Introduction to SQL for Data Retrieval",
+    objective: "Query data from a database.",
+    icon: "/images/icon/icon-01.svg",
+    project: {
+      description: "A company database contains employee and department data.",
+      tasks: [
+        "Write SQL queries to extract employee information by department, salary ranges, and job roles.",
+        "Use basic SQL clauses like SELECT, WHERE, ORDER BY, and GROUP BY.",
+      ],
+      deliverables: ["SQL query scripts with results"],
+    },
+  },
+  {
+    week: 4,
+    title: "Data Transformation with SQL",
+    icon: "/images/icon/icon-01.svg",
+    objective: "Transform data using SQL for analysis.",
+    project: {
+      description: "Analyze customer transactions from an e-commerce database.",
+      tasks: [
+        "Write SQL queries for data aggregation (total sales, average order value).",
+        "Use CASE statements to categorize customers by spending levels.",
+      ],
+      deliverables: ["SQL scripts and insights"],
+    },
+  },
+  {
+    week: 5,
+    title: "Introduction to Power BI",
+    icon: "/images/icon/icon-01.svg",
+    objective: "Connect to datasets and create basic visualizations.",
+    project: {
+      description: "Create a Power BI report for a logistics company's shipping performance.",
+      tasks: [
+        "Connect to Excel/SQL datasets.",
+        "Create visuals (bar charts, pie charts, and line graphs).",
+        "Use slicers for interactivity.",
+      ],
+      deliverables: ["Power BI report file"],
+    },
+  },
+  {
+    week: 6,
+    title: "Power BI Data Modeling",
+    icon: "/images/icon/icon-01.svg",
+    objective: "Build a robust data model and DAX formulas.",
+    project: {
+      description: "Create a data model for a healthcare provider's patient visit data.",
+      tasks: [
+        "Develop relationships between tables.",
+        "Write DAX formulas (e.g., YTD, rolling averages) to analyze patient visits and revenue trends.",
+      ],
+      deliverables: ["Power BI report with a functional data model"],
+    },
+  },
+  {
+    week: 7,
+    title: "Advanced SQL Joins",
+    icon: "/images/icon/icon-01.svg",
+    objective: "Work with multiple datasets using SQL joins.",
+    project: {
+      description: "Merge sales and customer datasets for a telecom company.",
+      tasks: [
+        "Use INNER JOIN, LEFT JOIN, and FULL OUTER JOIN to integrate data.",
+        "Analyze churn rates and customer lifetime value.",
+      ],
+      deliverables: ["SQL scripts and insights"],
+    },
+  },
+  {
+    week: 8,
+    title: "Advanced Power BI Dashboards",
+    icon: "/images/icon/icon-01.svg",
+    objective: "Develop an end-to-end business dashboard.",
+    project: {
+      description: "Create an executive dashboard for a finance company's quarterly performance.",
+      tasks: [
+        "Combine data from Excel and SQL.",
+        "Create KPIs, custom visuals, and a clean layout.",
+      ],
+      deliverables: ["Power BI dashboard file"],
+    },
+  },
+  {
+    week: 9,
+    title: "Data Automation in Excel",
+    icon: "/images/icon/icon-01.svg",
+    objective: "Use advanced Excel features for automation.",
+    project: {
+      description: "Automate monthly reporting for a manufacturing company.",
+      tasks: [
+        "Use macros and Power Query to clean and transform data.",
+        "Automate creation of pivot tables and charts.",
+      ],
+      deliverables: ["Excel file with automated workflows"],
+    },
+  },
+  {
+    week: 10,
+    title: "Case Study Analysis",
+    icon: "/images/icon/icon-01.svg",
+    objective: "Solve a real-world business problem.",
+    project: {
+      description: "A retail company needs insights into customer purchase behavior.",
+      tasks: [
+        "Use SQL to extract data, Excel for cleaning, and Power BI for visualization.",
+        "Provide actionable recommendations.",
+      ],
+      deliverables: [
+        "Final report with SQL scripts, Excel file, and Power BI report",
+      ],
+    },
+  },
+  {
+    week: 11,
+    title: "Predictive Modeling with Power BI",
+    icon: "/images/icon/icon-01.svg",
+    objective: "Create forecasts and predictions in Power BI.",
+    project: {
+      description: "Develop a sales forecasting model for a startup.",
+      tasks: [
+        "Use historical sales data to forecast future revenue trends.",
+        "Incorporate Power BI's forecasting and analytics tools.",
+      ],
+      deliverables: ["Forecasting dashboard"],
+    },
+  },
+  {
+    week: 12,
+    title: "Capstone Project",
+    icon: "/images/icon/icon-01.svg",
+    objective: "Synthesize all skills in a comprehensive project.",
+    project: {
+      description:
+        "Participants choose a domain (e.g., finance, healthcare, retail) and solve a business problem end-to-end.",
+      tasks: [
+        "Use SQL for data extraction and transformation.",
+        "Use Excel for additional cleaning and KPIs.",
+        "Build a Power BI dashboard for reporting.",
+      ],
+      deliverables: ["Final project report and presentation"],
+    },
+  },
+];
+
+// --- Functional Component ---
 const CurriculumPage = () => {
-  const curriculum = [
-    {
-      week: 1,
-      icon: "/images/icon/icon-01.svg",
-      title: "Business Data Cleaning & Analysis with Excel",
-      objective:
-        "Understand how to clean and preprocess raw data for analysis.",
-      project: {
-        description:
-          "A retail company provides sales data containing missing values, duplicates, and errors.",
-        tasks: [
-          "Clean the data (remove duplicates, handle missing values).",
-          "Use advanced formulas (e.g., VLOOKUP, IF, SUMIFS) to calculate KPIs like total revenue, average sales per region, and product trends.",
-        ],
-        deliverables: ["Cleaned dataset", "KPI calculations"],
-      },
-    },
-    {
-      week: 2,
-      title: "Advanced Excel Visualization",
-      icon: "/images/icon/icon-01.svg",
-      objective: "Create professional dashboards in Excel.",
-      project: {
-        description:
-          "Visualize sales performance using slicers, pivot tables, and charts.",
-        tasks: [
-          "Design a dynamic dashboard that shows top-performing products, sales by region, and monthly trends.",
-        ],
-        deliverables: ["Interactive Excel dashboard"],
-      },
-    },
-    {
-      week: 3,
-      title: "Introduction to SQL for Data Retrieval",
-      objective: "Query data from a database.",
-      icon: "/images/icon/icon-01.svg",
-
-      project: {
-        description:
-          "A company database contains employee and department data.",
-        tasks: [
-          "Write SQL queries to extract employee information by department, salary ranges, and job roles.",
-          "Use basic SQL clauses like SELECT, WHERE, ORDER BY, and GROUP BY.",
-        ],
-        deliverables: ["SQL query scripts with results"],
-      },
-    },
-    {
-      week: 4,
-      title: "Data Transformation with SQL",
-      icon: "/images/icon/icon-01.svg",
-
-      objective: "Transform data using SQL for analysis.",
-      project: {
-        description:
-          "Analyze customer transactions from an e-commerce database.",
-        tasks: [
-          "Write SQL queries for data aggregation (total sales, average order value).",
-          "Use CASE statements to categorize customers by spending levels.",
-        ],
-        deliverables: ["SQL scripts and insights"],
-      },
-    },
-    {
-      week: 5,
-      title: "Introduction to Power BI",
-      icon: "/images/icon/icon-01.svg",
-
-      objective: "Connect to datasets and create basic visualizations.",
-      project: {
-        description:
-          "Create a Power BI report for a logistics company’s shipping performance.",
-        tasks: [
-          "Connect to Excel/SQL datasets.",
-          "Create visuals (bar charts, pie charts, and line graphs).",
-          "Use slicers for interactivity.",
-        ],
-        deliverables: ["Power BI report file"],
-      },
-    },
-    {
-      week: 6,
-      title: "Power BI Data Modeling",
-      icon: "/images/icon/icon-01.svg",
-
-      objective: "Build a robust data model and DAX formulas.",
-      project: {
-        description:
-          "Create a data model for a healthcare provider’s patient visit data.",
-        tasks: [
-          "Develop relationships between tables.",
-          "Write DAX formulas (e.g., YTD, rolling averages) to analyze patient visits and revenue trends.",
-        ],
-        deliverables: ["Power BI report with a functional data model"],
-      },
-    },
-    {
-      week: 7,
-      title: "Advanced SQL Joins",
-      icon: "/images/icon/icon-01.svg",
-
-      objective: "Work with multiple datasets using SQL joins.",
-      project: {
-        description: "Merge sales and customer datasets for a telecom company.",
-        tasks: [
-          "Use INNER JOIN, LEFT JOIN, and FULL OUTER JOIN to integrate data.",
-          "Analyze churn rates and customer lifetime value.",
-        ],
-        deliverables: ["SQL scripts and insights"],
-      },
-    },
-    {
-      week: 8,
-      title: "Advanced Power BI Dashboards",
-      icon: "/images/icon/icon-01.svg",
-
-      objective: "Develop an end-to-end business dashboard.",
-      project: {
-        description:
-          "Create an executive dashboard for a finance company’s quarterly performance.",
-        tasks: [
-          "Combine data from Excel and SQL.",
-          "Create KPIs, custom visuals, and a clean layout.",
-        ],
-        deliverables: ["Power BI dashboard file"],
-      },
-    },
-    {
-      week: 9,
-      title: "Data Automation in Excel",
-      icon: "/images/icon/icon-01.svg",
-
-      objective: "Use advanced Excel features for automation.",
-      project: {
-        description: "Automate monthly reporting for a manufacturing company.",
-        tasks: [
-          "Use macros and Power Query to clean and transform data.",
-          "Automate creation of pivot tables and charts.",
-        ],
-        deliverables: ["Excel file with automated workflows"],
-      },
-    },
-    {
-      week: 10,
-      title: "Case Study Analysis",
-      icon: "/images/icon/icon-01.svg",
-
-      objective: "Solve a real-world business problem.",
-      project: {
-        description:
-          "A retail company needs insights into customer purchase behavior.",
-        tasks: [
-          "Use SQL to extract data, Excel for cleaning, and Power BI for visualization.",
-          "Provide actionable recommendations.",
-        ],
-        deliverables: [
-          "Final report with SQL scripts, Excel file, and Power BI report",
-        ],
-      },
-    },
-    {
-      week: 11,
-      title: "Predictive Modeling with Power BI",
-      icon: "/images/icon/icon-01.svg",
-
-      objective: "Create forecasts and predictions in Power BI.",
-      project: {
-        description: "Develop a sales forecasting model for a startup.",
-        tasks: [
-          "Use historical sales data to forecast future revenue trends.",
-          "Incorporate Power BI’s forecasting and analytics tools.",
-        ],
-        deliverables: ["Forecasting dashboard"],
-      },
-    },
-    {
-      week: 12,
-      title: "Capstone Project",
-      icon: "/images/icon/icon-01.svg",
-
-      objective: "Synthesize all skills in a comprehensive project.",
-      project: {
-        description:
-          "Participants choose a domain (e.g., finance, healthcare, retail) and solve a business problem end-to-end.",
-        tasks: [
-          "Use SQL for data extraction and transformation.",
-          "Use Excel for additional cleaning and KPIs.",
-          "Build a Power BI dashboard for reporting.",
-        ],
-        deliverables: ["Final project report and presentation"],
-      },
-    },
-    // {
-    //   icon: "/images/icon/icon-01.svg",
-
-    //   additional_elements: [
-    //     {
-    //       title: "Weekly Feedback Sessions",
-    //       icon: "/images/icon/icon-01.svg",
-    //       description:
-    //         "Provide feedback on projects to help participants improve.",
-    //     },
-    //     {
-    //       title: "Mentorship",
-    //       icon: "/images/icon/icon-01.svg",
-    //       description:
-    //         "Assign mentors to guide participants through challenges.",
-    //     },
-    //     {
-    //       title: "Portfolio Development",
-    //       icon: "/images/icon/icon-01.svg",
-
-    //       description:
-    //         "Ensure participants leave with polished projects for their portfolios.",
-    //     },
-    //   ],
-    // },
-  ];
-
   return (
     <div className="min-h-screen py-10">
-      <div className="container mx-auto px-4">
-        <div className="mx-auto rounded-lg bg-gradient-to-t from-[#a0c8f2] to-[#F8F9FF] dark:bg-blacksection dark:bg-gradient-to-t dark:from-transparent dark:to-transparent dark:stroke-strokedark">
-          <div className="flex flex-wrap gap-8 md:flex-nowrap md:justify-between md:gap-0">
-            <div className="animate_left md:w-[70%] lg:w-1/2">
-              <h2 className="mb-4 w-11/12 text-3xl font-bold text-black text-left dark:text-white xl:text-sectiontitle4 pt-6 px-8">
-                Internship Program
-              </h2>
-              <div  className="px-8">
+    <div className="container mx-auto px-4">
+      {/* Internship Program Header Section */}
+      <div className="mx-auto rounded-lg bg-gradient-to-t from-[#a0c8f2] to-[#F8F9FF] dark:bg-blacksection dark:bg-gradient-to-t dark:from-transparent dark:to-transparent dark:stroke-strokedark">
+        <div className="flex flex-wrap gap-8 md:flex-nowrap md:justify-between md:gap-0">
+          <div className="animate_left md:w-[70%] lg:w-1/2">
+            <h2 className="mb-4 w-11/12 text-3xl font-bold text-black text-left dark:text-white xl:text-sectiontitle4 pt-6 px-8">
+              Internship Program
+            </h2>
+            <div className="px-8">
               <p className="text-left">
-                Unlock your potential with our transformative internship
-                program—gain hands-on experience, mentorship, and the skills to
-                excel in your career. Don't miss this chance to build your
-                future—join us today and take the first step toward success!
+              Our transformative internship program is designed to help you unlock your full potential. You'll gain invaluable hands-on experience, benefit from dedicated mentorship, and develop the critical skills needed for career excellence. Seize this chance to build a strong foundation for your future.
               </p>
+              {/* Use a more semantic button if it triggers an action, Link if it navigates */}
               <Link
                 href="/internship-form"
                 className="inline-flex rounded-full bg-black px-6 py-3 mt-6 font-medium text-white hover:opacity-90 dark:bg-white dark:text-black"
-                style={{float:'left'}}
+                style={{ float: 'left' }} // Consider moving inline styles to Tailwind classes
               >
-                Closed
-            
+                Open {/* This implies the form link might not be active, consider conditional rendering */}
                 <Image
                   width={20}
                   height={20}
@@ -255,57 +214,210 @@ const CurriculumPage = () => {
                   className="hidden dark:block"
                 />
               </Link>
-              </div>
             </div>
+          </div>
 
-            <div className="animate_right lg:w-[45%]">
-              <div className="flex items-center justify-end xl:justify-between">
-
-    <DotLottieReact
-      src="https://lottie.host/61c130d8-8d18-4ff7-b3d5-c5596dac5430/EilbcylZaY.lottie"
-      loop
-      autoplay
-    />
- 
-              </div>
+          <div className="animate_right lg:w-[45%]">
+            <div className="flex items-center justify-end xl:justify-between">
+              <DotLottieReact
+                src="https://lottie.host/61c130d8-8d18-4ff7-b3d5-c5596dac5430/EilbcylZaY.lottie"
+                loop
+                autoplay
+              />
             </div>
           </div>
         </div>
-        <h1 className="text-3xl font-bold mb-8 mt-8">Courses Outline</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {curriculum.map((item, index) => (
-            <div className="animate_top z-40 rounded-lg border border-white bg-white p-7.5 shadow-solid-3 transition-all hover:shadow-solid-4 dark:border-strokedark dark:bg-blacksection dark:hover:bg-hoverdark xl:p-12.5">
-              <div className="relative flex h-16 w-16 items-center mb-4  justify-center rounded-[4px] bg-primary">
-                <Image src={item?.icon} width={36} height={36} alt="title" />
-              </div>
-              <div className="flex justify-between w-full">
-                <h2 className="text-xl font-semibold">{item.title}</h2>
-              </div>
-              <p className="text-gray-600 text-left">{item.objective}</p>
-              {item.project && (
-                <div className="mt-4">
-                  <h3 className="text-md font-semibold mb-2 text-left">
-                    Project
-                  </h3>
-                  <p className="text-left">{item.project.description}</p>
-                  <ul className="list-disc list-inside text-left text-gray-600 mt-2">
-                    {item.project.tasks.map((line, i) => (
-                      <li key={i}>{line}</li>
-                    ))}
-                  </ul>
-                  <h4 className="mt-2 font-semibold text-left">Deliverables</h4>
-                  <ul className="list-disc list-inside text-left text-gray-600 mt-2">
-                    {item.project.deliverables.map((deliverable, i) => (
-                      <li key={i}>{deliverable}</li>
-                    ))}
-                  </ul>
+      </div>
+
+      <div className="py-4 sm:py-10">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          {/* Programs Section */}
+        
+
+          {/* Programs Grid */}
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 mb-24">
+            {/* Data Analytics & Science Program Card */}
+            <div className="relative group">
+              <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-lg ring-1 ring-gray-900/5 transition duration-300 hover:shadow-xl dark:ring-gray-700/5">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/20 dark:from-primary/20 dark:to-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative">
+                  <div className="flex items-center justify-between">
+                    <div className="bg-blue-600/10 dark:bg-blue-400/10 rounded-lg p-2">
+                      <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      </svg>
+                    </div>
+                    <span className="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-900/30 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10">3 Months</span>
+                  </div>
+                  <h3 className="mt-6 text-2xl font-semibold leading-8 tracking-tight text-gray-900 dark:text-white">Data Analytics & Science Internship</h3>
+                  <p className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">A comprehensive program exposing interns to real-world data analytics across multiple domains.</p>
+                  
+                  <div className="mt-8 space-y-6">
+                    <div>
+                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">Key Focus Areas</h4>
+                      <ul className="mt-4 grid grid-cols-1 gap-3">
+                        {['Research Analytics', 'Healthcare Analytics', 'Finance Analytics', 'Trade Analytics'].map((area) => (
+                          <li key={area} className="flex items-center gap-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                            <svg className="h-1.5 w-1.5 flex-none fill-blue-600 dark:fill-blue-400" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
+                            {area}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">Required Skills</h4>
+                      <ul className="mt-4 grid grid-cols-1 gap-3">
+                        {['Excel & Power BI/Tableau', 'SPSS', 'Python for Data Analysis', 'Machine Learning basics'].map((skill) => (
+                          <li key={skill} className="flex items-center gap-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                            <svg className="h-1.5 w-1.5 flex-none fill-blue-600 dark:fill-blue-400" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
+                            {skill}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 flex items-center gap-4">
+                    <Link
+                      href="/internship-form?type=data-analytics"
+                      className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-300"
+                    >
+                      Apply Now
+                      <span className="ml-2 text-blue-200" aria-hidden="true">→</span>
+                    </Link>
+                  </div>
                 </div>
-              )}
-             
+              </div>
             </div>
-          ))}
+
+            {/* Research Associate Program Card */}
+            <div className="relative group">
+              <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-lg ring-1 ring-gray-900/5 transition duration-300 hover:shadow-xl dark:ring-gray-700/5">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-950 dark:to-pink-950 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative">
+                  <div className="flex items-center justify-between">
+                    <div className="bg-purple-600/10 dark:bg-purple-400/10 rounded-lg p-2">
+                      <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </div>
+                    <span className="inline-flex items-center rounded-md bg-purple-50 dark:bg-purple-900/30 px-2 py-1 text-xs font-medium text-purple-700 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10">2 Months</span>
+                  </div>
+                  <h3 className="mt-6 text-2xl font-semibold leading-8 tracking-tight text-gray-900 dark:text-white">Research Associate Internship</h3>
+                  <p className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">A structured program designed to equip participants with essential skills in professional research and analysis.</p>
+                  
+                  <div className="mt-8 space-y-6">
+                    <div>
+                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">Research Areas</h4>
+                      <ul className="mt-4 grid grid-cols-1 gap-3">
+                        {['Public Health Research', 'Education Research', 'Business Analytics', 'Development Sectors'].map((area) => (
+                          <li key={area} className="flex items-center gap-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                            <svg className="h-1.5 w-1.5 flex-none fill-purple-600 dark:fill-purple-400" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
+                            {area}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">Program Benefits</h4>
+                      <ul className="mt-4 grid grid-cols-1 gap-3">
+                        {['Hands-on Research Experience', 'Mentorship & Training', 'Co-authoring Opportunities', 'Professional Certification'].map((benefit) => (
+                          <li key={benefit} className="flex items-center gap-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                            <svg className="h-1.5 w-1.5 flex-none fill-purple-600 dark:fill-purple-400" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
+                            {benefit}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 flex items-center gap-4">
+                    <Link
+                      href="/internship-form?type=research-associate"
+                      className="rounded-lg bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition-all duration-300"
+                    >
+                      Apply Now
+                      <span className="ml-2 text-purple-200" aria-hidden="true">→</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Benefits Section */}
+          <div className="mx-auto max-w-2xl text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Program Benefits</h2>
+            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+              Unlock valuable opportunities and resources to accelerate your career growth.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Real Projects Card */}
+            <div className="relative group overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 shadow-md ring-1 ring-gray-900/5 transition duration-300 hover:shadow-xl dark:ring-gray-700/5">
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-transparent dark:from-blue-950 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative">
+                <div className="w-12 h-12 mb-4 flex items-center justify-center rounded-xl bg-blue-600/10 dark:bg-blue-400/10">
+                  <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Real Projects</h3>
+                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">Work on actual projects across different domains and build your portfolio.</p>
+              </div>
+            </div>
+
+            {/* Mentorship Card */}
+            <div className="relative group overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 shadow-md ring-1 ring-gray-900/5 transition duration-300 hover:shadow-xl dark:ring-gray-700/5">
+              <div className="absolute inset-0 bg-gradient-to-b from-purple-50 to-transparent dark:from-purple-950 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative">
+                <div className="w-12 h-12 mb-4 flex items-center justify-center rounded-xl bg-purple-600/10 dark:bg-purple-400/10">
+                  <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Mentorship</h3>
+                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">Get guidance from experienced professionals in your field of interest.</p>
+              </div>
+            </div>
+
+            {/* Certification Card */}
+            <div className="relative group overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 shadow-md ring-1 ring-gray-900/5 transition duration-300 hover:shadow-xl dark:ring-gray-700/5">
+              <div className="absolute inset-0 bg-gradient-to-b from-green-50 to-transparent dark:from-green-950 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative">
+                <div className="w-12 h-12 mb-4 flex items-center justify-center rounded-xl bg-green-600/10 dark:bg-green-400/10">
+                  <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Certification</h3>
+                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">Receive a professional certification upon successful completion.</p>
+              </div>
+            </div>
+
+            {/* Alumni Network Card */}
+            <div className="relative group overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 shadow-md ring-1 ring-gray-900/5 transition duration-300 hover:shadow-xl dark:ring-gray-700/5">
+              <div className="absolute inset-0 bg-gradient-to-b from-pink-50 to-transparent dark:from-pink-950 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative">
+                <div className="w-12 h-12 mb-4 flex items-center justify-center rounded-xl bg-pink-600/10 dark:bg-pink-400/10">
+                  <svg className="w-6 h-6 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Alumni Network</h3>
+                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">Join our growing network of professionals and get access to future opportunities.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Curriculum Section - Hidden for now */}
+          <div className="hidden">
+            {/* ... existing curriculum code ... */}
+          </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

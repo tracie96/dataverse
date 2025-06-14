@@ -1,3 +1,5 @@
 {
-  "/(site)/internship/page": "app/(site)/internship/page.js"
+  "/(site)/blog/page": "app/(site)/blog/page.js",
+  "/(site)/internship/page": "app/(site)/internship/page.js",
+  "/(site)/internship-form/page": "app/(site)/internship-form/page.js"
 }

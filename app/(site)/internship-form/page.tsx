@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { motion, AnimatePresence } from "framer-motion"
 import { Dialog } from "@headlessui/react"
+import { useSearchParams } from 'next/navigation'
 
 // Create a Supabase client
 const supabase = createClient(
@@ -15,10 +16,15 @@ const supabase = createClient(
 interface FormData {
     fullName: string;
     email: string;
-    coverLetter?: string;
-    coverLetterFile?: File | null;
-    resumeFile?: File | null;
-    experience?: string;
+    phone: string;
+    fieldOfStudy: string;
+    currentLevel: 'undergraduate' | 'graduate' | 'phd' | '';
+    cvResume: File | null;
+    coverLetter: string;
+    experienceLevel: 'beginner' | 'intermediate' | '';
+    researchExperience?: string;
+    researchInterests?: string;
+    academicPublications?: File | null;
 }
 
 type ModalProps = {
@@ -149,20 +155,29 @@ type ModalProps = {
 };
 
 export default function InternshipForm() {
+    const searchParams = useSearchParams()
+    const internshipType = searchParams.get('type')
+    const isResearchInternship = internshipType === 'research-associate'
+
     const [formData, setFormData] = useState<FormData>({
         fullName: "",
         email: "",
+        phone: "",
+        fieldOfStudy: "",
+        currentLevel: "",
+        cvResume: null,
         coverLetter: "",
-        experience: "",
-        resumeFile: null,
-        coverLetterFile: null,
+        experienceLevel: "",
+        researchExperience: "",
+        researchInterests: "",
+        academicPublications: null
     });
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const isApplicationClosed = true
+    const isApplicationClosed = false;
 
     // Handle input change for text fields
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     }; 
@@ -170,9 +185,9 @@ export default function InternshipForm() {
     // Handle file change for file inputs
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        const { name, files } = e.target;
-        if (files && files[0]) {
-            const file = files[0];
+        const { name } = e.target;
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
             // Validate file type
             if (![".pdf", ".doc", ".docx", ".txt"].some(ext => file.name.endsWith(ext))) {
                 alert("Invalid file type. Please upload a .pdf, .doc, .docx, or .txt file.");
@@ -200,35 +215,34 @@ export default function InternshipForm() {
         return publicURL.data.publicUrl;
     };
 
-    const handleSubmit = async () => {
-        const { fullName, email, experience, resumeFile } = formData;
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setLoading(true)
 
-        // Validate required fields
-        if (!fullName || !email || !experience || !resumeFile) {
-            alert("Please fill out all required fields.");
-            return;
-        }
-        setLoading(true);
-     
         try {
             let resumeUrl; 
             let coverLetterUrl; 
 
             // Upload resume if provided and get its public URL
-            if (formData.resumeFile) {
-                resumeUrl = await uploadFile(formData.resumeFile, `resumes/${Date.now()}-${formData.resumeFile.name}`);
+            if (formData.cvResume) {
+                resumeUrl = await uploadFile(formData.cvResume, `resumes/${Date.now()}-${formData.cvResume.name}`);
             }
 
             // Upload cover letter if provided and get its public URL
-            if (formData.coverLetterFile) {
-                coverLetterUrl = await uploadFile(formData.coverLetterFile, `cover-letters/${Date.now()}-${formData.coverLetterFile.name}`);
+            if (formData.academicPublications) {
+                coverLetterUrl = await uploadFile(formData.academicPublications, `cover-letters/${Date.now()}-${formData.academicPublications.name}`);
             }
 
             // Insert application data into the database with URLs for uploaded files
             const { error } = await supabase.from("interns").insert({
                 full_name: formData.fullName,
                 email: formData.email,
-                years_of_experience: formData.experience,
+                phone: formData.phone,
+                field_of_study: formData.fieldOfStudy,
+                current_level: formData.currentLevel,
+                experience_level: formData.experienceLevel,
+                research_experience: formData.researchExperience,
+                research_interests: formData.researchInterests,
                 resume: resumeUrl,
                 cover_letter: coverLetterUrl,
                 created_at: new Date().toISOString(),
@@ -237,13 +251,18 @@ export default function InternshipForm() {
             if (error) throw error;
 
             setIsModalOpen(true);
-                        setFormData({
+            setFormData({
                 fullName: "",
                 email: "",
+                phone: "",
+                fieldOfStudy: "",
+                currentLevel: "",
+                cvResume: null,
                 coverLetter: "",
-                experience: "",
-                resumeFile: null,
-                coverLetterFile: null,
+                experienceLevel: "",
+                researchExperience: "",
+                researchInterests: "",
+                academicPublications: null
             });
         } catch (error) {
             console.error("Error submitting application:", error.message);
@@ -255,110 +274,247 @@ export default function InternshipForm() {
 
     return (
         <section id="support">
-        <div className="relative pt-20 lg:px-15 lg:pt-25 xl:px-20 xl:pt-30">
-          <div className="flex flex-col-reverse flex-wrap gap-8 md:flex-row md:flex-nowrap md:justify-between xl:gap-20">
-            {isApplicationClosed ? (
-              <div className="w-full rounded-lg mb-35 bg-gray-100 p-7.5 shadow-solid-8 text-center dark:bg-black xl:p-15">
-                <h2 className="text-3xl font-bold mb-6 text-black dark:text-white">
-                  Applications Closed
-                </h2>
-                <p className="text-black dark:text-white">
-                  Thank you for your interest in our Internship Program. Unfortunately, we are no longer accepting applications at this time.
-                </p>
-              </div>
-            ) : (
-              <div className="animate_top w-full rounded-lg bg-white p-7.5 shadow-solid-8 dark:border dark:border-strokedark dark:bg-black xl:p-15">
-                <h2 className="text-3xl font-bold mb-6 text-black dark:text-white text-center">
-                  Join Our Internship Program
-                </h2>
-                <p className="mb-8 text-center text-black dark:text-white">
-                  Fill out the form below to apply. <strong>Beginners will be prioritized!</strong>
-                </p>
-                <div className="mb-7.5 mt-4 flex flex-col gap-7.5 lg:flex-row lg:justify-between lg:gap-14">
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    placeholder="Full name"
-                    className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark lg:w-1/2"
-                    required
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Email address"
-                    className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark lg:w-1/2"
-                    required
-                  />
+            <div className="relative pt-20 lg:px-15 lg:pt-25 xl:px-20 xl:pt-30">
+             
+
+                <div className="flex flex-col-reverse flex-wrap gap-8 md:flex-row md:flex-nowrap md:justify-between xl:gap-20">
+                    <div className="animate_top w-full rounded-xl bg-white p-8 shadow-lg dark:border dark:border-strokedark dark:bg-black xl:p-12">
+                        <div className="mb-10 text-center">
+                            <h2 className="text-3xl font-bold mb-3 text-gray-900 dark:text-white">
+                                {isResearchInternship ? 'Research Associate Internship' : 'Data Analytics & Science Internship'}
+                            </h2>
+                            <p className="text-gray-600 dark:text-gray-400">Complete the form below to apply</p>
+                        </div>
+                        <form onSubmit={handleSubmit} className="space-y-8">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        name="fullName"
+                                        value={formData.fullName}
+                                        onChange={handleInputChange}
+                                        placeholder=" "
+                                        className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                        required
+                                    />
+                                    <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                        Full Name
+                                    </label>
+                                </div>
+                                <div className="relative">
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                        placeholder=" "
+                                        className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                        required
+                                    />
+                                    <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                        Email Address
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="relative">
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleInputChange}
+                                    placeholder=" "
+                                    className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                    required
+                                />
+                                <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                    Phone Number
+                                </label>
+                            </div>
+
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    name="fieldOfStudy"
+                                    value={formData.fieldOfStudy}
+                                    onChange={handleInputChange}
+                                    placeholder=" "
+                                    className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                    required
+                                />
+                                <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                    Field of Study
+                                </label>
+                            </div>
+
+                            <div className="relative">
+                                <select
+                                    name="currentLevel"
+                                    value={formData.currentLevel}
+                                    onChange={handleInputChange}
+                                    className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                    required
+                                >
+                                    <option value="" disabled></option>
+                                    <option value="undergraduate">Undergraduate</option>
+                                    <option value="graduate">Graduate</option>
+                                    <option value="phd">PhD</option>
+                                </select>
+                                <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                    Current Level of Study
+                                </label>
+                            </div>
+
+                            <div className="relative">
+                                <select
+                                    name="experienceLevel"
+                                    value={formData.experienceLevel}
+                                    onChange={handleInputChange}
+                                    className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                    required
+                                >
+                                    <option value="" disabled></option>
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate">Intermediate</option>
+                                </select>
+                                <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                    Experience Level
+                                </label>
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    CV/Resume
+                                </label>
+                                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-blue-500 transition-colors dark:border-gray-600 dark:hover:border-blue-400">
+                                    <div className="space-y-1 text-center">
+                                        <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        <div className="flex text-sm text-gray-600 dark:text-gray-400">
+                                            <label htmlFor="cvResume" className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                                                <span>Upload a file</span>
+                                                <input
+                                                    id="cvResume"
+                                                    name="cvResume"
+                                                    type="file"
+                                                    accept=".pdf,.doc,.docx"
+                                                    onChange={handleFileChange}
+                                                    className="sr-only"
+                                                    required
+                                                />
+                                            </label>
+                                            <p className="pl-1">or drag and drop</p>
+                                        </div>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                            PDF, DOC up to 10MB
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="relative">
+                                <textarea
+                                    name="coverLetter"
+                                    value={formData.coverLetter}
+                                    onChange={handleInputChange}
+                                    rows={4}
+                                    placeholder=" "
+                                    className="peer w-full border-2 rounded-lg border-gray-300 bg-transparent p-4 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                    required
+                                ></textarea>
+                                <label className="pointer-events-none absolute top-0 left-0 ml-4 origin-left -translate-y-1/2 transform bg-white px-2 text-sm text-gray-800 opacity-75 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:text-sm peer-focus:text-blue-600 dark:bg-black dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                    Cover Letter
+                                </label>
+                            </div>
+
+                            {/* Research-specific fields */}
+                            {isResearchInternship && (
+                                <div className="space-y-8">
+                                    <div className="relative">
+                                        <textarea
+                                            name="researchExperience"
+                                            value={formData.researchExperience}
+                                            onChange={handleInputChange}
+                                            rows={4}
+                                            placeholder=" "
+                                            className="peer w-full border-2 rounded-lg border-gray-300 bg-transparent p-4 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                            required
+                                        ></textarea>
+                                        <label className="pointer-events-none absolute top-0 left-0 ml-4 origin-left -translate-y-1/2 transform bg-white px-2 text-sm text-gray-800 opacity-75 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:text-sm peer-focus:text-blue-600 dark:bg-black dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                            Research Experience
+                                        </label>
+                                    </div>
+
+                                    <div className="relative">
+                                        <textarea
+                                            name="researchInterests"
+                                            value={formData.researchInterests}
+                                            onChange={handleInputChange}
+                                            rows={4}
+                                            placeholder=" "
+                                            className="peer w-full border-2 rounded-lg border-gray-300 bg-transparent p-4 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                            required
+                                        ></textarea>
+                                        <label className="pointer-events-none absolute top-0 left-0 ml-4 origin-left -translate-y-1/2 transform bg-white px-2 text-sm text-gray-800 opacity-75 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:text-sm peer-focus:text-blue-600 dark:bg-black dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                            Research Interests
+                                        </label>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            Academic Publications (Optional)
+                                        </label>
+                                        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-blue-500 transition-colors dark:border-gray-600 dark:hover:border-blue-400">
+                                            <div className="space-y-1 text-center">
+                                                <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <div className="flex text-sm text-gray-600 dark:text-gray-400">
+                                                    <label htmlFor="academicPublications" className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                                                        <span>Upload a file</span>
+                                                        <input
+                                                            id="academicPublications"
+                                                            name="academicPublications"
+                                                            type="file"
+                                                            accept=".pdf,.doc,.docx"
+                                                            onChange={handleFileChange}
+                                                            className="sr-only"
+                                                        />
+                                                    </label>
+                                                    <p className="pl-1">or drag and drop</p>
+                                                </div>
+                                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                    PDF, DOC up to 10MB
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="pt-4">
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="w-full bg-primary text-white py-4 rounded-xl font-medium text-lg shadow-lg  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-blue-600 disabled:hover:to-purple-600"
+                                >
+                                    {loading ? (
+                                        <div className="flex items-center justify-center">
+                                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Submitting...
+                                        </div>
+                                    ) : "Submit Application"}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div className="mb-7.5">
-                  <label htmlFor="resumeFile" className="block mb-2 text-black dark:text-white">
-                    Upload Resume
-                  </label>
-                  <input
-                    id="resumeFile"
-                    name="resumeFile"
-                    type="file"
-                    accept=".pdf,.doc,.docx,.txt"
-                    onChange={handleFileChange}
-                    className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark"
-                    required
-                  />
-                </div>
-                <div className="mb-12.5">
-                  <label htmlFor="coverLetter" className="block mb-2 text-black dark:text-white">
-                    Cover Letter (Optional)
-                  </label>
-                  <input
-                    id="coverLetter"
-                    name="coverLetterFile"
-                    type="file"
-                    accept=".pdf,.doc,.docx,.txt"
-                    onChange={handleFileChange}
-                    className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo dark:border-strokedark"
-                  />
-                  <textarea
-                    name="coverLetter"
-                    value={formData.coverLetter}
-                    onChange={handleInputChange}
-                    placeholder="Or type your cover letter"
-                    rows={4}
-                    className="w-full border-b border-stroke bg-transparent mt-3 focus:border-waterloo dark:border-strokedark"
-                  ></textarea>
-                </div>
-                <div className="mb-12.5">
-                  <label htmlFor="experience" className="block mb-2 text-black dark:text-white">
-                    Years of Experience
-                  </label>
-                  <input
-                    id="experience"
-                    aria-required
-                    name="experience"
-                    value={formData.experience}
-                    onChange={handleInputChange}
-                    type="number"
-                    placeholder="Enter years of experience"
-                    className="w-full border-b border-stroke bg-transparent pb-3.5 focus:border-waterloo focus-visible:outline-none dark:border-strokedark dark:focus:border-manatee dark:focus:placeholder:text-white"
-                    required
-                  />
-                </div>
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={loading}
-                  className="w-full bg-green-600 text-white py-3 rounded-md"
-                >
-                  {loading ? "Submitting..." : "Submit Application"}
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-        <SuccessModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
-      </section>
-      
+            </div>
+            <SuccessModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+        </section>
     );
 }
