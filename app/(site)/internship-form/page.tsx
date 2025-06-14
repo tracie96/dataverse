@@ -12,19 +12,55 @@ const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
 );
 
+// Define the education level type
+type EducationLevel = 'high_school' | 'bachelors' | 'masters' | 'phd' | 'undergraduate' | 'others';
+type InternshipType = 'data_analytics' | 'research_associate';
+
 // Define the structure of the form data
 interface FormData {
     fullName: string;
     email: string;
     phone: string;
     fieldOfStudy: string;
-    currentLevel: 'undergraduate' | 'graduate' | 'phd' | '';
+    currentLevel: EducationLevel;
     cvResume: File | null;
     coverLetter: string;
-    experienceLevel: 'beginner' | 'intermediate' | '';
+    experienceLevel: 'beginner' | 'intermediate';
+    // Additional fields for research associate
     researchExperience?: string;
     researchInterests?: string;
     academicPublications?: File | null;
+}
+
+// Add type definitions for the database schema
+type education_level = 'high_school' | 'bachelors' | 'masters' | 'phd' | 'undergraduate' | 'others';
+
+interface ApplicantData {
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    country: string;
+    city: string;
+    education_level: education_level;
+    institution: string;
+    field_of_study: string;
+    graduation_year: number;
+    linkedin_url?: string;
+    github_url?: string;
+    portfolio_url?: string;
+}
+
+interface InternshipApplicationData {
+    applicant_id: string;
+    internship_type: 'data_analytics' | 'research_associate';
+    motivation_letter: string;
+    relevant_experience?: string;
+    technical_skills: string[];
+    availability_date: string;
+    preferred_duration: number;
+    resume_url: string;
+    how_did_you_hear?: string;
 }
 
 type ModalProps = {
@@ -154,23 +190,101 @@ type ModalProps = {
     );
 };
 
+const submitToSupabase = async (formData: FormData, resumeUrl: string, isResearchInternship: boolean, academicPublicationsUrl?: string): Promise<void> => {
+    // First, create the applicant
+    const { data: applicantData, error: applicantError } = await supabase
+        .from('applicants')
+        .insert({
+            full_name: formData.fullName,
+            email: formData.email,
+            phone: formData.phone,
+            field_of_study: formData.fieldOfStudy,
+            education_level: formData.currentLevel
+        })
+        .select()
+        .single();
+
+    if (applicantError) {
+        console.error('Error creating applicant:', applicantError);
+        if (applicantError.code === '23505') {
+            throw new Error('An application with this email already exists.');
+        }
+        throw new Error(applicantError.message);
+    }
+
+    // Create internship application
+    const { error: applicationError } = await supabase
+        .from('internship_applications')
+        .insert({
+            applicant_id: applicantData.id,
+            internship_type: isResearchInternship ? 'research_associate' : 'data_analytics',
+            status: 'pending',
+            motivation_letter: formData.coverLetter,
+            relevant_experience: isResearchInternship ? formData.researchExperience : null,
+            technical_skills: [],
+            resume_url: resumeUrl,
+            academic_publications_url: academicPublicationsUrl || null
+        });
+
+    if (applicationError) {
+        // If application creation fails, clean up the created applicant
+        await supabase
+            .from('applicants')
+            .delete()
+            .match({ id: applicantData.id });
+            
+        console.error('Error creating internship application:', applicationError);
+        throw new Error('Failed to submit internship application. Please try again.');
+    }
+};
+
 export default function InternshipForm() {
     const searchParams = useSearchParams()
     const internshipType = searchParams.get('type')
     const isResearchInternship = internshipType === 'research-associate'
+
+    // Add suggested skills based on internship type
+    const suggestedSkills = {
+        data_analytics: [
+            'Python',
+            'R',
+            'SQL',
+            'Excel',
+            'Tableau',
+            'Power BI',
+            'Machine Learning',
+            'Statistical Analysis',
+            'Data Visualization',
+            'ETL'
+        ],
+        research_associate: [
+            'Research Methodology',
+            'Academic Writing',
+            'Statistical Analysis',
+            'Literature Review',
+            'Data Collection',
+            'SPSS',
+            'Research Design',
+            'Python',
+            'R',
+            'LaTeX'
+        ]
+    };
+
+    const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
     const [formData, setFormData] = useState<FormData>({
         fullName: "",
         email: "",
         phone: "",
         fieldOfStudy: "",
-        currentLevel: "",
+        currentLevel: "undergraduate",
         cvResume: null,
         coverLetter: "",
-        experienceLevel: "",
+        experienceLevel: "beginner",
         researchExperience: "",
         researchInterests: "",
-        academicPublications: null
+        // academicPublications: null
     });
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -216,57 +330,84 @@ export default function InternshipForm() {
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setLoading(true)
+        e.preventDefault();
+        setLoading(true);
 
         try {
-            let resumeUrl; 
-            let coverLetterUrl; 
+            // Common required fields for both forms
+            if (!formData.fullName || !formData.email || !formData.phone ||
+                !formData.fieldOfStudy || !formData.currentLevel || 
+                !formData.experienceLevel || !formData.cvResume || 
+                !formData.coverLetter) {
+                throw new Error("Please fill in all required fields");
+            }
 
-            // Upload resume if provided and get its public URL
+            // Additional validation for research internship
+            if (isResearchInternship) {
+                if (!formData.researchExperience || !formData.researchInterests) {
+                    throw new Error("Please fill in all research-related fields");
+                }
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                throw new Error("Please enter a valid email address");
+            }
+
+            let resumeUrl = "";
+            let academicPublicationsUrl = "";
+
+            // Upload resume
             if (formData.cvResume) {
-                resumeUrl = await uploadFile(formData.cvResume, `resumes/${Date.now()}-${formData.cvResume.name}`);
+                try {
+                    resumeUrl = await uploadFile(
+                        formData.cvResume,
+                        `resumes/${Date.now()}-${formData.cvResume.name}`
+                    );
+                } catch (error) {
+                    console.error("Resume upload error:", error);
+                    throw new Error("Failed to upload resume. Please try again.");
+                }
             }
 
-            // Upload cover letter if provided and get its public URL
-            if (formData.academicPublications) {
-                coverLetterUrl = await uploadFile(formData.academicPublications, `cover-letters/${Date.now()}-${formData.academicPublications.name}`);
+            // Upload academic publications if provided (for research internships)
+            if (isResearchInternship && formData.academicPublications) {
+                try {
+                    academicPublicationsUrl = await uploadFile(
+                        formData.academicPublications,
+                        `publications/${Date.now()}-${formData.academicPublications.name}`
+                    );
+                } catch (error) {
+                    console.error("Publications upload error:", error);
+                    throw new Error("Failed to upload academic publications. Please try again.");
+                }
             }
 
-            // Insert application data into the database with URLs for uploaded files
-            const { error } = await supabase.from("interns").insert({
-                full_name: formData.fullName,
-                email: formData.email,
-                phone: formData.phone,
-                field_of_study: formData.fieldOfStudy,
-                current_level: formData.currentLevel,
-                experience_level: formData.experienceLevel,
-                research_experience: formData.researchExperience,
-                research_interests: formData.researchInterests,
-                resume: resumeUrl,
-                cover_letter: coverLetterUrl,
-                created_at: new Date().toISOString(),
-            });
+            // Submit to Supabase
+            await submitToSupabase(formData, resumeUrl, isResearchInternship, academicPublicationsUrl);
 
-            if (error) throw error;
-
+            // Show success modal
             setIsModalOpen(true);
+
+            // Reset form
             setFormData({
                 fullName: "",
                 email: "",
                 phone: "",
                 fieldOfStudy: "",
-                currentLevel: "",
+                currentLevel: "undergraduate",
                 cvResume: null,
                 coverLetter: "",
-                experienceLevel: "",
+                experienceLevel: "beginner",
                 researchExperience: "",
                 researchInterests: "",
                 academicPublications: null
             });
+
         } catch (error) {
-            console.error("Error submitting application:", error.message);
-            alert("There was an error submitting your application.");
+            console.error("Error submitting application:", error);
+            alert(error.message || "There was an error submitting your application. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -281,40 +422,40 @@ export default function InternshipForm() {
                     <div className="animate_top w-full rounded-xl bg-white p-8 shadow-lg dark:border dark:border-strokedark dark:bg-black xl:p-12">
                         <div className="mb-10 text-center">
                             <h2 className="text-3xl font-bold mb-3 text-gray-900 dark:text-white">
-                                {isResearchInternship ? 'Research Associate Internship' : 'Data Analytics & Science Internship'}
+                                {isResearchInternship ? 'Research Associate Internship' : 'Data Science and Analytics Internship'}
                             </h2>
                             <p className="text-gray-600 dark:text-gray-400">Complete the form below to apply</p>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-8">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                <div className="relative">
-                                    <input
-                                        type="text"
-                                        name="fullName"
-                                        value={formData.fullName}
-                                        onChange={handleInputChange}
-                                        placeholder=" "
-                                        className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
-                                        required
-                                    />
-                                    <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
-                                        Full Name
-                                    </label>
-                                </div>
-                                <div className="relative">
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleInputChange}
-                                        placeholder=" "
-                                        className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
-                                        required
-                                    />
-                                    <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
-                                        Email Address
-                                    </label>
-                                </div>
+                            {/* Basic Information */}
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    name="fullName"
+                                    value={formData.fullName}
+                                    onChange={handleInputChange}
+                                    placeholder=" "
+                                    className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                    required
+                                />
+                                <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                    Full Name
+                                </label>
+                            </div>
+
+                            <div className="relative">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    placeholder=" "
+                                    className="peer w-full border-b-2 border-gray-300 bg-transparent pt-4 pb-1.5 font-normal outline-none transition-all focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-400"
+                                    required
+                                />
+                                <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all duration-100 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 peer-focus:pl-0 peer-focus:text-sm peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
+                                    Email Address
+                                </label>
                             </div>
 
                             <div className="relative">
@@ -356,9 +497,12 @@ export default function InternshipForm() {
                                     required
                                 >
                                     <option value="" disabled></option>
+                                    <option value="high_school">High School</option>
                                     <option value="undergraduate">Undergraduate</option>
-                                    <option value="graduate">Graduate</option>
+                                    <option value="bachelors">Bachelor's Degree</option>
+                                    <option value="masters">Master's Degree</option>
                                     <option value="phd">PhD</option>
+                                    <option value="others">Others</option>
                                 </select>
                                 <label className="pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-gray-800 opacity-75 transition-all peer-focus:text-blue-600 dark:text-gray-200 dark:peer-focus:text-blue-400">
                                     Current Level of Study
@@ -430,7 +574,7 @@ export default function InternshipForm() {
 
                             {/* Research-specific fields */}
                             {isResearchInternship && (
-                                <div className="space-y-8">
+                                <>
                                     <div className="relative">
                                         <textarea
                                             name="researchExperience"
@@ -490,14 +634,14 @@ export default function InternshipForm() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </>
                             )}
 
                             <div className="pt-4">
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full bg-primary text-white py-4 rounded-xl font-medium text-lg shadow-lg  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-blue-600 disabled:hover:to-purple-600"
+                                    className="w-full bg-primary text-white py-4 rounded-xl font-medium text-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {loading ? (
                                         <div className="flex items-center justify-center">
