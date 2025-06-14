@@ -29,30 +29,30 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed left-0 top-0 z-99999 w-full ${
+      className={`fixed left-0 top-0 z-50 w-full ${
         stickyMenu
           ? "bg-white shadow transition duration-100 dark:bg-black"
-          : ""
+          : "bg-white/80 backdrop-blur-sm dark:bg-black/80"
       }`}
     >
       <div className="relative mx-auto max-w-c-1390 items-center justify-between px-4 md:px-8 xl:flex 2xl:px-0">
-        <div className="flex w-full items-center justify-between xl:w-1/4">
-        <a href="/">
+        <div className="flex w-full items-center justify-between py-4 xl:w-1/4 xl:py-0">
+          <a href="/">
             <Image
               src="/images/logo/logo.png"
               alt="logo"
               width={70.03}
               height={30}
-              style={{width:'70%'}}
-              className="hidden dark:block py-2"
+              style={{width:'70%', maxWidth: '200px'}}
+              className="hidden dark:block"
             />
             <Image
               src="/images/logo/logo.png"
               alt="logo"
               width={70.03}
               height={30}
-              style={{width:'70%'}}
-              className="w-full dark:hidden py-2"
+              style={{width:'70%', maxWidth: '200px'}}
+              className="w-full dark:hidden"
             />
           </a>
 
@@ -99,9 +99,9 @@ const Header = () => {
 
         {/* Nav Menu Start   */}
         <div
-          className={`invisible h-0 w-full items-center justify-between xl:visible xl:flex xl:h-auto xl:w-full ${
+          className={`invisible absolute left-0 right-0 top-full h-0 w-full items-center justify-between bg-white dark:bg-blacksection xl:visible xl:static xl:flex xl:h-auto xl:w-full xl:bg-transparent xl:dark:bg-transparent ${
             navigationOpen &&
-            "navbar !visible mt-4 h-auto max-h-[400px] rounded-md bg-white p-7.5 shadow-solid-5 dark:bg-blacksection xl:h-auto xl:p-0 xl:shadow-none xl:dark:bg-transparent"
+            "!visible mt-0 h-auto max-h-[400px] overflow-y-auto p-7.5 shadow-solid-5 xl:h-auto xl:p-0 xl:shadow-none"
           }`}
         >
           <nav>

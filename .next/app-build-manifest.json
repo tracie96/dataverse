@@ -27,10 +27,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(site)/internship-form/page.js"
     ],
-    "/not-found": [
+    "/(site)/about/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
+      "static/chunks/app/(site)/about/page.js"
     ]
   }
 }

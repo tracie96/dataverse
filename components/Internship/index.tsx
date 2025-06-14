@@ -186,13 +186,13 @@ const curriculumData = [
 // --- Functional Component ---
 const CurriculumPage = () => {
   return (
-    <div className="min-h-screen py-10">
+    <div className="min-h-screen pt-24 md:pt-28 lg:pt-32">
     <div className="container mx-auto px-4">
       {/* Internship Program Header Section */}
       <div className="mx-auto rounded-lg bg-gradient-to-t from-[#a0c8f2] to-[#F8F9FF] dark:bg-blacksection dark:bg-gradient-to-t dark:from-transparent dark:to-transparent dark:stroke-strokedark">
         <div className="flex flex-wrap gap-8 md:flex-nowrap md:justify-between md:gap-0">
           <div className="animate_left md:w-[70%] lg:w-1/2">
-            <h2 className="mb-4 w-11/12 text-3xl font-bold text-black text-left dark:text-white xl:text-sectiontitle4 pt-6 px-8">
+            <h2 className="mb-4 w-11/12 text-3xl font-bold text-black text-left dark:text-white xl:text-sectiontitle4 pt-6 px-8 mt-6">
               Internship Program
             </h2>
             <div className="px-8">
@@ -200,20 +200,7 @@ const CurriculumPage = () => {
               Our transformative internship program is designed to help you unlock your full potential. You'll gain invaluable hands-on experience, benefit from dedicated mentorship, and develop the critical skills needed for career excellence. Seize this chance to build a strong foundation for your future.
               </p>
               {/* Use a more semantic button if it triggers an action, Link if it navigates */}
-              <Link
-                href="/internship-form"
-                className="inline-flex rounded-full bg-black px-6 py-3 mt-6 font-medium text-white hover:opacity-90 dark:bg-white dark:text-black"
-                style={{ float: 'left' }} // Consider moving inline styles to Tailwind classes
-              >
-                Open {/* This implies the form link might not be active, consider conditional rendering */}
-                <Image
-                  width={20}
-                  height={20}
-                  src="/images/icon/icon-arrow-light.svg"
-                  alt="Arrow"
-                  className="hidden dark:block"
-                />
-              </Link>
+         
             </div>
           </div>
 
@@ -230,7 +217,7 @@ const CurriculumPage = () => {
       </div>
 
       <div className="py-4 sm:py-10">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto">
           {/* Programs Section */}
         
 
@@ -249,27 +236,27 @@ const CurriculumPage = () => {
                     </div>
                     <span className="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-900/30 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10">3 Months</span>
                   </div>
-                  <h3 className="mt-6 text-2xl font-semibold leading-8 tracking-tight text-gray-900 dark:text-white">Data Analytics & Science Internship</h3>
-                  <p className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">A comprehensive program exposing interns to real-world data analytics across multiple domains.</p>
+                  <h3 className="mt-6 text-2xl font-semibold leading-8 tracking-tight text-gray-900 dark:text-white text-left">Data Analytics & Science Internship</h3>
+                  <p className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300 text-left">A comprehensive program exposing interns to real-world data analytics across multiple domains.</p>
                   
                   <div className="mt-8 space-y-6">
                     <div>
-                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">Key Focus Areas</h4>
+                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white text-left">Key Focus Areas</h4>
                       <ul className="mt-4 grid grid-cols-1 gap-3">
                         {['Research Analytics', 'Healthcare Analytics', 'Finance Analytics', 'Trade Analytics'].map((area) => (
                           <li key={area} className="flex items-center gap-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
-                            <svg className="h-1.5 w-1.5 flex-none fill-blue-600 dark:fill-blue-400" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
+                            <svg className="h-1.5 w-1.5 flex-none fill-primary dark:fill-blue-400" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
                             {area}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">Required Skills</h4>
+                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white text-left">Required Skills</h4>
                       <ul className="mt-4 grid grid-cols-1 gap-3">
                         {['Excel & Power BI/Tableau', 'SPSS', 'Python for Data Analysis', 'Machine Learning basics'].map((skill) => (
                           <li key={skill} className="flex items-center gap-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
-                            <svg className="h-1.5 w-1.5 flex-none fill-blue-600 dark:fill-blue-400" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
+                            <svg className="h-1.5 w-1.5 flex-none fill-primary dark:fill-blue-400" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
                             {skill}
                           </li>
                         ))}
@@ -280,7 +267,7 @@ const CurriculumPage = () => {
                   <div className="mt-8 flex items-center gap-4">
                     <Link
                       href="/internship-form?type=data-analytics"
-                      className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-300"
+                      className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-300"
                     >
                       Apply Now
                       <span className="ml-2 text-blue-200" aria-hidden="true">→</span>
@@ -303,12 +290,12 @@ const CurriculumPage = () => {
                     </div>
                     <span className="inline-flex items-center rounded-md bg-purple-50 dark:bg-purple-900/30 px-2 py-1 text-xs font-medium text-purple-700 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10">2 Months</span>
                   </div>
-                  <h3 className="mt-6 text-2xl font-semibold leading-8 tracking-tight text-gray-900 dark:text-white">Research Associate Internship</h3>
-                  <p className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">A structured program designed to equip participants with essential skills in professional research and analysis.</p>
+                  <h3 className="mt-6 text-2xl font-semibold leading-8 tracking-tight text-gray-900 dark:text-white text-left">Research Associate Internship</h3>
+                  <p className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300 text-left">A structured program designed to equip participants with essential skills in professional research and analysis.</p>
                   
                   <div className="mt-8 space-y-6">
                     <div>
-                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">Research Areas</h4>
+                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white text-left">Research Areas</h4>
                       <ul className="mt-4 grid grid-cols-1 gap-3">
                         {['Public Health Research', 'Education Research', 'Business Analytics', 'Development Sectors'].map((area) => (
                           <li key={area} className="flex items-center gap-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
@@ -319,7 +306,7 @@ const CurriculumPage = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">Program Benefits</h4>
+                      <h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white text-left">Program Benefits</h4>
                       <ul className="mt-4 grid grid-cols-1 gap-3">
                         {['Hands-on Research Experience', 'Mentorship & Training', 'Co-authoring Opportunities', 'Professional Certification'].map((benefit) => (
                           <li key={benefit} className="flex items-center gap-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
@@ -346,8 +333,8 @@ const CurriculumPage = () => {
           </div>
 
           {/* Benefits Section */}
-          <div className="mx-auto max-w-2xl text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Program Benefits</h2>
+          <div className="mx-auto max-w-2xl text-left mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl ">Program Benefits</h2>
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
               Unlock valuable opportunities and resources to accelerate your career growth.
             </p>
