@@ -272,6 +272,7 @@ export default function InternshipForm() {
     };
 
     const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+    const [selectedFileName, setSelectedFileName] = useState<string>("");
 
     const [formData, setFormData] = useState<FormData>({
         fullName: "",
@@ -303,11 +304,12 @@ export default function InternshipForm() {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             // Validate file type
-            if (![".pdf", ".doc", ".docx", ".txt"].some(ext => file.name.endsWith(ext))) {
+            if (![".pdf", ".doc", ".docx", ".txt"].some(ext => file.name.toLowerCase().endsWith(ext))) {
                 alert("Invalid file type. Please upload a .pdf, .doc, .docx, or .txt file.");
                 return;
             }
             setFormData({ ...formData, [name]: file });
+            setSelectedFileName(file.name);
         }
     };
 
@@ -387,10 +389,7 @@ export default function InternshipForm() {
             // Submit to Supabase
             await submitToSupabase(formData, resumeUrl, isResearchInternship, academicPublicationsUrl);
 
-            // Show success modal
-            setIsModalOpen(true);
-
-            // Reset form
+            // Reset form and filename
             setFormData({
                 fullName: "",
                 email: "",
@@ -402,8 +401,9 @@ export default function InternshipForm() {
                 experienceLevel: "beginner",
                 researchExperience: "",
                 researchInterests: "",
-                academicPublications: null
             });
+            setSelectedFileName("");
+            setIsModalOpen(true);
 
         } catch (error) {
             console.error("Error submitting application:", error);
@@ -426,7 +426,12 @@ export default function InternshipForm() {
                             </h2>
                             <p className="text-gray-600 dark:text-gray-400">Complete the form below to apply</p>
                         </div>
-                        <form onSubmit={handleSubmit} className="space-y-8">
+                        <form 
+                            onSubmit={handleSubmit} 
+                            className="space-y-8"
+                            method="POST"
+                            action=""
+                        >
                             {/* Basic Information */}
                             <div className="relative">
                                 <input
@@ -532,27 +537,50 @@ export default function InternshipForm() {
                                 </label>
                                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-blue-500 transition-colors dark:border-gray-600 dark:hover:border-blue-400">
                                     <div className="space-y-1 text-center">
-                                        <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        <div className="flex text-sm text-gray-600 dark:text-gray-400">
-                                            <label htmlFor="cvResume" className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
-                                                <span>Upload a file</span>
-                                                <input
-                                                    id="cvResume"
-                                                    name="cvResume"
-                                                    type="file"
-                                                    accept=".pdf,.doc,.docx"
-                                                    onChange={handleFileChange}
-                                                    className="sr-only"
-                                                    required
-                                                />
-                                            </label>
-                                            <p className="pl-1">or drag and drop</p>
-                                        </div>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                                            PDF, DOC up to 10MB
-                                        </p>
+                                        {selectedFileName ? (
+                                            <div className="flex flex-col items-center">
+                                                <svg className="mx-auto h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                                                    {selectedFileName}
+                                                </p>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setFormData({ ...formData, cvResume: null });
+                                                        setSelectedFileName("");
+                                                    }}
+                                                    className="mt-2 text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                                                >
+                                                    Remove file
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <div className="flex text-sm text-gray-600 dark:text-gray-400">
+                                                    <label htmlFor="cvResume" className="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                                                        <span>Upload a file</span>
+                                                        <input
+                                                            id="cvResume"
+                                                            name="cvResume"
+                                                            type="file"
+                                                            accept=".pdf,.doc,.docx"
+                                                            onChange={handleFileChange}
+                                                            className="sr-only"
+                                                            required
+                                                        />
+                                                    </label>
+                                                    <p className="pl-1">or drag and drop</p>
+                                                </div>
+                                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                    PDF, DOC up to 10MB
+                                                </p>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </div>
