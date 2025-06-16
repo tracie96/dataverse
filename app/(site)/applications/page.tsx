@@ -5,6 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
+// Create a Supabase client
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL as string,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
@@ -34,50 +35,10 @@ export default function ApplicationsTable() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedLetter, setSelectedLetter] = useState<string>("");
     const [selectedApplicant, setSelectedApplicant] = useState<string>("");
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [loginError, setLoginError] = useState<string>("");
-    const [credentials, setCredentials] = useState({
-        email: "",
-        password: ""
-    });
 
     useEffect(() => {
-        const authStatus = localStorage.getItem('isAuthenticated');
-        if (authStatus === 'true') {
-            setIsAuthenticated(true);
-        }
+        fetchApplications();
     }, []);
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            fetchApplications();
-        }
-    }, [isAuthenticated]);
-
-    const handleLogin = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (credentials.email === "admin" && credentials.password === "dataverse_root") {
-            setIsAuthenticated(true);
-            localStorage.setItem('isAuthenticated', 'true');
-            setLoginError("");
-        } else {
-            setLoginError("Invalid credentials");
-        }
-    };
-
-    const handleLogout = () => {
-        setIsAuthenticated(false);
-        localStorage.removeItem('isAuthenticated');
-        setCredentials({ email: "", password: "" });
-    };
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setCredentials(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
 
     const fetchApplications = async () => {
         try {
@@ -119,65 +80,6 @@ export default function ApplicationsTable() {
         setIsModalOpen(true);
     };
 
-    if (!isAuthenticated) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8">
-                    <div>
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                            Admin Access Required
-                        </h2>
-                    </div>
-                    <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-                        <div className="rounded-md shadow-sm -space-y-px">
-                            <div>
-                                <label htmlFor="email" className="sr-only">Email</label>
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="text"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                    placeholder="Email"
-                                    value={credentials.email}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="password" className="sr-only">Password</label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                    placeholder="Password"
-                                    value={credentials.password}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                        </div>
-
-                        {loginError && (
-                            <div className="text-red-500 text-sm text-center">
-                                {loginError}
-                            </div>
-                        )}
-
-                        <div>
-                            <button
-                                type="submit"
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                            >
-                                Sign in
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        );
-    }
-
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
@@ -199,9 +101,7 @@ export default function ApplicationsTable() {
 
     return (
         <>
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-28 ">
-               
-                
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-28">
                 <div className="overflow-x-auto bg-white rounded-lg shadow-lg overflow-y-auto relative dark:bg-gray-800">
                     <table className="border-collapse table-auto w-full whitespace-no-wrap bg-white dark:bg-gray-800 table-striped relative">
                         <thead>
