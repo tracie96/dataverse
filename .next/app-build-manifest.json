@@ -6,15 +6,16 @@
       "static/css/app/(site)/layout.css",
       "static/chunks/app/(site)/layout.js"
     ],
-    "/(site)/internship-form/page": [
+    "/(site)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(site)/internship-form/page.js"
+      "static/css/app/(site)/page.css",
+      "static/chunks/app/(site)/page.js"
     ],
-    "/not-found": [
+    "/(site)/applications/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
+      "static/chunks/app/(site)/applications/page.js"
     ]
   }
 }

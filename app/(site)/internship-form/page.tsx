@@ -315,20 +315,40 @@ export default function InternshipForm() {
 
   
     const uploadFile = async (file: File, path: string) => {
-        const { data, error } = await supabase.storage.from("documents").upload(path, file);
-        if (error) {
-            console.error("File upload error:", error);
-            throw error;
-        }
+        try {
+            console.log('Starting file upload to:', path);
+            console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+            
+            const { data, error } = await supabase.storage
+                .from("documents")
+                .upload(path, file, {
+                    cacheControl: '3600',
+                    upsert: false
+                });
 
-        // Get public URL for the uploaded file
-        const publicURL = supabase.storage.from("documents").getPublicUrl(data.path);
-        if (!publicURL) {
-            console.error("Error getting public URL:", path);
-            throw publicURL; 
-        }
+            if (error) {
+                console.error("File upload error:", error);
+                throw error;
+            }
 
-        return publicURL.data.publicUrl;
+            console.log('File uploaded successfully:', data);
+
+            // Get public URL for the uploaded file
+            const publicURL = supabase.storage
+                .from("documents")
+                .getPublicUrl(data.path);
+
+            if (!publicURL) {
+                console.error("Error getting public URL:", path);
+                throw new Error("Failed to get public URL for uploaded file");
+            }
+
+            console.log('Generated public URL:', publicURL);
+            return publicURL.data.publicUrl;
+        } catch (error) {
+            console.error('Upload error details:', error);
+            throw new Error(`File upload failed: ${error.message}`);
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
