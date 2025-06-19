@@ -265,13 +265,12 @@ const CurriculumPage = () => {
                   </div>
 
                   <div className="mt-8 flex items-center gap-4">
-                    <Link
-                      href="/internship-form?type=data-analytics"
-                      className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-300"
+                    <button
+                      disabled
+                      className="rounded-lg bg-gray-400 px-4 py-2.5 text-sm font-semibold text-white shadow-sm cursor-not-allowed"
                     >
-                      Apply Now
-                      <span className="ml-2 text-blue-200" aria-hidden="true">→</span>
-                    </Link>
+                      Closed
+                    </button>
                   </div>
                 </div>
               </div>
@@ -319,13 +318,12 @@ const CurriculumPage = () => {
                   </div>
 
                   <div className="mt-8 flex items-center gap-4">
-                    <Link
-                      href="/internship-form?type=research-associate"
-                      className="rounded-lg bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition-all duration-300"
+                    <button
+                      disabled
+                      className="rounded-lg bg-gray-400 px-4 py-2.5 text-sm font-semibold text-white shadow-sm cursor-not-allowed"
                     >
-                      Apply Now
-                      <span className="ml-2 text-purple-200" aria-hidden="true">→</span>
-                    </Link>
+                      Closed
+                    </button>
                   </div>
                 </div>
               </div>
