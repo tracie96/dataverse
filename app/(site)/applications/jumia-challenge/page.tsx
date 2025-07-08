@@ -3,6 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { createClient } from "@supabase/supabase-js";
+
+// Create a Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+);
 
 const JumiaChallengePage = () => {
   const router = useRouter();
@@ -19,7 +26,39 @@ const JumiaChallengePage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    router.push("/applications/jumia-challenge/success");
+    
+    try {
+      // Convert previousParticipation to boolean
+      const previousParticipationBool = formData.previousParticipation === "yes";
+
+      // Insert data into Supabase
+      const { data, error } = await supabase
+        .from("challenge")
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            location: formData.location,
+            gender: formData.gender,
+            previousparticipation: previousParticipationBool,
+            skilllevel: formData.skillLevel,
+            expectations: formData.expectations,
+            referralsource: formData.referralSource,
+          },
+        ])
+        .select();
+
+      if (error) {
+        console.error("Error submitting registration:", error);
+        throw error;
+      }
+
+      // Redirect to success page
+      router.push("/applications/jumia-challenge/success");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Failed to submit registration. Please try again.");
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

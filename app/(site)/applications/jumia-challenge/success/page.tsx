@@ -4,9 +4,9 @@ import Link from "next/link";
 
 const SuccessPage = () => {
   return (
-    <div className="relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px]">
+    <div className="relative z-10 overflow-hidden pb-16  md:pb-[120px] xl:pb-[160px] 2xl:pb-[200px]">
       
-      <div className="container">
+      <div className="overflow-hidden pt-30 md:pt-30">
     
 
         <div className="flex flex-wrap -mx-4">

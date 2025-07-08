@@ -47,6 +47,21 @@ CREATE TABLE internship_applications (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Table for challenge registrations
+CREATE TABLE challenge_registrations (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    gender VARCHAR(50) NOT NULL,
+    previous_participation BOOLEAN NOT NULL,
+    skill_level VARCHAR(50) NOT NULL,
+    expectations TEXT NOT NULL,
+    referral_source VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Table for application reviews
 CREATE TABLE application_reviews (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

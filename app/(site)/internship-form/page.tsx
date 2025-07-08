@@ -33,35 +33,8 @@ interface FormData {
 }
 
 // Add type definitions for the database schema
-type education_level = 'high_school' | 'bachelors' | 'masters' | 'phd' | 'undergraduate' | 'others';
 
-interface ApplicantData {
-    first_name: string;
-    last_name: string;
-    email: string;
-    phone: string;
-    country: string;
-    city: string;
-    education_level: education_level;
-    institution: string;
-    field_of_study: string;
-    graduation_year: number;
-    linkedin_url?: string;
-    github_url?: string;
-    portfolio_url?: string;
-}
 
-interface InternshipApplicationData {
-    applicant_id: string;
-    internship_type: 'data_analytics' | 'research_associate';
-    motivation_letter: string;
-    relevant_experience?: string;
-    technical_skills: string[];
-    availability_date: string;
-    preferred_duration: number;
-    resume_url: string;
-    how_did_you_hear?: string;
-}
 
 type ModalProps = {
 	isOpen: boolean
