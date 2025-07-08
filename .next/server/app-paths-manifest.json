@@ -1,5 +1,5 @@
 {
-  "/(site)/page": "app/(site)/page.js",
   "/(site)/applications/jumia-challenge/page": "app/(site)/applications/jumia-challenge/page.js",
+  "/(site)/page": "app/(site)/page.js",
   "/(site)/research/page": "app/(site)/research/page.js"
 }
