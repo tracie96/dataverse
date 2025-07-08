@@ -25,14 +25,18 @@ const menuData: Menu[] = [
     newTab: false,
     path: "/blog",
   },
-
+  {
+    id: 3.1,
+    title: "Jumia Challenge",
+    newTab: false,
+    path: "/applications/jumia-challenge",
+  },
   {
     id: 4,
     title: "Support",
     newTab: false,
     path: "/support",
   },
-
   {
     id: 5,
     title: "Research",
