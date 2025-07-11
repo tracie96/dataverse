@@ -118,7 +118,7 @@ const ChallengeSubmissionPage = () => {
   };
 
   return (
-    <div className="relative z-10 overflow-hidden pb-16 pt-8 md:pb-[120px] xl:pb-[160px] 2xl:pb-[200px]">
+    <div className="relative z-10  pt-30 overflow-hidden pb-16  md:pb-[120px] xl:pb-[160px] 2xl:pb-[200px]">
       <div className="mx-auto max-w-c-1390 px-4 md:px-8 2xl:px-0">
         <div className="flex flex-col items-center">
           <div className="w-full max-w-[800px]">
