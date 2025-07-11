@@ -73,6 +73,39 @@ CREATE TABLE application_reviews (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Table for challenge submissions
+CREATE TABLE challenge_submissions (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    registration_id UUID REFERENCES challenge_registrations(id),
+    -- Personal Details
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(50) NOT NULL,
+    country_of_residence VARCHAR(255) NOT NULL,
+    
+    -- Social Media Verification
+    social_media_verified BOOLEAN NOT NULL,
+    
+    -- Project Details
+    tools_used TEXT[] NOT NULL,
+    other_tools TEXT,
+    classification_model_built BOOLEAN NOT NULL,
+    models_used TEXT,
+    performance_metrics TEXT[] NOT NULL,
+    other_metrics TEXT,
+    
+    -- Insights & Strategy
+    seller_behavior_insight TEXT NOT NULL,
+    suspended_sellers_rationale TEXT NOT NULL,
+    delivery_hypothesis_result VARCHAR(50),
+    
+    -- File Upload
+    submission_file_url TEXT NOT NULL,
+    
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Function to update timestamps
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
@@ -98,16 +131,29 @@ CREATE TRIGGER update_reviews_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
+-- Add trigger for updating timestamps
+CREATE TRIGGER update_challenge_submissions_updated_at
+    BEFORE UPDATE ON challenge_submissions
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
 -- Indexes for better query performance
 CREATE INDEX idx_applications_status ON internship_applications(status);
 CREATE INDEX idx_applications_type ON internship_applications(internship_type);
 CREATE INDEX idx_applications_created_at ON internship_applications(created_at);
 CREATE INDEX idx_applicants_email ON applicants(email);
 
+-- Add indexes for better performance
+CREATE INDEX idx_challenge_submissions_email ON challenge_submissions(email);
+CREATE INDEX idx_challenge_submissions_registration ON challenge_submissions(registration_id);
+
 -- Row Level Security (RLS) policies
 ALTER TABLE applicants ENABLE ROW LEVEL SECURITY;
 ALTER TABLE internship_applications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE application_reviews ENABLE ROW LEVEL SECURITY;
+
+-- Enable RLS
+ALTER TABLE challenge_submissions ENABLE ROW LEVEL SECURITY;
 
 -- Policies for applicants table
 CREATE POLICY "Applicants are viewable by authenticated users" ON applicants
@@ -141,3 +187,21 @@ CREATE POLICY "Reviews can only be created by authenticated users" ON applicatio
     FOR INSERT
     TO authenticated
     WITH CHECK (true); 
+
+-- Update RLS policies for challenge_submissions
+DROP POLICY IF EXISTS "Challenge submissions are viewable by authenticated users" ON challenge_submissions;
+DROP POLICY IF EXISTS "Challenge submissions can be created by anyone" ON challenge_submissions;
+
+-- Enable RLS
+ALTER TABLE challenge_submissions ENABLE ROW LEVEL SECURITY;
+
+-- Add more permissive policies
+CREATE POLICY "Enable read access for all users" ON challenge_submissions
+    FOR SELECT USING (true);
+
+CREATE POLICY "Enable insert access for all users" ON challenge_submissions
+    FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Enable update for users based on email" ON challenge_submissions
+    FOR UPDATE USING (auth.jwt() ->> 'email' = email)
+    WITH CHECK (auth.jwt() ->> 'email' = email); 

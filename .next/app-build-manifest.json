@@ -1,11 +1,5 @@
 {
   "pages": {
-    "/(site)/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/(site)/page.css",
-      "static/chunks/app/(site)/page.js"
-    ],
     "/(site)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -17,15 +11,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(site)/applications/jumia-challenge/page.js"
     ],
-    "/(site)/research/page": [
+    "/(site)/applications/jumia-challenge/submit/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(site)/research/page.js"
-    ],
-    "/(site)/internship/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(site)/internship/page.js"
+      "static/chunks/app/(site)/applications/jumia-challenge/submit/page.js"
     ],
     "/(site)/applications/jumia-challenge/success/page": [
       "static/chunks/webpack.js",
