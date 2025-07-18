@@ -286,11 +286,12 @@ const About = () => {
               {/* Profile Section */}
               <div className="lg:col-span-1 bg-primary p-6 text-center text-white">
                 <div className="w-24 h-24 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
-                  <User className="h-12 w-12 text-white" />
+                  <Image src="/images/brand/alex.jpg" alt="Valentine Onyemeziri Chinazom" width={96} height={96} className="rounded-full" />
+
                 </div>
                 <h3 className="text-itemtitle2 font-bold mb-2">Valentine Onyemeziri Chinazom</h3>
                 <p className="text-white/90 text-regular font-medium">Research Lead</p>
-                <p className="text-white/80 text-sectiontitle mt-1">Dataverse Africa Research Institute</p>
+                <p className="text-white/80 text-sectiontitle mt-1">DataVerse Africa Research Institute</p>
               </div>
               
               {/* Content Section */}
@@ -361,7 +362,8 @@ const About = () => {
               {/* Profile Section */}
               <div className="lg:col-span-1 bg-titlebg p-6 text-center text-white">
                 <div className="w-24 h-24 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center">
-                  <User className="h-12 w-12 text-white" />
+                  <Image src="/images/brand/chidinma.jpeg" alt="Chidinma Helen Okorie" width={96} height={96} className="rounded-full" />
+
                 </div>
                 <h3 className="text-itemtitle2 font-bold mb-2">Chidinma Helen Okorie</h3>
                 <p className="text-white/90 text-regular font-medium">Strategy Associate</p>
