@@ -157,7 +157,7 @@ const projects = [
     description: "In this agri-tech initiative, we are using machine learning models and image datasets to build a real-time disease detection and early warning system for crops like cassava.",
     impact: "Enhancing food security by reducing losses, enabling proactive response, and democratizing agri-intelligence for smallholder farmers across Africa.",
     features: [
-      "1,000+ leaf image dataset (healthy & infected)",
+      "Leaf image dataset (healthy & infected)",
       "CNN-based classification models", 
       "GIS integration for field-level disease mapping",
       "Real-time alerts and decision support for farmers"
@@ -170,7 +170,7 @@ const projects = [
     description: "This strategic project aims to build a centralized, user-friendly repository of Africa-centric datasets spanning health, agriculture, education, energy, and governance.",
     impact: "Laying the foundation for open data-driven research and innovation, enabling evidence-based policymaking, and promoting equitable access to quality African data.",
     features: [
-      "Architecture inspired by Harvard Dataverse, customized for African needs",
+      "Architecture inspired by Harvard DataVerse, customized for African needs",
       "FAIR-compliant dataset curation",
       "Data-sharing partnerships with local institutions",
       "Integration with continental initiatives"
@@ -306,7 +306,7 @@ const About = () => {
                       Valentine is a dynamic researcher and data strategist with a passion for harnessing 
                       data science to address Africa's most pressing challenges. With expertise in statistical 
                       research, data analytics, and project leadership, he drives innovation-led research at 
-                      Dataverse Africa, focusing on digital transformation, global health, and sustainable development.
+                      DataVerse Africa, focusing on digital transformation, global health, and sustainable development.
                     </p>
                   </div>
                   
@@ -487,7 +487,7 @@ const Contact = () => {
           </h2>
           <p className="text-metatitle3 text-waterloo dark:text-manatee max-w-3xl mx-auto">
             Whether you're a policymaker, academic, startup, or development partner, 
-            Dataverse Africa Research Institute is your trusted partner for research, 
+            DataVerse Africa Research Institute is your trusted partner for research, 
             innovation, and insight.
           </p>
         </div>
@@ -537,8 +537,8 @@ const Contact = () => {
                 
                 <div className="text-sectiontitle text-waterloo dark:text-manatee">
                   <p>Research Lead: Valentine Onyemeziri Chinazom</p>
-                  <p>Email: valentine.onyemeziri@dataverseafrica.org</p>
-                  <p className="mt-1">Dataverse Africa Research Institute</p>
+                  <p>Email: valentine.onyemeziri@DataVerseafrica.org</p>
+                  <p className="mt-1">DataVerse Africa Research Institute</p>
                 </div>
               </div>
             </div>
