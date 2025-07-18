@@ -149,7 +149,7 @@ const projects = [
     title: "Business Analytics Adoption Among African SMEs",
     description: "This groundbreaking project explores how small and medium enterprises across Africa are leveraging business analytics tools to transform operations and gain a competitive edge.",
     impact: "Offers actionable insights for African governments, business development agencies, and digital service providers to support SME digital transformation.",
-    image: "/images/brand/brand-dark-01.svg",
+    image: "/images/hero/sme.jpg",
     tags: ["Business Analytics", "SME Development", "Digital Transformation"]
   },
   {
@@ -162,7 +162,7 @@ const projects = [
       "GIS integration for field-level disease mapping",
       "Real-time alerts and decision support for farmers"
     ],
-    image: "/images/brand/brand-dark-02.svg",
+    image: "/images/hero/agriculture.jpg",
     tags: ["Machine Learning", "Agriculture", "Food Security", "GIS"]
   },
   {
@@ -175,7 +175,7 @@ const projects = [
       "Data-sharing partnerships with local institutions",
       "Integration with continental initiatives"
     ],
-    image: "/images/brand/brand-dark-03.svg",
+    image: "/images/hero/databank.png",
     tags: ["Open Data", "Data Governance", "Policy", "Research Infrastructure"]
   }
 ];
