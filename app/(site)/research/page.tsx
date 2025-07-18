@@ -29,7 +29,7 @@ const Hero = () => {
       <div className="relative z-10 max-w-c-1390 mx-auto px-4 text-center text-white">
         <div className="max-w-4xl mx-auto space-y-8">
           <h1 className="text-hero md:text-sectiontitle3 font-bold leading-tight">
-            Dataverse Africa Research Institute
+            DataVerse Africa Research Institute
             <span className="block text-titlebg text-sectiontitle4 md:text-sectiontitle2 font-medium mt-4">
               (DARI)
             </span>
