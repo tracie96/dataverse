@@ -1,4 +1,4 @@
 {
-  "/(site)/applications/jumia-challenge/submit/page": "app/(site)/applications/jumia-challenge/submit/page.js",
-  "/(site)/applications/jumia-challenge/success/page": "app/(site)/applications/jumia-challenge/success/page.js"
+  "/(site)/research/page": "app/(site)/research/page.js",
+  "/(site)/page": "app/(site)/page.js"
 }

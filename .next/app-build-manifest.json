@@ -6,20 +6,16 @@
       "static/css/app/(site)/layout.css",
       "static/chunks/app/(site)/layout.js"
     ],
-    "/(site)/applications/jumia-challenge/page": [
+    "/(site)/research/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(site)/applications/jumia-challenge/page.js"
+      "static/chunks/app/(site)/research/page.js"
     ],
-    "/(site)/applications/jumia-challenge/submit/page": [
+    "/(site)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(site)/applications/jumia-challenge/submit/page.js"
-    ],
-    "/(site)/applications/jumia-challenge/success/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(site)/applications/jumia-challenge/success/page.js"
+      "static/css/app/(site)/page.css",
+      "static/chunks/app/(site)/page.js"
     ]
   }
 }
