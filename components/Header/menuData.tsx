@@ -18,18 +18,20 @@ const menuData: Menu[] = [
     title: "Internship",
     newTab: false,
     path: "/internship",
+    submenu: [
+      {
+        id: 3.1,
+        title: "Cohort 3",
+        newTab: false,
+        path: "/internship-cohort3",
+      },
+    ],
   },
   {
     id: 2.1,
     title: "Event",
     newTab: false,
     path: "/blog",
-  },
-  {
-    id: 3.1,
-    title: "Jumia Challenge",
-    newTab: false,
-    path: "/applications/jumia-challenge",
   },
   {
     id: 4,

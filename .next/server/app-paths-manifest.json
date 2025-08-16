@@ -1,3 +1,4 @@
 {
-  "/(site)/research/page": "app/(site)/research/page.js"
+  "/(site)/internship-cohort3/apply/page": "app/(site)/internship-cohort3/apply/page.js",
+  "/(site)/internship-cohort3/page": "app/(site)/internship-cohort3/page.js"
 }
