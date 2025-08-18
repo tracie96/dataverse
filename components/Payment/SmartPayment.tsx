@@ -34,6 +34,15 @@ const SmartPayment = ({
     onError(error);
   };
 
+  // Wrapper functions to match child component signatures
+  const handleBankTransferSuccess = (transferId: string) => {
+    onSuccess(transferId, 'bank-transfer');
+  };
+
+  const handleStripeSuccess = (paymentIntentId: string) => {
+    onSuccess(paymentIntentId, 'stripe');
+  };
+
   // Auto-detect based on country
   const isNigerian = countryInfo?.isNigeria;
 
@@ -72,8 +81,7 @@ const SmartPayment = ({
       {/* Payment Method */}
       {isNigerian ? (
         <NigerianBankTransfer
-          amount={amount}
-          onSuccess={handleSuccess}
+          onSuccess={handleBankTransferSuccess}
           onError={handleError}
           userEmail={userEmail}
           userFullName={userFullName}
@@ -83,11 +91,8 @@ const SmartPayment = ({
         <StripePayment
           amount={amount}
           currency={currency}
-          onSuccess={handleSuccess}
+          onSuccess={handleStripeSuccess}
           onError={handleError}
-          userEmail={userEmail}
-          userFullName={userFullName}
-          userPhone={userPhone}
         />
       )}
     </div>

@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { User, Target, Award, Mail, Users, Lightbulb, Building, Search, BarChart3, FileText, GraduationCap, Database } from "lucide-react";
 
+// Force dynamic rendering to prevent SSR issues
+export const dynamic = 'force-dynamic';
+
 const ResearchPage = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">

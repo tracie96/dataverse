@@ -8,13 +8,12 @@ import { useSearchParams } from 'next/navigation'
 
 // Create a Supabase client
 const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+    process.env.NEXT_PUBLIC_SUPABASE_URL! as string,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY! as string
 );
 
 // Define the education level type
 type EducationLevel = 'high_school' | 'bachelors' | 'masters' | 'phd' | 'undergraduate' | 'others';
-type InternshipType = 'data_analytics' | 'research_associate';
 
 // Define the structure of the form data
 interface FormData {

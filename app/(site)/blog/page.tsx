@@ -2,6 +2,9 @@ import BlogData from "@/components/Blog/blogData";
 import BlogItem from "@/components/Blog/BlogItem";
 import { Metadata } from "next";
 
+// Force dynamic rendering to prevent SSR issues
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Blog Page - Dataverse SaaS Boilerplate",
   description: "This is Blog page for Dataverse Pro",

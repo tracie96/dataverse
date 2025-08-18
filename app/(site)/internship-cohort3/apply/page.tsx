@@ -72,9 +72,11 @@ const ApplyPage = () => {
       setShowPaymentForm(true);
       
       setTimeout(() => {
-        const paymentSection = document.querySelector('[data-payment-section]');
-        if (paymentSection) {
-          paymentSection.scrollIntoView({ behavior: 'smooth' });
+        if (typeof window !== 'undefined') {
+          const paymentSection = document.querySelector('[data-payment-section]');
+          if (paymentSection) {
+            paymentSection.scrollIntoView({ behavior: 'smooth' });
+          }
         }
       }, 100);
       
