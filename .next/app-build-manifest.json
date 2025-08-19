@@ -16,11 +16,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(site)/internship-cohort3/page.js"
-    ],
-    "/(site)/internship-cohort3/apply/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(site)/internship-cohort3/apply/page.js"
     ]
   }
 }

@@ -264,7 +264,7 @@ const CTA = () => {
           </div>
           
           <div className="mt-8 text-white/80 text-sm">
-            <p>Questions? Contact us at internship@DataVerseafrica.org</p>
+            <p>Questions? Contact us at info@dataverseafrica.org</p>
           </div>
         </div>
       </div>

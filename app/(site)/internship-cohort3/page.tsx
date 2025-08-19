@@ -167,11 +167,29 @@ const tracks = [
     description: "Master the fundamentals of data analysis and visualization",
     icon: BarChart3,
     color: "from-blue-500 to-blue-600",
+    bgColor: "from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20",
+    borderColor: "border-blue-200 dark:border-blue-700",
     specializations: [
-      "Healthcare Analytics",
-      "Financial Analytics", 
-      "Agricultural Analytics",
-      "Agronomics Intelligence"
+      {
+        name: "Healthcare",
+        projectTitle: "Telemedicine Uptake & Equity Dashboard",
+        description: "Analyze mobile health consultation data to uncover usage gaps across income levels, gender, and rural–urban divides. Build predictive dashboards that highlight underserved populations and recommend outreach strategies."
+      },
+      {
+        name: "Finance",
+        projectTitle: "Green Finance & Carbon Credit Analytics",
+        description: "Analyze loan disbursements for green products (solar panels, clean cookstoves, EVs) and estimate avoided CO₂ emissions. Build a dashboard that balances financial returns with environmental impact, helping lenders track both profitability and sustainability."
+      },
+      {
+        name: "Agriculture",
+        projectTitle: "Crop Price Volatility & Farmer Livelihood Index",
+        description: "Integrate regional crop price data, climate patterns, and transport costs to create a volatility index. Simulate farmer income shocks and recommend cooperative storage or price-stabilization strategies."
+      },
+      {
+        name: "Agronomics",
+        projectTitle: "Soil Health & Sustainable Yield Tracker",
+        description: "Use IoT soil sensor + satellite data to monitor nutrient depletion and crop yield trends. Build an analytics tool that shows the trade-off between short-term yield and long-term soil fertility."
+      }
     ]
   },
   {
@@ -179,10 +197,24 @@ const tracks = [
     description: "Dive deep into machine learning and artificial intelligence",
     icon: Brain,
     color: "from-purple-500 to-purple-600",
+    bgColor: "from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20",
+    borderColor: "border-purple-200 dark:border-purple-700",
     specializations: [
-      "Machine Learning",
-      "Deep Learning",
-      "Applications of LLM and Gen AI"
+      {
+        name: "Machine Learning",
+        projectTitle: "Dynamic Market Basket Recommender for Informal Trade",
+        description: "Model co-purchase patterns in street markets and small shops. Build a recommendation system that helps informal retailers know what items to stock together."
+      },
+      {
+        name: "Deep Learning",
+        projectTitle: "Satellite + Drone Hybrid Model for Crop Disease Early Warning",
+        description: "Train a deep learning model that combines satellite images with drone snapshots to detect early signs of crop stress/disease before widespread damage occurs."
+      },
+      {
+        name: "Gen AI Applications",
+        projectTitle: "Local Language AI Health Navigator",
+        description: "Create a GenAI assistant that interprets symptoms in African languages (e.g., Yoruba, Hausa, Swahili) and returns trusted health advice. It can also summarize clinic visit notes into patient-friendly instructions."
+      }
     ]
   }
 ];
@@ -201,37 +233,92 @@ const Tracks = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="space-y-12">
           {tracks.map((track, index) => (
             <div 
               key={index}
-              className="group hover:shadow-solid-7 transition-all duration-300 hover:-translate-y-2 bg-white dark:bg-blacksection border border-stroke dark:border-strokedark rounded-lg p-8"
+              className={`group bg-gradient-to-br ${track.bgColor} border ${track.borderColor} rounded-2xl p-8 hover:shadow-solid-7 transition-all duration-500 hover:-translate-y-2`}
             >
-              <div className="text-center mb-6">
-                <div className={`w-20 h-20 mx-auto mb-4 bg-gradient-to-r ${track.color} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                  <track.icon className="h-10 w-10 text-white" />
+              {/* Track Header */}
+              <div className="text-center mb-8">
+                <div className={`w-24 h-24 mx-auto mb-6 bg-gradient-to-r ${track.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                  <track.icon className="h-12 w-12 text-white" />
                 </div>
-                <h3 className="text-itemtitle font-bold text-black dark:text-white group-hover:text-primary transition-colors">
+                <h3 className="text-sectiontitle4 font-bold text-black dark:text-white group-hover:text-primary transition-colors mb-3">
                   {track.title}
                 </h3>
-                <p className="text-waterloo dark:text-manatee mt-2">
+                <p className="text-metatitle3 text-waterloo dark:text-manatee max-w-2xl mx-auto">
                   {track.description}
                 </p>
               </div>
               
-              <div>
-                <h4 className="font-semibold text-black dark:text-white mb-3">Specializations:</h4>
-                <div className="space-y-2">
-                  {track.specializations.map((spec, specIndex) => (
-                    <div key={specIndex} className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-titlebg rounded-full"></div>
-                      <span className="text-waterloo dark:text-manatee text-sm">{spec}</span>
+                            {/* Specializations Grid */}
+              <div className={`grid grid-cols-1 ${
+                track.title === "Data Science" 
+                  ? "lg:grid-cols-3" 
+                  : "lg:grid-cols-2"
+              } gap-6`}>
+                {track.specializations.map((spec, specIndex) => (
+                  <div 
+                    key={specIndex}
+                    className="bg-white/80 dark:bg-blacksection/80 backdrop-blur-sm rounded-xl p-6 border border-white/20 dark:border-strokedark/50 hover:shadow-lg transition-all duration-300 group-hover:border-white/40"
+                  >
+                    <div className="flex items-start gap-3 mb-4">
+                      <h4 className="text-itemtitle2 font-bold text-black dark:text-white">
+                        {spec.name}
+                      </h4>
                     </div>
-                  ))}
-                </div>
+                    
+                    <div className="space-y-3">
+                      <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-lg p-4">
+                        
+                        <p className="text-metatitle3 text-black dark:text-white font-medium">
+                          {spec.projectTitle}
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h5 className="font-semibold text-black dark:text-white text-sm mb-2 flex items-center gap-2">
+                          <span className="text-titlebg">📋</span>
+                          Description
+                        </h5>
+                        <p className="text-regular text-waterloo dark:text-manatee leading-relaxed">
+                          {spec.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
+        </div>
+        
+        {/* Track Selection Info */}
+        <div className="mt-16 text-center">
+          <div className="bg-gradient-to-r from-titlebg/10 to-primary/10 rounded-2xl p-8 border border-titlebg/20">
+            <h3 className="text-itemtitle font-bold text-black dark:text-white mb-4">
+              🎯 Track Selection Process
+            </h3>
+            <p className="text-metatitle3 text-waterloo dark:text-manatee max-w-3xl mx-auto mb-6">
+              During orientation week, you'll have the opportunity to explore each track in detail and make your final selection. 
+              Our mentors will guide you through the decision-making process based on your interests and career goals.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm">
+              <span className="bg-white dark:bg-blacksection px-4 py-2 rounded-full border border-stroke dark:border-strokedark">
+                🔍 Deep Dive Sessions
+              </span>
+              <span className="bg-white dark:bg-blacksection px-4 py-2 rounded-full border border-stroke dark:border-strokedark">
+                💬 Mentor Consultations
+              </span>
+              <span className="bg-white dark:bg-blacksection px-4 py-2 rounded-full border border-stroke dark:border-strokedark">
+                🎯 Career Alignment
+              </span>
+              <span className="bg-white dark:bg-blacksection px-4 py-2 rounded-full border border-stroke dark:border-strokedark">
+                📊 Project Preview
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -509,9 +596,7 @@ const Sponsorship = () => {
               A limited number of need-based scholarships will be available for exceptional candidates 
               who demonstrate financial need and strong potential.
             </p>
-            <button className="text-primary hover:text-primaryho font-medium">
-              Learn More →
-            </button>
+        
           </div>
           
           <div className="bg-alabaster dark:bg-blacksection p-8 rounded-lg border border-stroke dark:border-strokedark">
@@ -525,9 +610,7 @@ const Sponsorship = () => {
               Organizations can sponsor participants or entire tracks, building a pipeline of 
               skilled talent while supporting African tech education.
             </p>
-            <button className="text-titlebg hover:text-titlebgdark font-medium">
-              Partner With Us →
-            </button>
+          
           </div>
         </div>
       </div>
@@ -618,7 +701,7 @@ const CTA = () => {
           </div>
           
           <div className="mt-8 text-white/80 text-sm">
-            <p>Questions? Contact us at internship@DataVerseafrica.org</p>
+            <p>Questions? Contact us at info@dataverseafrica.org</p>
           </div>
         </div>
       </div>

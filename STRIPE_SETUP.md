@@ -195,7 +195,7 @@ For Stripe-specific issues:
 - [Stripe Community](https://community.stripe.com)
 
 For application-specific issues:
-- Contact: internship@DataVerseafrica.org
+- Contact: info@dataverseafrica.org
 - Check application logs
 - Review webhook delivery status
 

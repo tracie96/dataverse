@@ -286,7 +286,7 @@ This project is proprietary to DataVerse Africa. All rights reserved.
 ## Contact
 
 For technical support:
-- Email: internship@DataVerseafrica.org
+- Email: info@dataverseafrica.org
 - GitHub Issues: [Repository Issues]
 
 For program information:

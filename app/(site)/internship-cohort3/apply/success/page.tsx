@@ -151,10 +151,10 @@ const SuccessPage = () => {
               <p className="text-gray-600 dark:text-gray-400">
                 Questions? Contact us at{" "}
                 <a 
-                  href="mailto:internship@DataVerseafrica.org" 
+                  href="mailto:info@dataverseafrica.org" 
                   className="text-titlebg hover:text-titlebgdark font-medium"
                 >
-                  internship@DataVerseafrica.org
+                  info@dataverseafrica.org
                 </a>
               </p>
             </div>

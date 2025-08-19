@@ -548,7 +548,7 @@ const ApplyPage = () => {
                     <Mail className="h-4 md:h-5 w-4 md:w-5 text-titlebg" />
                     <div>
                       <div className="font-medium text-black dark:text-white text-sm md:text-base">Email</div>
-                      <div className="text-xs md:text-sm text-waterloo dark:text-manatee">internship@DataVerseafrica.org</div>
+                      <div className="text-xs md:text-sm text-waterloo dark:text-manatee">info@dataverseafrica.org</div>
                     </div>
                   </div>
                   
