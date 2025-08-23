@@ -13,6 +13,7 @@ interface SmartPaymentProps {
   userEmail?: string;
   userFullName?: string;
   userPhone?: string;
+  applicationData?: any; // Add application data prop
 }
 
 const SmartPayment = ({ 
@@ -22,9 +23,11 @@ const SmartPayment = ({
   onError,
   userEmail = '',
   userFullName = '',
-  userPhone = ''
+  userPhone = '',
+  applicationData = {} // Add application data with default
 }: SmartPaymentProps) => {
   const { countryInfo, isLoading } = useCountryDetection();
+  const [paymentMethod, setPaymentMethod] = useState<'stripe' | 'bank-transfer'>('stripe');
 
   const handleSuccess = (paymentId: string, paymentMethod: string) => {
     onSuccess(paymentId, paymentMethod);
@@ -80,19 +83,71 @@ const SmartPayment = ({
 
       {/* Payment Method */}
       {isNigerian ? (
-        <NigerianBankTransfer
-          onSuccess={handleBankTransferSuccess}
-          onError={handleError}
-          userEmail={userEmail}
-          userFullName={userFullName}
-          userPhone={userPhone}
-        />
+        <div className="space-y-4">
+          {/* Payment Method Selection */}
+          <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+            <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-3">
+              Choose Payment Method
+            </h3>
+            <div className="space-y-3">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="stripe"
+                  checked={paymentMethod === 'stripe'}
+                  onChange={(e) => setPaymentMethod(e.target.value as 'stripe' | 'bank-transfer')}
+                  className="w-4 h-4 text-titlebg border-gray-300 focus:ring-titlebg"
+                />
+                <div>
+                  <span className="font-medium text-blue-800 dark:text-blue-200">Credit/Debit Card (Stripe)</span>
+                  <p className="text-sm text-blue-700 dark:text-blue-300">Pay securely with your card</p>
+                </div>
+              </label>
+              
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="bank-transfer"
+                  checked={paymentMethod === 'bank-transfer'}
+                  onChange={(e) => setPaymentMethod(e.target.value as 'stripe' | 'bank-transfer')}
+                  className="w-4 h-4 text-titlebg border-gray-300 focus:ring-titlebg"
+                />
+                <div>
+                  <span className="font-medium text-blue-800 dark:text-blue-200">Nigerian Bank Transfer</span>
+                  <p className="text-sm text-blue-700 dark:text-blue-300">Pay directly to our Nigerian bank account</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          {/* Payment Component Based on Selection */}
+          {paymentMethod === 'stripe' ? (
+            <StripePayment
+              amount={amount}
+              currency={currency}
+              onSuccess={handleStripeSuccess}
+              onError={handleError}
+              applicationData={applicationData}
+            />
+          ) : (
+            <NigerianBankTransfer
+              onSuccess={handleBankTransferSuccess}
+              onError={handleError}
+              userEmail={userEmail}
+              userFullName={userFullName}
+              userPhone={userPhone}
+            />
+          )}
+        </div>
       ) : (
         <StripePayment
           amount={amount}
           currency={currency}
           onSuccess={handleStripeSuccess}
           onError={handleError}
+          applicationData={applicationData}
         />
       )}
     </div>

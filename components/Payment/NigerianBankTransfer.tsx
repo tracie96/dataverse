@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from 'react';
+import { createClient } from '@supabase/supabase-js';
+import { useRouter } from 'next/navigation';
 
 interface NigerianBankTransferProps {
   onSuccess: (transferId: string) => void;
@@ -17,7 +19,9 @@ const NigerianBankTransfer = ({
   userFullName = '', 
   userPhone = '' 
 }: NigerianBankTransferProps) => {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [formData, setFormData] = useState({
     fullName: userFullName,
     email: userEmail,
@@ -26,13 +30,18 @@ const NigerianBankTransfer = ({
     accountNumber: '',
     reference: ''
   });
+  const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [message, setMessage] = useState('');
 
-  // Bank details - update with your actual account information
+  // Initialize Supabase client
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
   const bankDetails = {
-    bankName: 'Access Bank Plc',
-    accountName: 'DataVerse Africa',
-    accountNumber: '1234567890', // Replace with actual account number
+    bankName: 'United Bank of Africa',
+    accountName: 'Francis Ifiora',
+    accountNumber: '2363765712',
     accountType: 'Current Account',
     nairaAmount: 37500,
     usdAmount: 25
@@ -46,26 +55,94 @@ const NigerianBankTransfer = ({
     }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setMessage('File size must be less than 5MB');
+        return;
+      }
+      // Check file type
+      if (!file.type.startsWith('image/') && file.type !== 'application/pdf') {
+        setMessage('Please upload an image or PDF file');
+        return;
+      }
+      setReceiptFile(file);
+      setMessage('');
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setMessage('');
 
     try {
-      // Generate unique reference number
-      const uniqueReference = `NGN-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+      if (!receiptFile) {
+        setMessage('Please upload your payment receipt');
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Upload file to Supabase Storage
+      const fileName = `${Date.now()}_${receiptFile.name}`;
+      const filePath = `receipts/${fileName}`;
       
-      // Simulate API call - replace with actual API endpoint
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Simulate upload progress
+      setUploadProgress(25);
       
-      setMessage('Bank transfer request created successfully! Please complete the transfer and upload proof.');
-      onSuccess(uniqueReference);
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('receipti-url')
+        .upload(filePath, receiptFile);
+
+      if (uploadError) {
+        console.error('File upload error:', uploadError);
+        throw new Error('Failed to upload receipt file. Please try again.');
+      }
+
+      setUploadProgress(75);
+
+      // Get the public URL for the uploaded file
+      const { data: urlData } = supabase.storage
+        .from('receipti-url')
+        .getPublicUrl(filePath);
+
+      const receiptUrl = urlData.publicUrl;
+
+      setUploadProgress(90);
+
+      // Call the bank transfer API
+      const response = await fetch('/api/cohort3-application/bank-transfer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          transferName: formData.fullName,
+          receiptUrl
+        }),
+      });
+
+      setUploadProgress(100);
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to save bank transfer details');
+      }
+      router.push(`/internship-cohort3/apply/success?email=${encodeURIComponent(formData.email)}&payment_method=bank-transfer`);
+      setMessage('Bank transfer details saved successfully! Payment will be verified within 24-48 hours.');
+      onSuccess(result.transferId);
     } catch (error) {
-      const errorMessage = 'Failed to create transfer request. Please try again.';
+      console.error('Error:', error);
+      const errorMessage = 'Failed to save bank transfer details. Please try again.';
       setMessage(errorMessage);
       onError(errorMessage);
     } finally {
       setIsSubmitting(false);
+      setUploadProgress(0);
     }
   };
 
@@ -115,10 +192,6 @@ const NigerianBankTransfer = ({
             <li className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
               <span className="text-green-500 mt-1">•</span>
               Use your full name as payment reference
-            </li>
-            <li className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <span className="text-green-500 mt-1">•</span>
-              Upload proof of payment after transfer
             </li>
             <li className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
               <span className="text-green-500 mt-1">•</span>
@@ -184,51 +257,58 @@ const NigerianBankTransfer = ({
               />
             </div>
             
-            <div>
-              <label htmlFor="bankName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Your Bank Name *
-              </label>
-              <input
-                type="text"
-                id="bankName"
-                name="bankName"
-                value={formData.bankName}
-                onChange={handleInputChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-titlebg focus:border-transparent dark:bg-gray-800 dark:text-white"
-                placeholder="Enter your bank name"
-              />
-            </div>
+         
             
-            <div>
-              <label htmlFor="accountNumber" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Your Account Number *
-              </label>
-              <input
-                type="text"
-                id="accountNumber"
-                name="accountNumber"
-                value={formData.accountNumber}
-                onChange={handleInputChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-titlebg focus:border-transparent dark:bg-gray-800 dark:text-white"
-                placeholder="Enter your account number"
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="reference" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Payment Reference
-              </label>
-              <input
-                type="text"
-                id="reference"
-                name="reference"
-                value={formData.reference}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-titlebg focus:border-transparent dark:bg-gray-800 dark:text-white"
-                placeholder="Optional payment reference"
-              />
+          </div>
+
+          {/* Receipt Upload */}
+          <div className="col-span-full">
+            <label htmlFor="receipt" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Payment Receipt * <span className="text-red-500">(Required)</span>
+            </label>
+            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg hover:border-titlebg transition-colors">
+              <div className="space-y-1 text-center">
+                <svg
+                  className="mx-auto h-12 w-12 text-gray-400"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 48 48"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <div className="flex text-sm text-gray-600 dark:text-gray-400">
+                  <label
+                    htmlFor="receipt"
+                    className="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-titlebg hover:text-titlebgdark focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-titlebg"
+                  >
+                    <span>Upload a file</span>
+                    <input
+                      id="receipt"
+                      name="receipt"
+                      type="file"
+                      accept="image/*,.pdf"
+                      className="sr-only"
+                      onChange={handleFileChange}
+                      required
+                    />
+                  </label>
+                  <p className="pl-1">or drag and drop</p>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  PNG, JPG, GIF, PDF up to 5MB
+                </p>
+                {receiptFile && (
+                  <p className="text-sm text-green-600 dark:text-green-400">
+                    ✓ {receiptFile.name}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -242,19 +322,29 @@ const NigerianBankTransfer = ({
             </div>
           )}
 
+          {/* Upload Progress Bar */}
+          {isSubmitting && uploadProgress > 0 && (
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div 
+                className="bg-titlebg h-2 rounded-full transition-all duration-300"
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
+          )}
+
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || !receiptFile}
             className="w-full bg-titlebg hover:bg-titlebgdark disabled:bg-gray-400 text-white py-3 px-6 rounded-lg font-medium transition-all duration-300 shadow-solid-5 flex items-center justify-center gap-2"
           >
             {isSubmitting ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                Creating Transfer Request...
+                {uploadProgress > 0 ? `Uploading... ${uploadProgress}%` : 'Saving Transfer Details...'}
               </>
             ) : (
               <>
-                Create Transfer Request
+                Submit Transfer Details
               </>
             )}
           </button>
@@ -266,7 +356,7 @@ const NigerianBankTransfer = ({
         <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Important Notes:</h4>
         <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
           <li>• Please use your full name as the payment reference when making the transfer</li>
-          <li>• Keep your transfer receipt/proof of payment for verification</li>
+          <li>• Upload a clear image or PDF of your transfer receipt</li>
           <li>• Payment verification typically takes 24-48 hours</li>
           <li>• You will receive an email confirmation once payment is verified</li>
         </ul>

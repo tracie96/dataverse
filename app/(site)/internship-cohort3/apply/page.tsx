@@ -40,7 +40,6 @@ const ApplyPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate required fields
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.country || !formData.city || !formData.track || !formData.experience || !formData.motivation) {
       toast.error("Please fill in all required fields");
       return;
@@ -67,6 +66,9 @@ const ApplyPage = () => {
       if (!response.ok) {
         throw new Error(result.error || 'Failed to save application');
       }
+      
+      // Save application data to localStorage for payment success page
+      localStorage.setItem('cohort3_application_data', JSON.stringify(formData));
       
       toast.success('Application saved successfully! Proceeding to payment...');
       setShowPaymentForm(true);
@@ -132,13 +134,11 @@ const ApplyPage = () => {
                     </button>
                   ) : (
                     <div className="space-y-3 md:space-y-4">
-                      <div className="bg-white dark:bg-blacksection p-3 md:p-4 rounded-lg border border-stroke dark:border-strokedark">
                         <h4 className="font-semibold text-black dark:text-white mb-2 text-sm md:text-base">Program Fee: $25 USD</h4>
                         <p className="text-xs md:text-sm text-waterloo dark:text-manatee mb-3">
                           This covers access to tools, mentor support, certification, and career resources.
                         </p>
                         
-                        {/* Stripe Payment Form */}
                         <div className="bg-white dark:bg-blacksection p-3 md:p-4 rounded-lg border border-stroke dark:border-strokedark">
                           <div className="text-center mb-3 md:mb-4">
                             <div className="text-gray-500 dark:text-gray-400 mb-1 md:mb-2 text-sm">
@@ -155,29 +155,14 @@ const ApplyPage = () => {
                             onSuccess={async (paymentId, paymentMethod) => {
                               console.log('Payment successful:', paymentId, paymentMethod);
                               
-                              try {
-                                // Update payment status in database
-                                const response = await fetch('/api/cohort3-application/payment', {
-                                  method: 'PUT',
-                                  headers: {
-                                    'Content-Type': 'application/json',
-                                  },
-                                  body: JSON.stringify({
-                                    email: formData.email,
-                                    paymentId: paymentId
-                                  }),
-                                });
-                                
-                                if (!response.ok) {
-                                  console.error('Failed to update payment status');
-                                }
-                                
+                              if (paymentMethod === 'stripe') {
+                                // Stripe payments are already handled by the payment success API
                                 toast.success('Payment completed successfully!');
                                 setPaymentCompleted(true);
-                              } catch (error) {
-                                console.error('Error updating payment status:', error);
-                                toast.success('Payment completed successfully!');
-                                setPaymentCompleted(true); // Still show success even if DB update fails
+                              } else if (paymentMethod === 'bank-transfer') {
+                                // Bank transfers are handled by the bank transfer API
+                                toast.success('Bank transfer details submitted successfully! Payment will be verified within 24-48 hours.');
+                                setPaymentCompleted(true);
                               }
                             }}
                             onError={(error) => {
@@ -187,8 +172,8 @@ const ApplyPage = () => {
                             userEmail={formData.email}
                             userFullName={`${formData.firstName} ${formData.lastName}`}
                             userPhone={formData.phone}
+                            applicationData={formData}
                           />
-                        </div>
                       </div>
                     </div>
                   )}

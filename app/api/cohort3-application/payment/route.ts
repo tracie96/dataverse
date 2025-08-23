@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-export async function PUT(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    // Check environment variables
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!;
     
+    console.log({supabaseUrl, supabaseKey});
     if (!supabaseUrl || !supabaseKey) {
       console.error('Missing Supabase environment variables');
       return NextResponse.json(
@@ -15,41 +15,50 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    // Initialize Supabase client
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     const body = await request.json();
-    const { email, paymentId } = body;
+    console.log('Received request body:', body);
+    
+    const {
+      paymentIntentId,
+      applicationData,
+      paymentMethod = 'stripe'
+    } = body;
 
-    if (!email || !paymentId) {
+    if (!paymentIntentId || !applicationData) {
+      console.error('Missing required fields:', { paymentIntentId: !!paymentIntentId, applicationData: !!applicationData });
       return NextResponse.json(
-        { error: 'Email and payment ID are required' },
+        { error: 'Missing required fields: paymentIntentId and applicationData' },
         { status: 400 }
       );
     }
 
-    // Update payment status in Supabase
+    if (!applicationData.email) {
+      console.error('Missing email in applicationData:', applicationData);
+      return NextResponse.json(
+        { error: 'Missing email in applicationData' },
+        { status: 400 }
+      );
+    }
+
+
     const { data, error } = await supabase
       .from('cohort3_applications')
       .update({
         payment_completed: true,
-        payment_id: paymentId
+        payment_id: paymentIntentId,
+        payment_method: paymentMethod,
+        payment_date: new Date().toISOString(),
       })
-      .eq('email', email.toLowerCase())
+      .eq('email', applicationData.email)
       .select();
 
     if (error) {
-      console.error('Supabase error:', error);
+      console.error('Supabase error updating payment:', error);
       return NextResponse.json(
         { error: 'Failed to update payment status: ' + error.message },
         { status: 500 }
-      );
-    }
-
-    if (data.length === 0) {
-      return NextResponse.json(
-        { error: 'Application not found' },
-        { status: 404 }
       );
     }
 
@@ -60,7 +69,7 @@ export async function PUT(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Server error:', error);
+    console.error('Server error updating payment:', error);
     return NextResponse.json(
       { error: 'Internal server error: ' + (error as Error).message },
       { status: 500 }
