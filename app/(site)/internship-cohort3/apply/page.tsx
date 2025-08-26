@@ -156,7 +156,6 @@ const ApplyPage = () => {
                               console.log('Payment successful:', paymentId, paymentMethod);
                               
                               if (paymentMethod === 'stripe') {
-                                // Stripe payments are already handled by the payment success API
                                 toast.success('Payment completed successfully!');
                                 setPaymentCompleted(true);
                               } else if (paymentMethod === 'bank-transfer') {

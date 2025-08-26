@@ -9,7 +9,7 @@ import menuData from "./menuData";
 
 const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
-  const [dropdownToggler, setDropdownToggler] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [stickyMenu, setStickyMenu] = useState(false);
 
   const pathUrl = usePathname();
@@ -21,6 +21,17 @@ const Header = () => {
     } else {
       setStickyMenu(false);
     }
+  };
+
+  // Close dropdown and mobile navigation when menu item is clicked
+  const handleMenuItemClick = () => {
+    setOpenDropdown(null);
+    setNavigationOpen(false);
+  };
+
+  // Toggle dropdown
+  const toggleDropdown = (menuId: number) => {
+    setOpenDropdown(openDropdown === menuId ? null : menuId);
   };
 
   useEffect(() => {
@@ -111,13 +122,15 @@ const Header = () => {
                   {menuItem.submenu ? (
                     <>
                       <button
-                        onClick={() => setDropdownToggler(!dropdownToggler)}
+                        onClick={() => toggleDropdown(menuItem.id)}
                         className="flex cursor-pointer items-center justify-between gap-3 hover:text-primary"
                       >
                         {menuItem.title}
                         <span>
                           <svg
-                            className="h-3 w-3 cursor-pointer fill-waterloo group-hover:fill-primary"
+                            className={`h-3 w-3 cursor-pointer fill-waterloo group-hover:fill-primary transition-transform duration-200 ${
+                              openDropdown === menuItem.id ? "rotate-180" : ""
+                            }`}
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
                           >
@@ -127,11 +140,13 @@ const Header = () => {
                       </button>
 
                       <ul
-                        className={`dropdown ${dropdownToggler ? "flex" : ""}`}
+                        className={`dropdown ${openDropdown === menuItem.id ? "flex" : ""}`}
                       >
                         {menuItem.submenu.map((item, key) => (
                           <li key={key} className="hover:text-primary">
-                            <Link href={item.path || "#"}>{item.title}</Link>
+                            <Link href={item.path || "#"} onClick={handleMenuItemClick}>
+                              {item.title}
+                            </Link>
                           </li>
                         ))}
                       </ul>
@@ -139,6 +154,7 @@ const Header = () => {
                   ) : (
                     <Link
                       href={`${menuItem.path}`}
+                      onClick={handleMenuItemClick}
                       className={
                         pathUrl === menuItem.path
                           ? "text-primary hover:text-primary"
