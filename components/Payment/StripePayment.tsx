@@ -24,7 +24,13 @@ interface StripePaymentProps {
   currency?: string;
   onSuccess: (paymentIntentId: string) => void;
   onError: (error: string) => void;
-  applicationData?: any; // Add application data prop
+  applicationData?: {
+    name?: string;
+    email?: string;
+    phone?: string;
+    applicationId?: string;
+    [key: string]: any;
+  };
 }
 
 const PaymentForm = ({ amount, currency = 'usd', onSuccess, onError, applicationData }: StripePaymentProps) => {
@@ -126,7 +132,16 @@ const StripePayment = ({ amount, currency, onSuccess, onError, applicationData }
     fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount, currency }),
+      body: JSON.stringify({ 
+        amount, 
+        currency,
+        customerInfo: {
+          name: applicationData?.name,
+          email: applicationData?.email,
+          phone: applicationData?.phone,
+          applicationId: applicationData?.applicationId,
+        }
+      }),
     })
       .then((res) => {
         if (!res.ok) {
@@ -149,7 +164,7 @@ const StripePayment = ({ amount, currency, onSuccess, onError, applicationData }
       .finally(() => {
         setIsLoading(false);
       });
-  }, [amount, currency]);
+  }, [amount, currency, applicationData]);
 
   if (isLoading) {
     return (

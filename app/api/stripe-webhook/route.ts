@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
     case 'payment_intent.succeeded':
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       console.log('Payment succeeded:', paymentIntent.id);
+      console.log('Payment metadata:', paymentIntent.metadata);
       
       // Try to update the database
       try {
@@ -37,8 +38,8 @@ export async function POST(request: NextRequest) {
         if (supabaseUrl && supabaseKey) {
           const supabase = createClient(supabaseUrl, supabaseKey);
           
-          // Look for application with this payment intent ID
-          const { data, error } = await supabase
+          // First try to find by payment intent ID
+          let { data, error } = await supabase
             .from('cohort3_applications')
             .update({
               payment_completed: true,
@@ -51,8 +52,33 @@ export async function POST(request: NextRequest) {
             .eq('payment_id', paymentIntent.id)
             .select();
 
-          if (error) {
-            console.error('Failed to update application via webhook:', error);
+          // If no application found by payment_id, try to find by email from metadata
+          if (!data || data.length === 0) {
+            const customerEmail = paymentIntent.metadata?.customer_email;
+            if (customerEmail) {
+              console.log('Looking for application by email:', customerEmail);
+              
+              const { data: emailData, error: emailError } = await supabase
+                .from('cohort3_applications')
+                .update({
+                  payment_completed: true,
+                  payment_id: paymentIntent.id,
+                  payment_method: 'stripe',
+                  payment_date: new Date().toISOString(),
+                  payment_status: 'completed',
+                  updated_at: new Date().toISOString()
+                })
+                .eq('email', customerEmail)
+                .select();
+
+              if (emailError) {
+                console.error('Failed to update application by email via webhook:', emailError);
+              } else if (emailData && emailData.length > 0) {
+                console.log('Application updated by email via webhook:', emailData);
+              } else {
+                console.log('No application found by email:', customerEmail);
+              }
+            }
           } else {
             console.log('Application updated via webhook:', data);
           }
@@ -62,8 +88,21 @@ export async function POST(request: NextRequest) {
       }
       break;
       
+    case 'customer.created':
+      const customer = event.data.object as Stripe.Customer;
+      console.log('Customer created:', customer.id, customer.email);
+      console.log('Customer metadata:', customer.metadata);
+      break;
+      
+    case 'customer.updated':
+      const updatedCustomer = event.data.object as Stripe.Customer;
+      console.log('Customer updated:', updatedCustomer.id, updatedCustomer.email);
+      console.log('Updated customer metadata:', updatedCustomer.metadata);
+      break;
+      
     default:
       console.log(`Unhandled event type: ${event.type}`);
+      break;
   }
 
   return NextResponse.json({ received: true });
