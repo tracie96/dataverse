@@ -328,7 +328,7 @@ const Tracks = () => {
 // Timeline Component
 const timelineData = [
   {
-    date: "August 12 – September 30, 2025",
+    date: "August 12 – August 30, 2025",
     activity: "Application Open + Outreach Campaign",
     icon: Users,
     status: "active"
@@ -561,7 +561,7 @@ const Application = () => {
               </button>
             </Link>
             <p className="text-waterloo dark:text-manatee mt-4">
-              Applications close September 30, 2025
+              Applications close August 30th, 2025
             </p>
           </div>
         </div>

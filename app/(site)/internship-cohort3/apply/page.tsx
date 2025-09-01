@@ -555,7 +555,7 @@ const ApplyPage = () => {
                 <ul className="space-y-1 md:space-y-2 text-xs md:text-sm text-titlebg">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-3 md:h-4 w-3 md:w-4 mt-0.5 flex-shrink-0" />
-                    Applications close September 30, 2025
+                    Applications close September 30th, 2025
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-3 md:h-4 w-3 md:w-4 mt-0.5 flex-shrink-0" />
