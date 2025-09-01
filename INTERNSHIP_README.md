@@ -33,7 +33,7 @@ This repository contains the implementation of the DataVerse Africa Internship P
 ## Program Details
 
 ### Timeline
-- **Applications Open**: August 12 - August 30, 2025
+- **Applications Open**: August 12 - September 30, 2025
 - **Program Start**: September 26, 2025
 - **Program End**: December 12, 2025
 - **Duration**: 12 Weeks (3 Months)
