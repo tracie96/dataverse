@@ -540,7 +540,9 @@ const ApplyPage = () => {
                     <Phone className="h-4 md:h-5 w-4 md:w-5 text-titlebg" />
                     <div>
                       <div className="font-medium text-black dark:text-white text-sm md:text-base">Phone</div>
-                      <div className="text-xs md:text-sm text-waterloo dark:text-manatee">+234 XXX XXX XXXX</div>
+                      <div className="text-xs md:text-sm text-waterloo dark:text-manatee">+234 706 308 3925</div>
+                      <div className="text-xs md:text-sm text-waterloo dark:text-manatee">+1 (832) 837-3307</div>
+
                     </div>
                   </div>
                 </div>
