@@ -390,58 +390,7 @@ const ApplyPage = () => {
                 </div>
 
                 {/* Portfolio & Links */}
-                <div>
-                  <h3 className="text-lg font-semibold text-black dark:text-white mb-4">
-                    Portfolio & Professional Links
-                  </h3>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-black dark:text-white mb-2">
-                        Portfolio/Projects URL
-                      </label>
-                      <input
-                        type="url"
-                        name="portfolio"
-                        value={formData.portfolio}
-                        onChange={handleInputChange}
-                        placeholder="https://your-portfolio.com"
-                        className="w-full px-3 md:px-4 py-2 md:py-3 border border-stroke dark:border-strokedark rounded-lg focus:ring-2 focus:ring-titlebg focus:border-transparent dark:bg-blacksection dark:text-white text-sm md:text-base"
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-black dark:text-white mb-2">
-                          LinkedIn Profile
-                        </label>
-                        <input
-                          type="url"
-                          name="linkedin"
-                          value={formData.linkedin}
-                          onChange={handleInputChange}
-                          placeholder="https://linkedin.com/in/your-profile"
-                          className="w-full px-3 md:px-4 py-2 md:py-3 border border-stroke dark:border-strokedark rounded-lg focus:ring-2 focus:ring-titlebg focus:border-transparent dark:bg-blacksection dark:text-white text-sm md:text-base"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-black dark:text-white mb-2">
-                          GitHub Profile
-                        </label>
-                        <input
-                          type="url"
-                          name="github"
-                          value={formData.github}
-                          onChange={handleInputChange}
-                          placeholder="https://github.com/your-username"
-                          className="w-full px-3 md:px-4 py-2 md:py-3 border border-stroke dark:border-strokedark rounded-lg focus:ring-2 focus:ring-titlebg focus:border-transparent dark:bg-blacksection dark:text-white text-sm md:text-base"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+           
                 {/* Terms & Conditions */}
                 <div>
                   <div className="flex items-start gap-3">
