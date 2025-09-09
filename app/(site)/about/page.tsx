@@ -1,5 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
+import About from "@/components/About";
 
 export const metadata: Metadata = {
   title: "About - DataVerse Africa",
@@ -7,10 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function page() {
-  return (
-    <main>
-      <h1>About Page</h1>
-      <p>This is a test page to isolate the build issue.</p>
-    </main>
-  );
+  return <About />;
 }
