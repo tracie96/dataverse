@@ -12,10 +12,10 @@
       "static/css/app/(site)/layout.css",
       "static/chunks/app/(site)/layout.js"
     ],
-    "/(site)/about/page": [
+    "/(site)/internship-cohort3/entries/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(site)/about/page.js"
+      "static/chunks/app/(site)/internship-cohort3/entries/page.js"
     ]
   }
 }

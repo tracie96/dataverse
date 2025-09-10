@@ -1,4 +1,4 @@
 {
-  "/(site)/page": "app/(site)/page.js",
-  "/(site)/about/page": "app/(site)/about/page.js"
+  "/(site)/internship-cohort3/entries/page": "app/(site)/internship-cohort3/entries/page.js",
+  "/(site)/page": "app/(site)/page.js"
 }

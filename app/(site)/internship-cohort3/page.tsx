@@ -56,7 +56,12 @@ const Hero = () => {
                 <ArrowRight className="h-4 w-4" />
               </button>
             </Link>
-          
+            <Link href="/internship-cohort3/entries">
+              <button className="border-2 border-titlebg text-titlebg hover:bg-titlebg hover:text-white px-8 py-4 text-metatitle3 font-medium rounded-lg transition-all duration-300 flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                View Applications
+              </button>
+            </Link>
           </div>
           
           {/* Key Stats */}
