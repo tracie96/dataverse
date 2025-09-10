@@ -26,7 +26,7 @@ export default function Home() {
       {/* <Brands /> */}
       <Brands/>
       <Feature />
-      <About />
+      {/* <About /> */}
       <CTA />
       <FAQ />
       <Testimonial />
