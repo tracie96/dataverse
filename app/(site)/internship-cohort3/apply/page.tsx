@@ -456,7 +456,7 @@ const ApplyPage = () => {
                     <BookOpen className="h-4 md:h-5 w-4 md:w-5 text-titlebg" />
                     <div>
                       <div className="font-medium text-black dark:text-white text-sm md:text-base">Start Date</div>
-                      <div className="text-xs md:text-sm text-waterloo dark:text-manatee">Sept 26, 2025</div>
+                      <div className="text-xs md:text-sm text-waterloo dark:text-manatee">Oct 3rd, 2025</div>
                     </div>
                   </div>
                   

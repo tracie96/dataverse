@@ -130,11 +130,11 @@ const ProgramOverview = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-waterloo dark:text-manatee">Start Date:</span>
-                  <span className="font-medium text-black dark:text-white">Friday, 26th September, 2025</span>
+                  <span className="font-medium text-black dark:text-white">3rd October, 2025</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-waterloo dark:text-manatee">End Date:</span>
-                  <span className="font-medium text-black dark:text-white">Friday, 12th December, 2025</span>
+                  <span className="font-medium text-black dark:text-white">12th December, 2025</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-waterloo dark:text-manatee">Duration:</span>
