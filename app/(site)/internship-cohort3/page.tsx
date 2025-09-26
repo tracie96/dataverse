@@ -10,7 +10,7 @@ const InternshipCohort3Page = () => {
       <Hero />
       <ProgramOverview />
       <Tracks />
-      <Timeline />
+      {/* <Timeline /> */}
       <Benefits />
       <Application />
       <Sponsorship />
