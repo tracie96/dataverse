@@ -21,9 +21,9 @@ const menuData: Menu[] = [
     submenu: [
       {
         id: 3.1,
-        title: "Cohort 3",
+        title: "Cohort 3 (Closed)",
         newTab: false,
-        path: "/internship-cohort3",
+        path: "",
       },
     ],
   },

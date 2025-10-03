@@ -40,6 +40,29 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Check if email already exists
+    const { data: existingApplication, error: checkError } = await supabase
+      .from('cohort3_applications')
+      .select('id, email')
+      .eq('email', email.toLowerCase())
+      .single();
+
+    if (checkError && checkError.code !== 'PGRST116') {
+      console.error('Error checking email uniqueness:', checkError);
+      return NextResponse.json(
+        { error: 'Failed to validate email: ' + checkError.message },
+        { status: 500 }
+      );
+    }
+
+    if (existingApplication) {
+      return NextResponse.json(
+        { error: 'An application with this email address already exists. Please use a different email or contact support if you believe this is an error.' },
+        { status: 409 }
+      );
+    }
+
 console.log({body});
     // Insert into Supabase
     const { data, error } = await supabase

@@ -25,8 +25,33 @@ export async function GET(request: NextRequest) {
     const track = searchParams.get('track');
     const paymentStatus = searchParams.get('payment_status');
     const search = searchParams.get('search');
+    const distinctEmails = searchParams.get('distinct_emails') === 'true';
 
-    // Build query
+    // Handle distinct emails request
+    if (distinctEmails) {
+      const { data, error } = await supabase
+        .from('cohort3_applications')
+        .select('email')
+        .not('email', 'is', null);
+
+      if (error) {
+        console.error('Supabase error:', error);
+        return NextResponse.json(
+          { error: 'Failed to fetch distinct emails: ' + error.message },
+          { status: 500 }
+        );
+      }
+
+      // Get unique emails
+      const uniqueEmails = Array.from(new Set(data?.map(item => item.email).filter(Boolean)));
+      
+      return NextResponse.json({ 
+        emails: uniqueEmails,
+        count: uniqueEmails.length
+      });
+    }
+
+    // Build query for regular data
     let query = supabase
       .from('cohort3_applications')
       .select('*', { count: 'exact' })
@@ -60,20 +85,29 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get total payment statistics
-    const { count: paidCount, error: paidError } = await supabase
+    // Get distinct payment statistics
+    const { data: paidData, error: paidError } = await supabase
       .from('cohort3_applications')
-      .select('*', { count: 'exact', head: true })
-      .eq('payment_completed', true);
+      .select('email')
+      .eq('payment_completed', true)
+      .not('email', 'is', null);
 
-    const { count: pendingCount, error: pendingError } = await supabase
+    const { data: pendingData, error: pendingError } = await supabase
       .from('cohort3_applications')
-      .select('*', { count: 'exact', head: true })
-      .eq('payment_completed', false);
+      .select('email')
+      .eq('payment_completed', false)
+      .not('email', 'is', null);
 
     if (paidError || pendingError) {
       console.error('Error fetching payment stats:', paidError || pendingError);
     }
+
+    // Get unique counts for paid and pending
+    const uniquePaidEmails = Array.from(new Set(paidData?.map(item => item.email).filter(Boolean)));
+    const uniquePendingEmails = Array.from(new Set(pendingData?.map(item => item.email).filter(Boolean)));
+    
+    const paidCount = uniquePaidEmails.length;
+    const pendingCount = uniquePendingEmails.length;
 
     return NextResponse.json({ 
       data: data || [], 

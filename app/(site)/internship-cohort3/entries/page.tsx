@@ -103,9 +103,16 @@ const Cohort3EntriesPage = () => {
       }
       
       const result: ApplicationsResponse = await response.json();
-      setApplications(result.data);
+      
+      // Remove duplicate applications based on email
+      const uniqueApplications = result.data.filter((app, index, self) => 
+        index === self.findIndex(a => a.email === app.email)
+      );
+      
+      setApplications(uniqueApplications);
       setTotalPages(result.totalPages);
-      setTotalCount(result.count);
+      setTotalCount(uniqueApplications.length);
+      // Use API's distinct payment stats
       setTotalPaidCount(result.paymentStats.paid);
       setTotalPendingCount(result.paymentStats.pending);
     } catch (err) {
