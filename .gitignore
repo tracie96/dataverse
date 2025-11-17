@@ -11,6 +11,8 @@ pnpm-debug.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.next
+.next/cache/
 
 # Next.js build output
 .next/

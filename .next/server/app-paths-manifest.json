@@ -1,7 +1,4 @@
 {
-  "/api/cohort3-application/all/route": "app/api/cohort3-application/all/route.js",
   "/(site)/page": "app/(site)/page.js",
-  "/(site)/internship-cohort3/page": "app/(site)/internship-cohort3/page.js",
-  "/(site)/internship-cohort3/entries/page": "app/(site)/internship-cohort3/entries/page.js",
-  "/(site)/internship-cohort3/apply/page": "app/(site)/internship-cohort3/apply/page.js"
+  "/(site)/internship-cohort4/page": "app/(site)/internship-cohort4/page.js"
 }

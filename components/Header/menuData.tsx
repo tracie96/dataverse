@@ -21,9 +21,26 @@ const menuData: Menu[] = [
     submenu: [
       {
         id: 3.1,
+        title: "Cohort 1 (Closed)",
+        newTab: false,
+        path: "",
+      }, {
+        id: 3.2,
+        title: "Cohort 2 (Closed)",
+        newTab: false,
+        path: "",
+      },
+      {
+        id: 3.3,
         title: "Cohort 3 (Closed)",
         newTab: false,
         path: "",
+      },
+      {
+        id: 3.4,
+        title: "Cohort 4.0 (Open)",
+        newTab: false,
+        path: "/internship-cohort4",
       },
     ],
   },

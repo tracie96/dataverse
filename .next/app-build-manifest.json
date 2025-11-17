@@ -12,20 +12,10 @@
       "static/css/app/(site)/layout.css",
       "static/chunks/app/(site)/layout.js"
     ],
-    "/(site)/internship-cohort3/page": [
+    "/(site)/internship-cohort4/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(site)/internship-cohort3/page.js"
-    ],
-    "/(site)/internship-cohort3/apply/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(site)/internship-cohort3/apply/page.js"
-    ],
-    "/(site)/internship-cohort3/entries/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(site)/internship-cohort3/entries/page.js"
+      "static/chunks/app/(site)/internship-cohort4/page.js"
     ]
   }
 }
