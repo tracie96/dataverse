@@ -6,11 +6,17 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Dialog } from "@headlessui/react"
 import { useSearchParams } from 'next/navigation'
 
-// Create a Supabase client
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL! as string,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY! as string
-);
+// Create a Supabase client helper function
+const getSupabaseClient = () => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(supabaseUrl, supabaseKey);
+};
 
 // Define the education level type
 type EducationLevel = 'high_school' | 'bachelors' | 'masters' | 'phd' | 'undergraduate' | 'others';
@@ -163,6 +169,8 @@ type ModalProps = {
 };
 
 const submitToSupabase = async (formData: FormData, resumeUrl: string, isResearchInternship: boolean, academicPublicationsUrl?: string): Promise<void> => {
+    const supabase = getSupabaseClient();
+    
     // First, create the applicant
     const { data: applicantData, error: applicantError } = await supabase
         .from('applicants')
@@ -288,6 +296,7 @@ export default function InternshipForm() {
   
     const uploadFile = async (file: File, path: string) => {
         try {
+            const supabase = getSupabaseClient();
             console.log('Starting file upload to:', path);
             console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
             

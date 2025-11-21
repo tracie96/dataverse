@@ -43,10 +43,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // For intermediate track, specialization is required
-    if (trackLevel === 'intermediate' && !specialization) {
+    // For intermediate Data Analytics track, specialization is required
+    if (trackLevel === 'intermediate' && track === 'data-analytics' && !specialization) {
       return NextResponse.json(
-        { error: 'Specialization is required for intermediate track' },
+        { error: 'Specialization is required for intermediate Data Analytics track' },
         { status: 400 }
       );
     }

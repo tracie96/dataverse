@@ -217,20 +217,8 @@ const tracks = [
       },
       {
         title: "Data Science",
-        specializations: [
-          {
-            name: "Applied Machine Learning",
-            description: "Build and deploy machine learning models for real-world applications."
-          },
-          {
-            name: "Deep Learning",
-            description: "Explore neural networks and deep learning architectures for complex problems."
-          },
-          {
-            name: "Applications of LLM and Gen AI",
-            description: "Work with Large Language Models and Generative AI to create innovative solutions."
-          }
-        ]
+        description: "Advanced project-based mentoring in Applied Machine Learning, Deep Learning, and Applications of LLM and Gen AI. No domain specialization required.",
+        specializations: [] // No specializations for Data Science intermediate track
       }
     ]
   }
@@ -302,20 +290,41 @@ const Tracks = () => {
                       </div>
                     ) : (
                       <div className="space-y-4">
-                        <h5 className="font-semibold text-black dark:text-white text-sm mb-3 flex items-center gap-2">
-                          <span className="text-titlebg">🎯</span>
-                          Specializations (Choose Any)
-                        </h5>
-                        {track.specializations?.map((spec, specIndex) => (
-                          <div key={specIndex} className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-lg p-4">
-                            <p className="text-metatitle3 text-black dark:text-white font-medium mb-1">
-                              {spec.name}
-                            </p>
-                            <p className="text-regular text-waterloo dark:text-manatee text-sm">
-                              {spec.description}
-                            </p>
+                        {track.specializations && track.specializations.length > 0 ? (
+                          <>
+                            <h5 className="font-semibold text-black dark:text-white text-sm mb-3 flex items-center gap-2">
+                              <span className="text-titlebg">🎯</span>
+                              Domain Specialization (Choose Any)
+                            </h5>
+                            {track.specializations.map((spec, specIndex) => (
+                              <div key={specIndex} className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-lg p-4">
+                                <p className="text-metatitle3 text-black dark:text-white font-medium mb-1">
+                                  {spec.name}
+                                </p>
+                                <p className="text-regular text-waterloo dark:text-manatee text-sm">
+                                  {spec.description}
+                                </p>
+                              </div>
+                            ))}
+                          </>
+                        ) : (
+                          <div className="space-y-3">
+                            {track.description && (
+                              <p className="text-regular text-waterloo dark:text-manatee leading-relaxed mb-3">
+                                {track.description}
+                              </p>
+                            )}
+                            <div className="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700">
+                              <p className="text-metatitle3 text-black dark:text-white font-medium mb-2 flex items-center gap-2">
+                                <span className="text-titlebg">🚀</span>
+                                Project-Based Mentoring
+                              </p>
+                              <p className="text-regular text-waterloo dark:text-manatee text-sm">
+                                Focus on advanced projects in Applied Machine Learning, Deep Learning, and LLM/Gen AI applications with expert mentorship.
+                              </p>
+                            </div>
                           </div>
-                        ))}
+                        )}
                       </div>
                     )}
                   </div>

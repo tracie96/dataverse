@@ -59,9 +59,9 @@ const ApplyPage = () => {
       return;
     }
     
-    // For intermediate track, specialization is required
-    if (formData.trackLevel === "intermediate" && !formData.specialization) {
-      toast.error("Please select a specialization for the intermediate track");
+    // For intermediate Data Analytics track, specialization is required
+    if (formData.trackLevel === "intermediate" && formData.track === "data-analytics" && !formData.specialization) {
+      toast.error("Please select a specialization for Data Analytics");
       return;
     }
     
@@ -405,11 +405,11 @@ const ApplyPage = () => {
                     </div>
                   )}
                   
-                  {/* Specialization for Intermediate Track */}
-                  {formData.trackLevel === "intermediate" && formData.track && (
+                  {/* Specialization for Intermediate Data Analytics Track Only */}
+                  {formData.trackLevel === "intermediate" && formData.track === "data-analytics" && (
                     <div className="mb-4">
                       <label className="block text-sm font-medium text-black dark:text-white mb-2">
-                        Specialization *
+                        Domain Specialization *
                       </label>
                       <select
                         name="specialization"
@@ -419,20 +419,9 @@ const ApplyPage = () => {
                         className="w-full px-4 py-3 border border-stroke dark:border-strokedark rounded-lg focus:ring-2 focus:ring-titlebg focus:border-transparent dark:bg-blacksection dark:text-white"
                       >
                         <option value="">Select Specialization</option>
-                        {formData.track === "data-analytics" && (
-                          <>
-                            <option value="healthcare-analytics">Healthcare Analytics</option>
-                            <option value="financial-analytics">Financial Analytics</option>
-                            <option value="agricultural-analytics">Agricultural Analytics</option>
-                          </>
-                        )}
-                        {formData.track === "data-science" && (
-                          <>
-                            <option value="applied-machine-learning">Applied Machine Learning</option>
-                            <option value="deep-learning">Deep Learning</option>
-                            <option value="llm-gen-ai">Applications of LLM and Gen AI</option>
-                          </>
-                        )}
+                        <option value="healthcare-analytics">Healthcare Analytics</option>
+                        <option value="financial-analytics">Financial Analytics</option>
+                        <option value="agricultural-analytics">Agricultural Analytics</option>
                       </select>
                     </div>
                   )}

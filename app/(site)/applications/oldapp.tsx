@@ -5,10 +5,17 @@ import { createClient } from "@supabase/supabase-js";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
-);
+// Create a Supabase client helper function
+const getSupabaseClient = () => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(supabaseUrl, supabaseKey);
+};
 
 interface Application {
     id: string;
@@ -81,6 +88,7 @@ export default function ApplicationsTable() {
 
     const fetchApplications = async () => {
         try {
+            const supabase = getSupabaseClient();
             const { data, error } = await supabase
                 .from('internship_applications')
                 .select(`
