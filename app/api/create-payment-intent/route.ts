@@ -1,12 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+// Force dynamic rendering to prevent build-time evaluation issues
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
-});
+// Initialize Stripe client lazily (only when needed)
+const getStripeClient = () => {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+  if (!secretKey) {
+    throw new Error('Missing STRIPE_SECRET_KEY environment variable');
+  }
+  return new Stripe(secretKey, {});
+};
 
 export async function POST(request: NextRequest) {
   try {
+    const stripe = getStripeClient();
     const { amount, currency = 'usd', customerInfo } = await request.json();
 
     // Create payment intent with customer information
@@ -47,6 +57,7 @@ export async function POST(request: NextRequest) {
 // Helper function to get or create a Stripe Customer
 async function getOrCreateCustomer(customerInfo: any) {
   try {
+    const stripe = getStripeClient();
     // First, try to find existing customer by email
     const existingCustomers = await stripe.customers.list({
       email: customerInfo.email,

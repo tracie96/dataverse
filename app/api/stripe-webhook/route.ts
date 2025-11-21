@@ -2,13 +2,32 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-07-30.basil',
-});
+// Force dynamic rendering to prevent build-time evaluation issues
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+// Initialize Stripe client lazily (only when needed)
+const getStripeClient = () => {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+  if (!secretKey) {
+    throw new Error('Missing STRIPE_SECRET_KEY environment variable');
+  }
+  return new Stripe(secretKey, {
+    apiVersion: '2025-07-30.basil',
+  });
+};
+
+const getWebhookSecret = () => {
+  const secret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!secret) {
+    throw new Error('Missing STRIPE_WEBHOOK_SECRET environment variable');
+  }
+  return secret;
+};
 
 export async function POST(request: NextRequest) {
+  const stripe = getStripeClient();
+  const endpointSecret = getWebhookSecret();
   const body = await request.text();
   const sig = request.headers.get('stripe-signature');
 

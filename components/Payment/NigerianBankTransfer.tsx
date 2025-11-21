@@ -4,6 +4,18 @@ import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 
+// Create a Supabase client helper function (outside component to avoid re-creation)
+const getSupabaseClient = () => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+  
+  return createClient(supabaseUrl, supabaseKey);
+};
+
 interface NigerianBankTransferProps {
   onSuccess: (transferId: string) => void;
   onError: (error: string) => void;
@@ -32,11 +44,6 @@ const NigerianBankTransfer = ({
   });
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [message, setMessage] = useState('');
-
-  // Initialize Supabase client
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-  const supabase = createClient(supabaseUrl, supabaseKey);
 
   const bankDetails = {
     bankName: 'United Bank of Africa',
@@ -92,6 +99,7 @@ const NigerianBankTransfer = ({
       // Simulate upload progress
       setUploadProgress(25);
       
+      const supabase = getSupabaseClient();
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('receipti-url')
         .upload(filePath, receiptFile);
