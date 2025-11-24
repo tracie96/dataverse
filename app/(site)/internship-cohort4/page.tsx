@@ -129,7 +129,7 @@ const ProgramOverview = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-waterloo dark:text-manatee">Start Date:</span>
-                  <span className="font-medium text-black dark:text-white">Friday, 9th January, 2026</span>
+                  <span className="font-medium text-black dark:text-white">Friday, 21st February, 2026</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-waterloo dark:text-manatee">End Date:</span>
@@ -341,7 +341,7 @@ const Tracks = () => {
               🎯 Track Selection Process
             </h3>
             <p className="text-metatitle3 text-waterloo dark:text-manatee max-w-3xl mx-auto mb-6">
-              During orientation week (January 9th, 2026), you'll have the opportunity to explore each track in detail and make your final selection. 
+              During orientation week (February 21st, 2026), you'll have the opportunity to explore each track in detail and make your final selection. 
               Our mentors will guide you through the decision-making process based on your experience level, interests, and career goals.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
@@ -380,13 +380,13 @@ const timelineData = [
     status: "upcoming"
   },
   {
-    date: "January 9th, 2026",
+    date: "February 21st, 2026",
     activity: "Cohort Kickoff (Orientation and Track Selection)",
     icon: GraduationCap,
     status: "upcoming"
   },
   {
-    date: "February 13, 2026",
+    date: "April 4, 2026",
     activity: "Midpoint Project Review",
     icon: Target,
     status: "upcoming"
@@ -716,7 +716,7 @@ const faqs = [
   },
   {
     question: "Can I switch tracks after the program starts?",
-    answer: "Track selection is finalized during the orientation week (January 9th, 2026). Changes may be possible in exceptional circumstances but are generally not recommended."
+    answer: "Track selection is finalized during the orientation week (February 21st, 2026). Changes may be possible in exceptional circumstances but are generally not recommended."
   }
 ];
 

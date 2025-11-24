@@ -220,7 +220,7 @@ const ApplyPage = () => {
                       <ul className="text-sm text-green-700 dark:text-green-300 space-y-1">
                         <li>• We'll review your application within 48 hours</li>
                         <li>• You'll receive an email with next steps</li>
-                        <li>• Program starts January 9th, 2026</li>
+                        <li>• Program starts February 21st, 2026</li>
                         <li>• Check your email for program details</li>
                       </ul>
                     </div>
@@ -530,7 +530,7 @@ const ApplyPage = () => {
                     <BookOpen className="h-4 md:h-5 w-4 md:w-5 text-titlebg" />
                     <div>
                       <div className="font-medium text-black dark:text-white text-sm md:text-base">Start Date</div>
-                      <div className="text-xs md:text-sm text-waterloo dark:text-manatee">Jan 9th, 2026</div>
+                      <div className="text-xs md:text-sm text-waterloo dark:text-manatee">Feb 21st, 2026</div>
                     </div>
                   </div>
                   

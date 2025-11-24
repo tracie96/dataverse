@@ -249,7 +249,7 @@ const PaymentSuccessPage = () => {
                   Track Selection
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  If accepted, you'll finalize your track selection during orientation week (January 9th, 2026).
+                  If accepted, you'll finalize your track selection during orientation week (February 21st, 2026).
                 </p>
               </div>
             </div>
@@ -263,7 +263,7 @@ const PaymentSuccessPage = () => {
                   Program Start
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Cohort 4.0 begins on Friday, January 9th, 2026. You'll receive detailed program information via email.
+                  Cohort 4.0 begins on Friday, February 21st, 2026. You'll receive detailed program information via email.
                 </p>
               </div>
             </div>
