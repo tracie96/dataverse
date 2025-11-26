@@ -377,10 +377,10 @@ const Tracks = () => {
 // Timeline Component
 const timelineData = [
   {
-    date: "October 24 – January 5th, 2025",
+    date: "December 1st, 2025 – January 5th, 2026",
     activity: "Application Open + Outreach Campaign",
     icon: Users,
-    status: "active"
+    status: "upcoming"
   },
   {
     date: "Nov 7 – Nov 14, 2025",
