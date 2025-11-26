@@ -38,7 +38,7 @@ const menuData: Menu[] = [
       },
       {
         id: 3.4,
-        title: "Cohort 4.0 (Open)",
+        title: "Cohort 4 (Open)",
         newTab: false,
         path: "/internship-cohort4",
       },

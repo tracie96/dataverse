@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { CheckCircle, ArrowLeft, Mail, Clock, Users, Award } from 'lucide-react';
+import { CheckCircle, ArrowLeft, Mail, Clock, Users, Award, MessageCircle } from 'lucide-react';
 
 const PaymentSuccessPage = () => {
   const searchParams = useSearchParams();
@@ -276,13 +276,24 @@ const PaymentSuccessPage = () => {
             Need Help?
           </h3>
           <div className="text-center text-blue-800 dark:text-blue-200">
-            <p className="mb-2">
+            <p className="mb-4">
               If you have any questions about your application or the program, 
               please don't hesitate to reach out:
             </p>
-            <p className="font-medium">
+            <p className="font-medium mb-4">
               📧 info@dataverseafrica.org
             </p>
+            <div className="mt-4">
+              <a
+                href="https://chat.whatsapp.com/DTbY8rBosPW9F8NdjydaGm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-all duration-300 font-medium"
+              >
+                <MessageCircle className="h-5 w-5" />
+                Join Cohort 4.0 WhatsApp Group
+              </a>
+            </div>
           </div>
         </div>
 
