@@ -138,6 +138,8 @@ const SmartPayment = ({
               userEmail={userEmail}
               userFullName={userFullName}
               userPhone={userPhone}
+              amount={amount}
+              currency={currency}
             />
           )}
         </div>

@@ -263,10 +263,37 @@ const PaymentSuccessPage = () => {
                   Program Start
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Cohort 4.0 begins on Friday, February 21st, 2026. You'll receive detailed program information via email.
+                  Cohort 4.0 begins on Saturday, February 21st, 2026. You'll receive detailed program information via email.
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Join WhatsApp Group - Prominent Section */}
+        <div className="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 border-2 border-green-300 dark:border-green-700 rounded-lg p-8 mb-8">
+          <div className="text-center">
+            <div className="mb-4">
+              <MessageCircle className="h-12 w-12 text-green-600 dark:text-green-400 mx-auto mb-3" />
+              <h3 className="text-2xl font-bold text-green-900 dark:text-green-100 mb-2">
+                Join the Cohort 4.0 Community!
+              </h3>
+              <p className="text-green-800 dark:text-green-200 mb-6 max-w-2xl mx-auto">
+                Connect with fellow interns, mentors, and get real-time updates, support, and networking opportunities in our dedicated WhatsApp group.
+              </p>
+            </div>
+            <a
+              href="https://chat.whatsapp.com/DTbY8rBosPW9F8NdjydaGm"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              <MessageCircle className="h-6 w-6" />
+              Join Cohort 4.0 WhatsApp Group
+            </a>
+            <p className="text-sm text-green-700 dark:text-green-300 mt-4">
+              Click the button above to join our community group
+            </p>
           </div>
         </div>
 
@@ -276,24 +303,13 @@ const PaymentSuccessPage = () => {
             Need Help?
           </h3>
           <div className="text-center text-blue-800 dark:text-blue-200">
-            <p className="mb-4">
+            <p className="mb-2">
               If you have any questions about your application or the program, 
               please don't hesitate to reach out:
             </p>
-            <p className="font-medium mb-4">
+            <p className="font-medium">
               📧 info@dataverseafrica.org
             </p>
-            <div className="mt-4">
-              <a
-                href="https://chat.whatsapp.com/DTbY8rBosPW9F8NdjydaGm"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-all duration-300 font-medium"
-              >
-                <MessageCircle className="h-5 w-5" />
-                Join Cohort 4.0 WhatsApp Group
-              </a>
-            </div>
           </div>
         </div>
 

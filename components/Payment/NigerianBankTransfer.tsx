@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 
@@ -22,6 +22,8 @@ interface NigerianBankTransferProps {
   userEmail?: string;
   userFullName?: string;
   userPhone?: string;
+  amount?: number; // USD amount
+  currency?: string;
 }
 
 const NigerianBankTransfer = ({ 
@@ -29,7 +31,9 @@ const NigerianBankTransfer = ({
   onError, 
   userEmail = '', 
   userFullName = '', 
-  userPhone = '' 
+  userPhone = '',
+  amount = 25, // Default to $25 (Intermediate track)
+  currency = 'usd'
 }: NigerianBankTransferProps) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,14 +49,24 @@ const NigerianBankTransfer = ({
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [message, setMessage] = useState('');
 
-  const bankDetails = {
-    bankName: 'United Bank of Africa',
-    accountName: 'Francis Ifiora',
-    accountNumber: '2363765712',
-    accountType: 'Current Account',
-    nairaAmount: 37500,
-    usdAmount: 25
-  };
+  // Calculate NGN amount based on USD amount (rate: 1 USD = 1,500 NGN)
+  // Use useMemo to ensure it recalculates when amount changes
+  const bankDetails = useMemo(() => {
+    const nairaAmount = amount * 1500;
+    return {
+      bankName: 'United Bank of Africa',
+      accountName: 'Francis Ifiora',
+      accountNumber: '2363765712',
+      accountType: 'Current Account',
+      nairaAmount: nairaAmount,
+      usdAmount: amount
+    };
+  }, [amount]);
+
+  // Debug: Log when amount changes
+  useEffect(() => {
+    console.log('NigerianBankTransfer - Amount prop changed:', amount, 'NGN Amount:', bankDetails.nairaAmount);
+  }, [amount, bankDetails.nairaAmount]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

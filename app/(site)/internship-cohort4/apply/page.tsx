@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, Mail, Phone, Calendar, BookOpen, Target, CheckCircle, Sparkles, MessageCircle } from "lucide-react";
+import { ArrowLeft, Mail, Phone, Calendar, BookOpen, Target, CheckCircle, Sparkles } from "lucide-react";
 import Link from "next/link";
 import SmartPayment from "@/components/Payment/SmartPayment";
 import toast from "react-hot-toast";
@@ -171,9 +171,16 @@ const ApplyPage = () => {
                       </div>
                       
                       <SmartPayment
+                        key={`payment-${formData.trackLevel}-${getProgramFee()}`}
                         amount={getProgramFee()}
                         currency="usd"
+                        applicationData={{
+                          ...formData,
+                          programFee: getProgramFee(),
+                          nairaFee: getNairaFee()
+                        }}
                         onSuccess={async (paymentId, paymentMethod) => {
+                          console.log('Payment amount used:', getProgramFee(), 'Track Level:', formData.trackLevel);
                           console.log('Payment successful:', paymentId, paymentMethod);
                           
                           if (paymentMethod === 'stripe') {
@@ -570,26 +577,6 @@ const ApplyPage = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Join WhatsApp Group */}
-              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 md:p-6">
-                <h3 className="text-base md:text-lg font-semibold text-green-800 dark:text-green-200 mb-3 md:mb-4 flex items-center gap-2">
-                  <MessageCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                  Join Community
-                </h3>
-                <p className="text-sm text-green-700 dark:text-green-300 mb-4">
-                  Connect with other applicants and get real-time updates in our WhatsApp group.
-                </p>
-                <a
-                  href="https://chat.whatsapp.com/DTbY8rBosPW9F8NdjydaGm"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg transition-all duration-300 text-sm font-medium"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  Join WhatsApp Group
-                </a>
               </div>
 
               {/* Important Notes */}

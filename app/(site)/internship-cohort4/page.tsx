@@ -56,15 +56,6 @@ const Hero = () => {
                 <ArrowRight className="h-4 w-4" />
               </button>
             </Link>
-            <a 
-              href="https://chat.whatsapp.com/DTbY8rBosPW9F8NdjydaGm" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="border-2 border-green-500 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 px-8 py-4 text-metatitle3 font-medium rounded-lg transition-all duration-300 flex items-center gap-2 justify-center"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Join WhatsApp Group
-            </a>
           </div>
           
           {/* Key Stats */}
@@ -138,7 +129,7 @@ const ProgramOverview = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-waterloo dark:text-manatee">Start Date:</span>
-                  <span className="font-medium text-black dark:text-white">Friday, 21st February, 2026</span>
+                  <span className="font-medium text-black dark:text-white">Saturday, 21st February, 2026</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-waterloo dark:text-manatee">End Date:</span>
@@ -782,15 +773,6 @@ const CTA = () => {
                 Apply Now
               </button>
             </Link>
-            <a 
-              href="https://chat.whatsapp.com/DTbY8rBosPW9F8NdjydaGm" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 text-metatitle3 font-medium rounded-lg backdrop-blur-sm transition-all duration-300 flex items-center gap-2 justify-center"
-            >
-              <MessageCircle className="h-5 w-5" />
-              Join WhatsApp Group
-            </a>
             <button className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 text-metatitle3 font-medium rounded-lg backdrop-blur-sm transition-all duration-300">
               Download Brochure
             </button>
