@@ -198,7 +198,6 @@ const ApplyPage = () => {
                         userEmail={formData.email}
                         userFullName={`${formData.firstName} ${formData.lastName}`}
                         userPhone={formData.phone}
-                        applicationData={formData}
                       />
                     </div>
                   </div>
