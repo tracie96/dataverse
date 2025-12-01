@@ -130,6 +130,9 @@ const SmartPayment = ({
               onSuccess={handleStripeSuccess}
               onError={handleError}
               applicationData={applicationData}
+              successUrl={applicationData?.trackLevel 
+                ? `${typeof window !== 'undefined' ? window.location.origin : ''}/internship-cohort4/apply/success?email=${encodeURIComponent(userEmail || '')}&payment_method=stripe`
+                : `${typeof window !== 'undefined' ? window.location.origin : ''}/internship-cohort3/apply/success?email=${encodeURIComponent(userEmail || '')}&payment_method=stripe`}
             />
           ) : (
             <NigerianBankTransfer
@@ -140,6 +143,8 @@ const SmartPayment = ({
               userPhone={userPhone}
               amount={amount}
               currency={currency}
+              applicationData={applicationData}
+              cohort={applicationData?.trackLevel ? 'cohort4' : 'cohort3'}
             />
           )}
         </div>
@@ -150,6 +155,9 @@ const SmartPayment = ({
           onSuccess={handleStripeSuccess}
           onError={handleError}
           applicationData={applicationData}
+          successUrl={applicationData?.trackLevel 
+            ? `${typeof window !== 'undefined' ? window.location.origin : ''}/internship-cohort4/apply/success?email=${encodeURIComponent(userEmail || '')}&payment_method=stripe`
+            : undefined}
         />
       )}
     </div>

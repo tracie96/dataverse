@@ -97,7 +97,7 @@ const ApplyPage = () => {
         <div className="max-w-c-1390 mx-auto px-4">
           <Link href="/internship-cohort3" className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors">
             <ArrowLeft className="h-4 w-4" />
-            Back to Cohort 3
+            Back to Cohort 4
           </Link>
           <h1 className="text-xl md:text-2xl font-bold mt-3 md:mt-4">Apply for Cohort 3</h1>
           <p className="text-white/80 mt-1 md:mt-2 text-sm md:text-base">DataVerse Africa Internship Program</p>
@@ -211,7 +211,7 @@ const ApplyPage = () => {
                       className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-all duration-300"
                     >
                       <ArrowLeft className="h-4 w-4" />
-                      Back to Cohort 3
+                      Back to Cohort 4
                     </Link>
                   </div>
                 </div>

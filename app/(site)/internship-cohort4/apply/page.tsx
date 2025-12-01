@@ -70,44 +70,25 @@ const ApplyPage = () => {
       return;
     }
     
+    // Only validate - don't save to database yet
+    // Application will be saved only after successful payment
     setIsSubmitting(true);
     
-    try {
-      const response = await fetch('/api/cohort4-application', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      console.log({response});
-      const result = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to save application');
-      }
-      
-      // Save application data to localStorage for payment success page
-      localStorage.setItem('cohort4_application_data', JSON.stringify(formData));
-      
-      toast.success('Application saved successfully! Proceeding to payment...');
-      setShowPaymentForm(true);
-      
-      setTimeout(() => {
-        if (typeof window !== 'undefined') {
-          const paymentSection = document.querySelector('[data-payment-section]');
-          if (paymentSection) {
-            paymentSection.scrollIntoView({ behavior: 'smooth' });
-          }
+    // Save application data to localStorage for payment processing
+    localStorage.setItem('cohort4_application_data', JSON.stringify(formData));
+    
+    // Show payment form without saving to database
+    setShowPaymentForm(true);
+    setIsSubmitting(false);
+    
+    setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        const paymentSection = document.querySelector('[data-payment-section]');
+        if (paymentSection) {
+          paymentSection.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 100);
-      
-    } catch (error) {
-      console.error('Error saving application:', error);
-      toast.error('Failed to save application: ' + (error as Error).message);
-    } finally {
-      setIsSubmitting(false);
-    }
+      }
+    }, 100);
   };
 
   const getProgramFee = () => {
@@ -183,12 +164,15 @@ const ApplyPage = () => {
                           console.log('Payment amount used:', getProgramFee(), 'Track Level:', formData.trackLevel);
                           console.log('Payment successful:', paymentId, paymentMethod);
                           
-                          if (paymentMethod === 'stripe') {
-                            toast.success('Payment completed successfully!');
-                            setPaymentCompleted(true);
-                          } else if (paymentMethod === 'bank-transfer') {
+                          if (paymentMethod === 'bank-transfer') {
+                            // For bank transfer, saving happens in the NigerianBankTransfer component
+                            // via the bank-transfer API route
                             toast.success('Bank transfer details submitted successfully! Payment will be verified within 24-48 hours.');
                             setPaymentCompleted(true);
+                          } else if (paymentMethod === 'stripe') {
+                            // For Stripe, the success page will handle saving after redirect
+                            // No need to save here as user will be redirected
+                            toast.success('Payment completed successfully! Redirecting...');
                           }
                         }}
                         onError={(error) => {

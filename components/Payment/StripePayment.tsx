@@ -31,9 +31,10 @@ interface StripePaymentProps {
     applicationId?: string;
     [key: string]: any;
   };
+  successUrl?: string; // Custom success page URL
 }
 
-const PaymentForm = ({ amount, currency = 'usd', onSuccess, onError, applicationData }: StripePaymentProps) => {
+const PaymentForm = ({ amount, currency = 'usd', onSuccess, onError, applicationData, successUrl }: StripePaymentProps) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -43,7 +44,7 @@ const PaymentForm = ({ amount, currency = 'usd', onSuccess, onError, application
   console.log('PaymentForm render:', { stripe: !!stripe, elements: !!elements, applicationData });
 
     const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevents the default form submission behavior
+    e.preventDefault(); 
     console.log('handleSubmit called!', { stripe: !!stripe, elements: !!elements });
     
     if (!stripe || !elements) {
@@ -53,10 +54,18 @@ const PaymentForm = ({ amount, currency = 'usd', onSuccess, onError, application
 
     setIsProcessing(true);
 
+    // Determine success URL based on applicationData or use provided successUrl
+    // Check if this is Cohort 4 by looking for trackLevel in applicationData
+    const isCohort4 = applicationData?.trackLevel !== undefined;
+    const defaultSuccessUrl = isCohort4
+      ? `${window.location.origin}/internship-cohort4/apply/success?email=${encodeURIComponent(applicationData?.email || '')}&payment_method=stripe`
+      : `${window.location.origin}/internship-cohort3/apply/success?email=${encodeURIComponent(applicationData?.email || '')}&payment_method=stripe`;
+    const finalSuccessUrl = successUrl || defaultSuccessUrl;
+
     const result = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/internship-cohort3/apply/success?email=${encodeURIComponent(applicationData?.email || '')}&payment_method=stripe`,
+        return_url: finalSuccessUrl,
       },
     });
 console.log({result});
@@ -116,7 +125,7 @@ console.log({result});
   );
 };
 
-const StripePayment = ({ amount, currency, onSuccess, onError, applicationData }: StripePaymentProps) => {
+const StripePayment = ({ amount, currency, onSuccess, onError, applicationData, successUrl }: StripePaymentProps) => {
   const [clientSecret, setClientSecret] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -244,6 +253,7 @@ const StripePayment = ({ amount, currency, onSuccess, onError, applicationData }
           onSuccess={onSuccess} 
           onError={onError} 
           applicationData={applicationData} // Pass applicationData to PaymentForm
+          successUrl={successUrl}
         />
       </Elements>
     </div>

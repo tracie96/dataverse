@@ -288,7 +288,7 @@ const PaymentSuccessPage = () => {
             className="inline-flex items-center gap-2 bg-titlebg hover:bg-titlebgdark text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 shadow-solid-5"
           >
             <ArrowLeft className="h-5 w-5" />
-            Back to Cohort 3
+            Back to Cohort 4
           </Link>
           
           <div className="text-sm text-gray-500 dark:text-gray-400">

@@ -24,6 +24,8 @@ interface NigerianBankTransferProps {
   userPhone?: string;
   amount?: number; // USD amount
   currency?: string;
+  applicationData?: any; // Application data for saving after payment
+  cohort?: string; // 'cohort3' or 'cohort4'
 }
 
 const NigerianBankTransfer = ({ 
@@ -33,7 +35,9 @@ const NigerianBankTransfer = ({
   userFullName = '', 
   userPhone = '',
   amount = 25, // Default to $25 (Intermediate track)
-  currency = 'usd'
+  currency = 'usd',
+  applicationData = {},
+  cohort = 'cohort4' // Default to cohort4
 }: NigerianBankTransferProps) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -134,8 +138,16 @@ const NigerianBankTransfer = ({
 
       setUploadProgress(90);
 
-      // Call the bank transfer API
-      const response = await fetch('/api/cohort3-application/bank-transfer', {
+      // Call the appropriate bank transfer API based on cohort
+      const apiRoute = cohort === 'cohort4' 
+        ? '/api/cohort4-application/bank-transfer'
+        : '/api/cohort3-application/bank-transfer';
+      
+      const successRoute = cohort === 'cohort4'
+        ? `/internship-cohort4/apply/success?email=${encodeURIComponent(formData.email)}&payment_method=bank-transfer`
+        : `/internship-cohort3/apply/success?email=${encodeURIComponent(formData.email)}&payment_method=bank-transfer`;
+
+      const response = await fetch(apiRoute, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -143,7 +155,8 @@ const NigerianBankTransfer = ({
         body: JSON.stringify({
           email: formData.email,
           transferName: formData.fullName,
-          receiptUrl
+          receiptUrl,
+          applicationData: applicationData // Include full application data
         }),
       });
 
@@ -154,7 +167,7 @@ const NigerianBankTransfer = ({
       if (!response.ok) {
         throw new Error(result.error || 'Failed to save bank transfer details');
       }
-      router.push(`/internship-cohort3/apply/success?email=${encodeURIComponent(formData.email)}&payment_method=bank-transfer`);
+      router.push(successRoute);
       setMessage('Bank transfer details saved successfully! Payment will be verified within 24-48 hours.');
       onSuccess(result.transferId);
     } catch (error) {
