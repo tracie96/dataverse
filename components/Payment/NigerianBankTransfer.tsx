@@ -58,13 +58,13 @@ const NigerianBankTransfer = ({
   const bankDetails = useMemo(() => {
     const nairaAmount = amount * 1500;
     return {
-      bankName: 'United Bank of Africa',
-      accountName: 'Francis Ifiora',
-      accountNumber: '2363765712',
-      accountType: 'Current Account',
+    bankName: 'United Bank of Africa',
+    accountName: 'Francis Ifiora',
+    accountNumber: '2363765712',
+    accountType: 'Current Account',
       nairaAmount: nairaAmount,
       usdAmount: amount
-    };
+  };
   }, [amount]);
 
   // Debug: Log when amount changes

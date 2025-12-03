@@ -13,8 +13,8 @@ const getStripeClient = () => {
     throw new Error('Missing STRIPE_SECRET_KEY environment variable');
   }
   return new Stripe(secretKey, {
-    apiVersion: '2025-07-30.basil',
-  });
+  apiVersion: '2025-07-30.basil',
+});
 };
 
 const getWebhookSecret = () => {

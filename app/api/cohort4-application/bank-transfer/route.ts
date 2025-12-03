@@ -29,90 +29,30 @@ export async function POST(request: NextRequest) {
 
     const transferId = `NGN-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
-    const {
-      firstName,
-      lastName,
-      phone,
-      country,
-      city,
-      trackLevel,
-      track,
-      specialization,
-      experience,
-      motivation,
-      portfolio,
-      linkedin,
-      github
-    } = applicationData || {};
-
-    const { data: existingApplication, error: checkError } = await supabase
-      .from('cohort4_applications')
-      .select('id, email')
-      .eq('email', email.toLowerCase())
-      .single();
-
-    if (checkError && checkError.code !== 'PGRST116') {
-      console.error('Error checking for existing application:', checkError);
+    // Get application ID from applicationData (application should be saved already)
+    const applicationId = applicationData?.applicationId;
+    
+    if (!applicationId) {
+      console.error('Missing applicationId in applicationData:', applicationData);
       return NextResponse.json(
-        { error: 'Failed to check application: ' + checkError.message },
-        { status: 500 }
-      );
-    }
-
-    let data;
-    let error;
-
-    if (existingApplication) {
-      // Application exists, update it with bank transfer info
-      const { data: updateData, error: updateError } = await supabase
-        .from('cohort4_applications')
-        .update({
-          payment_completed: true,
-          payment_id: transferId,
-          payment_method: 'bank-transfer',
-          payment_date: new Date().toISOString(),
-        })
-        .eq('email', email.toLowerCase())
-        .select();
-      
-      data = updateData;
-      error = updateError;
-    } else if (applicationData) {
-      // Application doesn't exist, create it with bank transfer info
-      const { data: insertData, error: insertError } = await supabase
-        .from('cohort4_applications')
-        .insert([
-          {
-            first_name: firstName,
-            last_name: lastName,
-            email: email.toLowerCase(),
-            phone: phone || null,
-            country,
-            city,
-            track_level: trackLevel,
-            track,
-            specialization: specialization || null,
-            experience,
-            motivation,
-            portfolio_url: portfolio || null,
-            linkedin_url: linkedin || null,
-            github_url: github || null,
-            payment_completed: true,
-            payment_id: transferId,
-            payment_method: 'bank-transfer',
-            payment_date: new Date().toISOString(),
-          }
-        ])
-        .select();
-      
-      data = insertData;
-      error = insertError;
-    } else {
-      return NextResponse.json(
-        { error: 'Application data is required to save bank transfer' },
+        { error: 'Missing applicationId. Please ensure your application was registered first.' },
         { status: 400 }
       );
     }
+
+    // Update the specific application with bank transfer info using application ID
+    const { data, error } = await supabase
+      .from('cohort4_applications')
+      .update({
+        payment_completed: false, // Pending manual verification
+        payment_id: transferId,
+        payment_method: 'bank-transfer',
+        payment_date: new Date().toISOString(),
+        transfer_name: transferName,
+        receipt_url: receiptUrl,
+      })
+      .eq('id', applicationId)
+      .select();
 
     if (error) {
       console.error('Supabase error saving bank transfer:', error);

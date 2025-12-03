@@ -12,14 +12,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get admin credentials from environment variables
     const adminUsername = process.env.ADMIN_USERNAME;
     const adminPassword = process.env.ADMIN_PASSWORD;
 
     if (!adminUsername || !adminPassword) {
       console.error('Admin credentials not configured in environment variables');
       return NextResponse.json(
-        { error: 'Server configuration error - please contact support' },
+        { error: 'Server configdddduration error - please contact support' },
         { status: 500 }
       );
     }

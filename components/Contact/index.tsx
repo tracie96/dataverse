@@ -70,11 +70,11 @@ const Contact = () => {
         throw new Error(result.error || 'Failed to send enquiry');
       }
 
-      message.success({
+    message.success({
         content: result.message || 'Message sent successfully! We\'ll get back to you soon.',
-        className: 'custom-class',
-        style: {
-          marginTop: '10vh',
+      className: 'custom-class',
+      style: {
+        marginTop: '10vh',
           float: 'right',
           zIndex: 999
         },
@@ -93,7 +93,7 @@ const Contact = () => {
         style: {
           marginTop: '10vh',
           zIndex: 999
-        },
+      },
       });
     } finally {
       setIsSubmitting(false);
@@ -216,19 +216,19 @@ const Contact = () => {
                   >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                     {!isSubmitting && (
-                      <svg
-                        className="fill-white"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 14 14"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M10.4767 6.16664L6.00668 1.69664L7.18501 0.518311L13.6667 6.99998L7.18501 13.4816L6.00668 12.3033L10.4767 7.83331H0.333344V6.16664H10.4767Z"
-                          fill=""
-                        />
-                      </svg>
+                    <svg
+                      className="fill-white"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.4767 6.16664L6.00668 1.69664L7.18501 0.518311L13.6667 6.99998L7.18501 13.4816L6.00668 12.3033L10.4767 7.83331H0.333344V6.16664H10.4767Z"
+                        fill=""
+                      />
+                    </svg>
                     )}
                   </button>
                 </div>

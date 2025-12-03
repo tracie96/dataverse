@@ -28,6 +28,8 @@ const ApplyPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [applicationId, setApplicationId] = useState<string | null>(null);
+  const [applicationSaved, setApplicationSaved] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -70,25 +72,55 @@ const ApplyPage = () => {
       return;
     }
     
-    // Only validate - don't save to database yet
-    // Application will be saved only after successful payment
+    // Save application to database immediately
     setIsSubmitting(true);
     
-    // Save application data to localStorage for payment processing
-    localStorage.setItem('cohort4_application_data', JSON.stringify(formData));
-    
-    // Show payment form without saving to database
-    setShowPaymentForm(true);
-    setIsSubmitting(false);
-    
-    setTimeout(() => {
-      if (typeof window !== 'undefined') {
-        const paymentSection = document.querySelector('[data-payment-section]');
-        if (paymentSection) {
-          paymentSection.scrollIntoView({ behavior: 'smooth' });
-        }
+    try {
+      const response = await fetch('/api/cohort4-application', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to save application');
       }
-    }, 100);
+
+      // Save application ID for linking to payment
+      if (result.data?.id) {
+        setApplicationId(result.data.id);
+        // Also save to localStorage for payment success page
+        localStorage.setItem('cohort4_application_data', JSON.stringify({
+          ...formData,
+          applicationId: result.data.id
+        }));
+      }
+
+      setApplicationSaved(true);
+      toast.success('Application registered successfully! You can now proceed to payment.');
+      
+      // Show payment form
+      setShowPaymentForm(true);
+      
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          const paymentSection = document.querySelector('[data-payment-section]');
+          if (paymentSection) {
+            paymentSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }, 100);
+      
+    } catch (error) {
+      console.error('Error saving application:', error);
+      toast.error('Failed to save application: ' + (error as Error).message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const getProgramFee = () => {
@@ -122,6 +154,19 @@ const ApplyPage = () => {
                 Application Form
               </h2>
               
+              {/* Application Saved Success Message */}
+              {applicationSaved && !paymentCompleted && (
+                <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                  <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
+                    <CheckCircle className="h-5 w-5" />
+                    <span className="font-medium">Application Registered Successfully!</span>
+                  </div>
+                  <p className="text-green-600 dark:text-green-300 text-sm mt-1">
+                    Your application has been saved. You can proceed to payment below. You can also register again with a different track if needed.
+                  </p>
+                </div>
+              )}
+
               {/* Payment Section - Only shown when form is submitted */}
               {showPaymentForm && !paymentCompleted && (
                 <div className="mb-6 md:mb-8 p-4 md:p-6 bg-gradient-to-r from-titlebg/10 to-primary/10 border border-titlebg/20 rounded-lg" data-payment-section>
@@ -157,6 +202,7 @@ const ApplyPage = () => {
                         currency="usd"
                         applicationData={{
                           ...formData,
+                          applicationId: applicationId,
                           programFee: getProgramFee(),
                           nairaFee: getNairaFee()
                         }}
@@ -484,12 +530,12 @@ const ApplyPage = () => {
                     {isSubmitting ? (
                       <>
                         <div className="animate-spin rounded-full h-4 md:h-5 w-4 md:w-5 border-b-2 border-white"></div>
-                        Processing...
+                        Registering Application...
                       </>
                     ) : (
                       <>
                         <CheckCircle className="h-4 md:h-5 w-4 md:w-5" />
-                        Continue to Payment
+                        Register Application & Continue to Payment
                       </>
                     )}
                   </button>

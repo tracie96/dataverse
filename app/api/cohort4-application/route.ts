@@ -51,29 +51,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if email already exists
-    const { data: existingApplication, error: checkError } = await supabase
-      .from('cohort4_applications')
-      .select('id, email')
-      .eq('email', email.toLowerCase())
-      .single();
-
-    if (checkError && checkError.code !== 'PGRST116') {
-      console.error('Error checking email uniqueness:', checkError);
-      return NextResponse.json(
-        { error: 'Failed to validate email: ' + checkError.message },
-        { status: 500 }
-      );
-    }
-
-    if (existingApplication) {
-      return NextResponse.json(
-        { error: 'An application with this email address already exists. Please use a different email or contact support if you believe this is an error.' },
-        { status: 409 }
-      );
-    }
-
-    console.log({body});
+    // Allow multiple registrations - no duplicate check
+    // Users can register as many times as they want
+    console.log('Saving application for:', email);
+    
     // Insert into Supabase
     const { data, error } = await supabase
       .from('cohort4_applications')
@@ -108,8 +89,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Application saved successfully',
-      data: data[0]
+      message: 'Application registered successfully. You can proceed to payment.',
+      data: data[0],
+      applicationId: data[0]?.id
     });
 
   } catch (error) {
