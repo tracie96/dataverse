@@ -156,7 +156,7 @@ const Cohort4AdminPage = () => {
       
       const params = new URLSearchParams({
         page: currentPage.toString(),
-        limit: '20'
+        limit: '100'
       });
       
       if (searchTerm) params.append('search', searchTerm);
@@ -181,9 +181,7 @@ const Cohort4AdminPage = () => {
       const result: ApplicationsResponse = await response.json();
       
       // Remove duplicate applications based on email
-      const uniqueApplications = result.data.filter((app, index, self) => 
-        index === self.findIndex(a => a.email === app.email)
-      );
+      const uniqueApplications = result?.data || [];
       
       setApplications(uniqueApplications);
       setTotalPages(result.totalPages);
