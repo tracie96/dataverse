@@ -684,8 +684,8 @@ const ApplyPage = () => {
                 <ul className="space-y-1 md:space-y-2 text-xs md:text-sm text-titlebg">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-3 md:h-4 w-3 md:w-4 mt-0.5 flex-shrink-0" />
-                    Applications close January 5th, 2026
-                  </li>
+                    Applications close February 20th, 2026
+                    </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-3 md:h-4 w-3 md:w-4 mt-0.5 flex-shrink-0" />
                     Program fee is non-refundable

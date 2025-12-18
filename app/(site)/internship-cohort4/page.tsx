@@ -670,7 +670,7 @@ const Application = () => {
               </button>
             </Link>
             <p className="text-waterloo dark:text-manatee mt-4">
-              Applications close January 5th, 2026
+              Applications close February 20th, 2026
             </p>
           </div>
         </div>
