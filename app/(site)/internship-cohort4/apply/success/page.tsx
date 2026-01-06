@@ -127,11 +127,8 @@ const PaymentSuccessPage = () => {
     );
   }
 
-  // 5% discount applied
-  const programFee = applicationData?.trackLevel === 'beginners' ? '$38' : '$23.75';
-  const originalProgramFee = applicationData?.trackLevel === 'beginners' ? '$40' : '$25';
-  const nairaFee = applicationData?.trackLevel === 'beginners' ? '₦57,000' : '₦35,625';
-  const originalNairaFee = applicationData?.trackLevel === 'beginners' ? '₦60,000' : '₦37,500';
+  const programFee = applicationData?.trackLevel === 'beginners' ? '$40' : '$25';
+  const nairaFee = applicationData?.trackLevel === 'beginners' ? '₦60,000' : '₦37,500';
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 mt-[8rem]">
@@ -168,18 +165,8 @@ const PaymentSuccessPage = () => {
               </h3>
               <p className="text-sm text-green-700 dark:text-green-300">
                 {paymentMethod === 'stripe' 
-                  ? (
-                    <span>
-                      Your <span className="font-bold">{programFee}</span> payment has been processed
-                      <span className="block text-xs text-gray-500 line-through mt-1">Original: {originalProgramFee}</span>
-                    </span>
-                  )
-                  : (
-                    <span>
-                      Your <span className="font-bold">{nairaFee}</span> transfer details received
-                      <span className="block text-xs text-gray-500 line-through mt-1">Original: {originalNairaFee}</span>
-                    </span>
-                  )
+                  ? `Your ${programFee} payment has been processed`
+                  : `Your ${nairaFee} transfer details received`
                 }
               </p>
             </div>

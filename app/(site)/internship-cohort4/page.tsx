@@ -31,12 +31,6 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 max-w-c-1390 mx-auto px-4 text-center mt-[7rem]">
         <div className="max-w-4xl mx-auto space-y-8">
-          {/* Promo Badge */}
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-full text-metatitle font-bold shadow-lg animate-pulse mb-4">
-            <Sparkles className="h-5 w-5" />
-            🎉 Get 5% OFF Your Registration! Limited Time Offer
-          </div>
-          
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-titlebg/10 text-titlebg px-4 py-2 rounded-full text-metatitle font-medium">
             <Star className="h-4 w-4" />
@@ -75,11 +69,8 @@ const Hero = () => {
               <div className="text-waterloo dark:text-manatee">Track Levels</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-titlebg mb-2">
-                <span className="line-through text-gray-400 text-2xl mr-2">$40/$25</span>
-                <span className="text-green-600">$38/$23.75</span>
-              </div>
-              <div className="text-waterloo dark:text-manatee">Program Fee <span className="text-green-600 font-semibold">(5% OFF)</span></div>
+              <div className="text-3xl font-bold text-titlebg mb-2">$40/$25</div>
+              <div className="text-waterloo dark:text-manatee">Program Fee</div>
             </div>
           </div>
         </div>
@@ -171,8 +162,7 @@ const ProgramOverview = () => {
 const tracks = [
   {
     level: "Beginners",
-    fee: "$38 USD",
-    originalFee: "$40 USD",
+    fee: "$40 USD",
     description: "Perfect for those new to data analytics or data science. Combines structured training with project-based mentoring.",
     icon: Sparkles,
     color: "from-green-500 to-green-600",
@@ -201,8 +191,7 @@ const tracks = [
   },
   {
     level: "Intermediate",
-    fee: "$23.75 USD",
-    originalFee: "$25 USD",
+    fee: "$25 USD",
     description: "For learners with prior experience. Focuses on advanced project mentoring and real-world applications.",
     icon: Target,
     color: "from-purple-500 to-purple-600",
@@ -264,19 +253,9 @@ const Tracks = () => {
                   <h3 className="text-sectiontitle4 font-bold text-black dark:text-white group-hover:text-primary transition-colors">
                     {trackLevel.level} Track
                   </h3>
-                  <div className="flex flex-col items-center">
-                    <span className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-1 rounded-full font-bold text-sm shadow-lg">
-                      {trackLevel.fee}
-                    </span>
-                    {trackLevel.originalFee && (
-                      <span className="text-xs text-gray-500 dark:text-gray-400 line-through mt-1">
-                        {trackLevel.originalFee}
-                      </span>
-                    )}
-                    <span className="text-xs text-green-600 dark:text-green-400 font-semibold mt-1">
-                      5% OFF
-                    </span>
-                  </div>
+                  <span className="bg-white dark:bg-blacksection px-4 py-1 rounded-full text-titlebg font-semibold text-sm border border-titlebg/20">
+                    {trackLevel.fee}
+                  </span>
                 </div>
                 <p className="text-metatitle3 text-waterloo dark:text-manatee max-w-2xl mx-auto">
                   {trackLevel.description}
@@ -587,17 +566,11 @@ const Application = () => {
             
             {/* Program Fee */}
             <div className="space-y-4">
-              <div className="bg-gradient-to-br from-green-500 to-green-600 text-white p-8 rounded-lg relative overflow-hidden">
-                <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold animate-pulse">
-                  5% OFF
-                </div>
+              <div className="bg-gradient-to-br from-green-500 to-green-600 text-white p-8 rounded-lg">
                 <h3 className="text-itemtitle font-bold mb-6">Beginners Track</h3>
                 <div className="text-center mb-6">
-                  <div className="text-2xl line-through opacity-70 mb-1">$40 USD</div>
-                  <div className="text-4xl font-bold mb-2">$38 USD</div>
-                  <div className="text-lg opacity-90">
-                    <span className="line-through opacity-70">₦60,000</span> <span className="font-bold">₦57,000 NGN</span>
-                  </div>
+                  <div className="text-4xl font-bold mb-2">$40 USD</div>
+                  <div className="text-lg opacity-90">or ₦60,000 NGN</div>
                 </div>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-2">
@@ -623,17 +596,11 @@ const Application = () => {
                 </div>
               </div>
               
-              <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-8 rounded-lg relative overflow-hidden">
-                <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold animate-pulse">
-                  5% OFF
-                </div>
+              <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-8 rounded-lg">
                 <h3 className="text-itemtitle font-bold mb-6">Intermediate Track</h3>
                 <div className="text-center mb-6">
-                  <div className="text-2xl line-through opacity-70 mb-1">$25 USD</div>
-                  <div className="text-4xl font-bold mb-2">$23.75 USD</div>
-                  <div className="text-lg opacity-90">
-                    <span className="line-through opacity-70">₦37,500</span> <span className="font-bold">₦35,625 NGN</span>
-                  </div>
+                  <div className="text-4xl font-bold mb-2">$25 USD</div>
+                  <div className="text-lg opacity-90">or ₦37,500 NGN</div>
                 </div>
                 <div className="space-y-3 text-sm">
                   <div className="flex items-center gap-2">
@@ -729,7 +696,7 @@ const Sponsorship = () => {
 const faqs = [
   {
     question: "What's the difference between Beginners and Intermediate tracks?",
-    answer: "Beginners track ($38 with 5% discount, originally $40) combines structured training with project-based mentoring, perfect for those new to data analytics or data science. Intermediate track ($23.75 with 5% discount, originally $25) focuses on advanced project mentoring for learners with prior experience."
+    answer: "Beginners track ($40) combines structured training with project-based mentoring, perfect for those new to data analytics or data science. Intermediate track ($25) focuses on advanced project mentoring for learners with prior experience."
   },
   {
     question: "Is this internship suitable for complete beginners?",
@@ -795,14 +762,6 @@ const CTA = () => {
           <h2 className="text-sectiontitle2 md:text-sectiontitle3 font-bold text-white mb-6">
             Ready to Transform Your Tech Career?
           </h2>
-          <div className="bg-yellow-400/20 border-2 border-yellow-400 rounded-lg p-4 mb-6">
-            <p className="text-yellow-100 font-bold text-lg mb-2">
-              🎉 Limited Time Offer: Get 5% OFF Your Registration!
-            </p>
-            <p className="text-white/90 text-sm">
-              Beginners: $38 (was $40) | Intermediate: $23.75 (was $25)
-            </p>
-          </div>
           <p className="text-white/90 text-metatitle3 mb-8 leading-relaxed">
             Join Cohort 4.0 of the DataVerse Africa Internship Program and become part of a community 
             that's shaping the future of technology in Africa. Choose the track that fits your experience level!

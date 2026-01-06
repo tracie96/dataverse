@@ -123,20 +123,11 @@ const ApplyPage = () => {
     }
   };
 
-  // 5% discount applied
   const getProgramFee = () => {
-    return formData.trackLevel === "beginners" ? 38 : 23.75;
+    return formData.trackLevel === "beginners" ? 40 : 25;
   };
 
   const getNairaFee = () => {
-    return formData.trackLevel === "beginners" ? 57000 : 35625;
-  };
-  
-  const getOriginalFee = () => {
-    return formData.trackLevel === "beginners" ? 40 : 25;
-  };
-  
-  const getOriginalNairaFee = () => {
     return formData.trackLevel === "beginners" ? 60000 : 37500;
   };
 
@@ -155,21 +146,6 @@ const ApplyPage = () => {
       </div>
 
       <div className="max-w-c-1390 mx-auto px-3 md:px-4 py-6 md:py-12">
-        {/* Promo Banner */}
-        <div className="mb-6 bg-gradient-to-r from-green-500 to-green-600 text-white p-4 md:p-6 rounded-lg shadow-lg">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div className="flex items-center gap-3">
-              <Sparkles className="h-6 w-6 md:h-8 md:w-8" />
-              <div>
-                <h3 className="text-lg md:text-xl font-bold mb-1">🎉 Get 5% OFF Your Registration!</h3>
-                <p className="text-sm md:text-base text-green-100">
-                  Limited time offer - Beginners: $38 (was $40) | Intermediate: $23.75 (was $25)
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
           {/* Application Form */}
           <div className="lg:col-span-2">
@@ -198,30 +174,13 @@ const ApplyPage = () => {
                     <Target className="h-4 md:h-5 w-4 md:w-5" />
                     Payment Required
                   </h3>
-                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 mb-4">
-                    <div className="flex items-center gap-2 text-green-700 dark:text-green-400 mb-2">
-                      <Sparkles className="h-4 w-4" />
-                      <span className="font-semibold text-sm">5% Discount Applied!</span>
-                    </div>
-                    <div className="text-sm">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="line-through text-gray-500">${getOriginalFee()} USD</span>
-                        <span className="font-bold text-green-600 dark:text-green-400">${getProgramFee()} USD</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="line-through text-gray-500">₦{getOriginalNairaFee().toLocaleString()} NGN</span>
-                        <span className="font-bold text-green-600 dark:text-green-400">₦{getNairaFee().toLocaleString()} NGN</span>
-                      </div>
-                    </div>
-                  </div>
-                  
                   <p className="text-sm md:text-base text-waterloo dark:text-manatee mb-3 md:mb-4">
-                    To complete your application, you must first pay the program fee of <span className="font-semibold">${getProgramFee()} USD</span> (or <span className="font-semibold">₦{getNairaFee().toLocaleString()} NGN</span>).
+                    To complete your application, you must first pay the program fee of ${getProgramFee()} USD (or ₦{getNairaFee().toLocaleString()} NGN).
                   </p>
                   
                   <div className="space-y-3 md:space-y-4">
                     <h4 className="font-semibold text-black dark:text-white mb-2 text-sm md:text-base">
-                      Program Fee: <span className="text-green-600">${getProgramFee()} USD</span> <span className="text-sm text-gray-500 line-through">(was ${getOriginalFee()})</span>
+                      Program Fee: ${getProgramFee()} USD
                     </h4>
                     <p className="text-xs md:text-sm text-waterloo dark:text-manatee mb-3">
                       This covers access to tools, mentor support, certification, and career resources.
@@ -430,21 +389,15 @@ const ApplyPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div
                       onClick={() => setFormData(prev => ({ ...prev, trackLevel: "beginners", track: "", specialization: "" }))}
-                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all relative ${
+                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
                         formData.trackLevel === "beginners"
                           ? "border-green-500 bg-green-50 dark:bg-green-900/20"
                           : "border-stroke dark:border-strokedark hover:border-green-300"
                       }`}
                     >
-                      <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">
-                        5% OFF
-                      </div>
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-semibold text-black dark:text-white">Beginners Track</h4>
-                        <div className="text-right">
-                          <div className="text-titlebg font-bold">$38</div>
-                          <div className="text-xs text-gray-500 line-through">$40</div>
-                        </div>
+                        <span className="text-titlebg font-bold">$40</span>
                       </div>
                       <p className="text-sm text-waterloo dark:text-manatee">
                         Project-based mentoring + Training
@@ -453,21 +406,15 @@ const ApplyPage = () => {
                     
                     <div
                       onClick={() => setFormData(prev => ({ ...prev, trackLevel: "intermediate", track: "", specialization: "" }))}
-                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all relative ${
+                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
                         formData.trackLevel === "intermediate"
                           ? "border-purple-500 bg-purple-50 dark:bg-purple-900/20"
                           : "border-stroke dark:border-strokedark hover:border-purple-300"
                       }`}
                     >
-                      <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">
-                        5% OFF
-                      </div>
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-semibold text-black dark:text-white">Intermediate Track</h4>
-                        <div className="text-right">
-                          <div className="text-titlebg font-bold">$23.75</div>
-                          <div className="text-xs text-gray-500 line-through">$25</div>
-                        </div>
+                        <span className="text-titlebg font-bold">$25</span>
                       </div>
                       <p className="text-sm text-waterloo dark:text-manatee">
                         Advanced project mentoring
@@ -627,22 +574,8 @@ const ApplyPage = () => {
                     <Target className="h-4 md:h-5 w-4 md:w-5 text-titlebg" />
                     <div>
                       <div className="font-medium text-black dark:text-white text-sm md:text-base">Program Fee</div>
-                      <div className="text-xs md:text-sm">
-                        {formData.trackLevel === "beginners" ? (
-                          <div>
-                            <span className="text-green-600 dark:text-green-400 font-bold">$38 USD</span>
-                            <span className="text-gray-500 line-through ml-2">$40</span>
-                            <span className="block text-green-600 dark:text-green-400 text-xs mt-1">5% OFF</span>
-                          </div>
-                        ) : formData.trackLevel === "intermediate" ? (
-                          <div>
-                            <span className="text-green-600 dark:text-green-400 font-bold">$23.75 USD</span>
-                            <span className="text-gray-500 line-through ml-2">$25</span>
-                            <span className="block text-green-600 dark:text-green-400 text-xs mt-1">5% OFF</span>
-                          </div>
-                        ) : (
-                          <span className="text-waterloo dark:text-manatee">Select track</span>
-                        )}
+                      <div className="text-xs md:text-sm text-waterloo dark:text-manatee">
+                        {formData.trackLevel === "beginners" ? "$40 USD" : formData.trackLevel === "intermediate" ? "$25 USD" : "Select track"}
                       </div>
                     </div>
                   </div>
