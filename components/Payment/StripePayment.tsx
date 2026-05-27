@@ -31,7 +31,15 @@ interface StripePaymentProps {
     applicationId?: string;
     [key: string]: any;
   };
-  successUrl?: string; // Custom success page URL
+  successUrl?: string;
+  cohort?: 'cohort3' | 'cohort4' | 'cohort5';
+}
+
+function resolveStripeCohort(applicationData?: StripePaymentProps['applicationData'], cohort?: string): string {
+  if (cohort) return cohort;
+  if (applicationData?.trackId) return 'cohort5';
+  if (applicationData?.trackLevel) return 'cohort4';
+  return 'cohort3';
 }
 
 const PaymentForm = ({ amount, currency = 'usd', onSuccess, onError, applicationData, successUrl }: StripePaymentProps) => {
@@ -125,10 +133,11 @@ console.log({result});
   );
 };
 
-const StripePayment = ({ amount, currency, onSuccess, onError, applicationData, successUrl }: StripePaymentProps) => {
+const StripePayment = ({ amount, currency, onSuccess, onError, applicationData, successUrl, cohort }: StripePaymentProps) => {
   const [clientSecret, setClientSecret] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const resolvedCohort = resolveStripeCohort(applicationData, cohort);
 
   // Add debugging
   console.log('StripePayment render:', { amount, currency, applicationData });
@@ -144,6 +153,7 @@ const StripePayment = ({ amount, currency, onSuccess, onError, applicationData, 
       body: JSON.stringify({ 
         amount, 
         currency,
+        cohort: resolvedCohort,
         customerInfo: {
           name: applicationData?.name,
           email: applicationData?.email,
@@ -173,7 +183,7 @@ const StripePayment = ({ amount, currency, onSuccess, onError, applicationData, 
       .finally(() => {
         setIsLoading(false);
       });
-  }, [amount, currency, applicationData]);
+  }, [amount, currency, applicationData, resolvedCohort]);
 
   if (isLoading) {
     return (

@@ -5,20 +5,37 @@ import { useCountryDetection } from '../../hooks/useCountryDetection';
 import StripePayment from './StripePayment';
 import NigerianBankTransfer from './NigerianBankTransfer';
 
+type CohortId = 'cohort3' | 'cohort4' | 'cohort5';
+
 interface SmartPaymentProps {
   amount: number;
   currency?: string;
+  cohort?: CohortId;
   onSuccess: (paymentId: string, paymentMethod: string) => void;
   onError: (error: string) => void;
   userEmail?: string;
   userFullName?: string;
   userPhone?: string;
-  applicationData?: any; // Add application data prop
+  applicationData?: any;
+}
+
+function resolveCohort(cohort?: CohortId, applicationData?: any): CohortId {
+  if (cohort) return cohort;
+  if (applicationData?.trackId) return 'cohort5';
+  if (applicationData?.trackLevel) return 'cohort4';
+  return 'cohort3';
+}
+
+function getSuccessUrl(cohortId: CohortId, email: string): string {
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  const encoded = encodeURIComponent(email || '');
+  return `${origin}/internship-${cohortId}/apply/success?email=${encoded}&payment_method=stripe`;
 }
 
 const SmartPayment = ({ 
   amount, 
-  currency = 'usd', 
+  currency = 'usd',
+  cohort,
   onSuccess, 
   onError,
   userEmail = '',
@@ -28,6 +45,7 @@ const SmartPayment = ({
 }: SmartPaymentProps) => {
   const { countryInfo, isLoading } = useCountryDetection();
   const [paymentMethod, setPaymentMethod] = useState<'stripe' | 'bank-transfer'>('stripe');
+  const cohortId = resolveCohort(cohort, applicationData);
 
   const handleSuccess = (paymentId: string, paymentMethod: string) => {
     onSuccess(paymentId, paymentMethod);
@@ -127,12 +145,11 @@ const SmartPayment = ({
             <StripePayment
               amount={amount}
               currency={currency}
+              cohort={cohortId}
               onSuccess={handleStripeSuccess}
               onError={handleError}
               applicationData={applicationData}
-              successUrl={applicationData?.trackLevel 
-                ? `${typeof window !== 'undefined' ? window.location.origin : ''}/internship-cohort4/apply/success?email=${encodeURIComponent(userEmail || '')}&payment_method=stripe`
-                : `${typeof window !== 'undefined' ? window.location.origin : ''}/internship-cohort3/apply/success?email=${encodeURIComponent(userEmail || '')}&payment_method=stripe`}
+              successUrl={getSuccessUrl(cohortId, userEmail)}
             />
           ) : (
             <NigerianBankTransfer
@@ -144,7 +161,7 @@ const SmartPayment = ({
               amount={amount}
               currency={currency}
               applicationData={applicationData}
-              cohort={applicationData?.trackLevel ? 'cohort4' : 'cohort3'}
+              cohort={cohortId}
             />
           )}
         </div>
@@ -152,12 +169,11 @@ const SmartPayment = ({
         <StripePayment
           amount={amount}
           currency={currency}
+          cohort={cohortId}
           onSuccess={handleStripeSuccess}
           onError={handleError}
           applicationData={applicationData}
-          successUrl={applicationData?.trackLevel 
-            ? `${typeof window !== 'undefined' ? window.location.origin : ''}/internship-cohort4/apply/success?email=${encodeURIComponent(userEmail || '')}&payment_method=stripe`
-            : undefined}
+          successUrl={getSuccessUrl(cohortId, userEmail)}
         />
       )}
     </div>

@@ -17,15 +17,21 @@ const getStripeClient = () => {
 export async function POST(request: NextRequest) {
   try {
     const stripe = getStripeClient();
-    const { amount, currency = 'usd', customerInfo } = await request.json();
+    const { amount, currency = 'usd', customerInfo, cohort = 'cohort3' } = await request.json();
+
+    const cohortLabels: Record<string, string> = {
+      cohort3: 'Cohort 3',
+      cohort4: 'Cohort 4',
+      cohort5: 'Cohort 5',
+    };
 
     // Create payment intent with customer information
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount * 100, 
       currency,
-      // Add customer information to metadata for tracking
       metadata: {
-        program: 'DataVerse Africa Internship Cohort 3',
+        program: `DataVerse Africa Internship ${cohortLabels[cohort] || cohort}`,
+        cohort,
         type: 'internship_fee',
         customer_name: customerInfo?.name || 'Unknown',
         customer_email: customerInfo?.email || 'Unknown',

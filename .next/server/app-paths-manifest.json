@@ -1,7 +1,6 @@
 {
-  "/api/cohort4-application/route": "app/api/cohort4-application/route.js",
+  "/api/cohort5-application/route": "app/api/cohort5-application/route.js",
   "/api/create-payment-intent/route": "app/api/create-payment-intent/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/(site)/page": "app/(site)/page.js",
-  "/(site)/internship-cohort4/apply/page": "app/(site)/internship-cohort4/apply/page.js"
+  "/(site)/internship-cohort5/apply/page": "app/(site)/internship-cohort5/apply/page.js",
+  "/(site)/internship-cohort5/page": "app/(site)/internship-cohort5/page.js"
 }

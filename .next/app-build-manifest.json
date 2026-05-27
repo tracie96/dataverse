@@ -1,10 +1,9 @@
 {
   "pages": {
-    "/(site)/page": [
+    "/(site)/internship-cohort5/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/(site)/page.css",
-      "static/chunks/app/(site)/page.js"
+      "static/chunks/app/(site)/internship-cohort5/page.js"
     ],
     "/(site)/layout": [
       "static/chunks/webpack.js",
@@ -12,15 +11,10 @@
       "static/css/app/(site)/layout.css",
       "static/chunks/app/(site)/layout.js"
     ],
-    "/(site)/internship-cohort4/page": [
+    "/(site)/internship-cohort5/apply/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(site)/internship-cohort4/page.js"
-    ],
-    "/(site)/internship-cohort4/apply/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(site)/internship-cohort4/apply/page.js"
+      "static/chunks/app/(site)/internship-cohort5/apply/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
