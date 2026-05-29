@@ -21,6 +21,7 @@ import {
   ProjectOutlined,
   FileTextOutlined,
   MailOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 import {
   COHORT5_META,
@@ -68,16 +69,25 @@ const InternshipCohort5Page = () => {
               </span>
             </h1>
             <p className="text-para2 font-light max-w-3xl mx-auto leading-relaxed text-waterloo dark:text-manatee">
-              A 12-week immersive, project-based virtual internship across six specialized tracks — from
+              A 12-week immersive, project-based virtual internship across six specialized tracks, from
               beginner analytics to Microsoft Fabric data engineering.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
               <Link href="/internship-cohort5/apply">
-                <button className="bg-titlebg hover:bg-titlebgdark text-white px-8 py-4 text-metatitle3 font-medium rounded-lg transition-all shadow-solid-5 flex items-center gap-2">
+                <button className="bg-titlebg hover:bg-titlebgdark text-white px-8 py-4 text-metatitle3 font-medium rounded-lg transition-all shadow-solid-5 flex items-center justify-center gap-2">
                   Apply Now
                   <ArrowRightOutlined style={{ fontSize: 16 }} />
                 </button>
               </Link>
+              <a
+                href="https://chat.whatsapp.com/HPfkfv0m1jSLCsmocAzgxQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-metatitle3 font-medium rounded-lg transition-all shadow-solid-5 flex items-center justify-center gap-2"
+              >
+                Join WhatsApp Group
+                <MessageOutlined style={{ fontSize: 16 }} />
+              </a>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12">
               <div className="text-center">
