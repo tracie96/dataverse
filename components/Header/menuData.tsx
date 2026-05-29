@@ -40,7 +40,7 @@ const menuData: Menu[] = [
         id: 3.4,
         title: "Cohort 4 (Closed)",
         newTab: false,
-        path: "/internship-cohort4",
+        path: "",
       },
       {
         id: 3.5,
