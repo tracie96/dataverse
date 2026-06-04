@@ -58,9 +58,9 @@ const NigerianBankTransfer = ({
   const bankDetails = useMemo(() => {
     const nairaAmount = amount * 1500;
     return {
-    bankName: 'United Bank of Africa',
-    accountName: 'Francis Ifiora',
-    accountNumber: '2363765712',
+    bankName: 'United Bank for Africa',
+    accountName: 'DATAVERSE AFRICA INTELLIGENGE HUB LIMITED',
+    accountNumber: '1029602800',
     accountType: 'Current Account',
       nairaAmount: nairaAmount,
       usdAmount: amount

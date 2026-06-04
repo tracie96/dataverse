@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import {
   COHORT5_META,
+  COHORT5_TRACK_LIST,
   COHORT5_TRACKS,
   getTrackFeeUsd,
   type Cohort5TrackId,
@@ -34,9 +35,6 @@ export async function POST(request: NextRequest) {
       portfolio,
       linkedin,
       github,
-      applicationType = 'paid',
-      scholarshipReason,
-      financialNeedStatement,
     } = body;
 
     if (!firstName || !lastName || !email || !country || !city || !trackId || !experience || !motivation) {
@@ -55,36 +53,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const isScholarship = applicationType === 'scholarship';
-
-    if (isScholarship) {
-      if (!scholarshipReason || !financialNeedStatement) {
-        return NextResponse.json(
-          { error: 'Scholarship reason and financial need statement are required' },
-          { status: 400 }
-        );
-      }
-
-      const { count, error: countError } = await supabase
-        .from('cohort5_applications')
-        .select('*', { count: 'exact', head: true })
-        .eq('application_type', 'scholarship')
-        .in('scholarship_status', ['pending', 'approved']);
-
-      if (countError) {
-        console.error('Scholarship count error:', countError);
-        return NextResponse.json({ error: 'Failed to verify scholarship availability' }, { status: 500 });
-      }
-
-      if ((count ?? 0) >= COHORT5_META.maxScholarships) {
-        return NextResponse.json(
-          { error: 'Scholarship slots are currently full. Please apply as a paid applicant or check back later.' },
-          { status: 409 }
-        );
-      }
-    }
-
-    const programFeeUsd = getTrackFeeUsd(trackId as Cohort5TrackId);
+    const programFeeUsd = getTrackFeeUsd();
 
     const { data, error } = await supabase
       .from('cohort5_applications')
@@ -103,13 +72,10 @@ export async function POST(request: NextRequest) {
           portfolio_url: portfolio || null,
           linkedin_url: linkedin || null,
           github_url: github || null,
-          application_type: isScholarship ? 'scholarship' : 'paid',
-          scholarship_status: isScholarship ? 'pending' : 'none',
-          scholarship_reason: isScholarship ? scholarshipReason : null,
-          financial_need_statement: isScholarship ? financialNeedStatement : null,
-          program_fee_usd: isScholarship ? 0 : programFeeUsd,
-          payment_completed: isScholarship,
-          payment_method: isScholarship ? 'scholarship' : null,
+          application_type: 'paid',
+          scholarship_status: 'none',
+          program_fee_usd: programFeeUsd,
+          payment_completed: false,
         },
       ])
       .select();
@@ -121,12 +87,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: isScholarship
-        ? 'Scholarship application submitted successfully. Our team will review your request within 5–7 business days.'
-        : 'Application registered successfully. You can proceed to payment.',
+      message: 'Application registered successfully. You can proceed to payment.',
       data: data[0],
       applicationId: data[0]?.id,
-      isScholarship,
     });
   } catch (error) {
     console.error('Server error:', error);

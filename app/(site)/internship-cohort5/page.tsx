@@ -8,8 +8,6 @@ import {
   ClockCircleOutlined,
   CheckCircleOutlined,
   ReadOutlined,
-  BarChartOutlined,
-  ExperimentOutlined,
   LineChartOutlined,
   NodeIndexOutlined,
   ThunderboltOutlined,
@@ -32,8 +30,6 @@ import {
 type AntIcon = ComponentType<{ className?: string; style?: React.CSSProperties }>;
 
 const trackIcons: Record<string, AntIcon> = {
-  "data-analytics-beginners": BarChartOutlined,
-  "data-science-beginners": ExperimentOutlined,
   "data-analytics-intermediate": LineChartOutlined,
   "ai-automation-business-analytics": NodeIndexOutlined,
   "data-science-intermediate": ThunderboltOutlined,
@@ -69,12 +65,12 @@ const InternshipCohort5Page = () => {
               </span>
             </h1>
             <p className="text-para2 font-light max-w-3xl mx-auto leading-relaxed text-waterloo dark:text-manatee">
-              A 12-week immersive, project-based virtual internship across six specialized tracks, from
-              beginner analytics to Microsoft Fabric data engineering.
+              A 12-week immersive, project-based virtual internship across four specialized tracks,
+              with real-world projects, mentorship, and career readiness support.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-              <Link href="/internship-cohort5/apply">
-                <button className="bg-titlebg hover:bg-titlebgdark text-white px-8 py-4 text-metatitle3 font-medium rounded-lg transition-all shadow-solid-5 flex items-center justify-center gap-2">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center pt-8 w-full max-w-md sm:max-w-none mx-auto">
+              <Link href="/internship-cohort5/apply" className="w-full sm:w-auto">
+                <button className="w-full bg-titlebg hover:bg-titlebgdark text-white px-8 py-4 text-metatitle3 font-medium rounded-lg transition-all shadow-solid-5 flex items-center justify-center gap-2">
                   Apply Now
                   <ArrowRightOutlined style={{ fontSize: 16 }} />
                 </button>
@@ -83,7 +79,7 @@ const InternshipCohort5Page = () => {
                 href="https://chat.whatsapp.com/HPfkfv0m1jSLCsmocAzgxQ"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-metatitle3 font-medium rounded-lg transition-all shadow-solid-5 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-metatitle3 font-medium rounded-lg transition-all shadow-solid-5 flex items-center justify-center gap-2"
               >
                 Join WhatsApp Group
                 <MessageOutlined style={{ fontSize: 16 }} />
@@ -95,12 +91,12 @@ const InternshipCohort5Page = () => {
                 <div className="text-waterloo dark:text-manatee">Weeks Duration</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-titlebg mb-2">6</div>
+                <div className="text-3xl font-bold text-titlebg mb-2">4</div>
                 <div className="text-waterloo dark:text-manatee">Specialized Tracks</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-titlebg mb-2">$30–$70</div>
-                <div className="text-waterloo dark:text-manatee">Track-Based Pricing</div>
+                <div className="text-3xl font-bold text-titlebg mb-2">$45</div>
+                <div className="text-waterloo dark:text-manatee">Flat Program Fee</div>
               </div>
             </div>
           </div>
@@ -151,7 +147,7 @@ const InternshipCohort5Page = () => {
               Course Tracks & Pricing
             </h2>
             <p className="text-metatitle3 text-waterloo dark:text-manatee max-w-3xl mx-auto">
-              Six career-aligned tracks with tiered pricing from $30 to $70 USD.
+              Four career-aligned tracks at a flat rate of $45 USD per track.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -166,7 +162,7 @@ const InternshipCohort5Page = () => {
                     <div className="w-12 h-12 bg-titlebg rounded-lg flex items-center justify-center">
                       <Icon className="text-white" style={{ fontSize: 24 }} />
                     </div>
-                    <span className="text-titlebg font-bold text-lg">${track.feeUsd}</span>
+                    <span className="text-titlebg font-bold text-lg">${COHORT5_META.programFeeUsd}</span>
                   </div>
                   <h3 className="text-itemtitle2 font-bold text-black dark:text-white mb-2">{track.name}</h3>
                   <p className="text-sm text-waterloo dark:text-manatee mb-4">{track.description}</p>
@@ -250,24 +246,6 @@ const InternshipCohort5Page = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Scholarship */}
-      <section className="py-20 bg-alabaster dark:bg-blacksection">
-        <div className="max-w-c-1390 mx-auto px-4 text-center">
-          <h2 className="text-sectiontitle2 font-bold text-black dark:text-white mb-6">
-            Need-Based Scholarships
-          </h2>
-          <p className="text-metatitle3 text-waterloo dark:text-manatee max-w-2xl mx-auto mb-8">
-            A limited number of need-based scholarships ({COHORT5_META.maxScholarships} slots) are available
-            for exceptional candidates who demonstrate financial need and strong potential.
-          </p>
-          <Link href="/internship-cohort5/apply">
-            <button className="bg-titlebg hover:bg-titlebgdark text-white px-8 py-4 rounded-lg font-medium">
-              Apply for Scholarship
-            </button>
-          </Link>
         </div>
       </section>
 

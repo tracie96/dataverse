@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   ArrowLeft,
   Mail,
@@ -10,7 +10,6 @@ import {
   Target,
   CheckCircle,
   Sparkles,
-  Award,
 } from "lucide-react";
 import Link from "next/link";
 import SmartPayment from "@/components/Payment/SmartPayment";
@@ -23,7 +22,9 @@ import {
   getTrackFeeNgn,
   type Cohort5TrackId,
 } from "@/config/cohort5";
-import type { ApplicationType } from "@/types/cohort5";
+
+const programFee = getTrackFeeUsd();
+const nairaFee = getTrackFeeNgn();
 
 const ApplyPage = () => {
   const [formData, setFormData] = useState({
@@ -40,9 +41,6 @@ const ApplyPage = () => {
     portfolio: "",
     linkedin: "",
     github: "",
-    applicationType: "paid" as ApplicationType,
-    scholarshipReason: "",
-    financialNeedStatement: "",
     agreeToTerms: false,
   });
 
@@ -51,23 +49,8 @@ const ApplyPage = () => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [applicationId, setApplicationId] = useState<string | null>(null);
   const [applicationSaved, setApplicationSaved] = useState(false);
-  const [isScholarshipApp, setIsScholarshipApp] = useState(false);
-  const [scholarshipSlots, setScholarshipSlots] = useState<{ remaining: number; available: boolean } | null>(null);
-
-  useEffect(() => {
-    fetch("/api/cohort5-application/scholarship")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.remaining !== undefined) {
-          setScholarshipSlots({ remaining: data.remaining, available: data.available });
-        }
-      })
-      .catch(() => {});
-  }, []);
 
   const selectedTrack = formData.trackId ? COHORT5_TRACKS[formData.trackId] : null;
-  const programFee = formData.trackId ? getTrackFeeUsd(formData.trackId) : 0;
-  const nairaFee = formData.trackId ? getTrackFeeNgn(formData.trackId) : 0;
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -107,17 +90,6 @@ const ApplyPage = () => {
       return;
     }
 
-    if (formData.applicationType === "scholarship") {
-      if (!formData.scholarshipReason || !formData.financialNeedStatement) {
-        toast.error("Please complete the scholarship application fields");
-        return;
-      }
-      if (scholarshipSlots && !scholarshipSlots.available) {
-        toast.error("Scholarship slots are currently full");
-        return;
-      }
-    }
-
     if (!formData.agreeToTerms) {
       toast.error("Please agree to the terms and conditions");
       return;
@@ -144,18 +116,11 @@ const ApplyPage = () => {
       }
 
       setApplicationSaved(true);
-      setIsScholarshipApp(!!result.isScholarship);
-
-      if (result.isScholarship) {
-        setPaymentCompleted(true);
-        toast.success("Scholarship application submitted! We will review within 5–7 business days.");
-      } else {
-        toast.success("Application registered! Proceed to payment.");
-        setShowPaymentForm(true);
-        setTimeout(() => {
-          document.querySelector("[data-payment-section]")?.scrollIntoView({ behavior: "smooth" });
-        }, 100);
-      }
+      toast.success("Application registered! Proceed to payment.");
+      setShowPaymentForm(true);
+      setTimeout(() => {
+        document.querySelector("[data-payment-section]")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     } catch (error) {
       toast.error("Failed to save application: " + (error as Error).message);
     } finally {
@@ -194,7 +159,7 @@ const ApplyPage = () => {
                 </div>
               )}
 
-              {showPaymentForm && !paymentCompleted && formData.applicationType === "paid" && (
+              {showPaymentForm && !paymentCompleted && (
                 <div
                   className="mb-8 p-4 md:p-6 bg-gradient-to-r from-titlebg/10 to-primary/10 border border-titlebg/20 rounded-lg"
                   data-payment-section
@@ -234,16 +199,14 @@ const ApplyPage = () => {
                 </div>
               )}
 
-              {(paymentCompleted || isScholarshipApp) && (
+              {paymentCompleted && (
                 <div className="mb-6 p-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-center">
                   <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-green-800 dark:text-green-200 mb-2">
-                    {isScholarshipApp ? "Scholarship Application Submitted!" : "Application Complete!"}
+                    Application Complete!
                   </h3>
                   <p className="text-green-700 dark:text-green-300 text-sm mb-4">
-                    {isScholarshipApp
-                      ? "Our team will review your scholarship request within 5–7 business days."
-                      : "Your application and payment have been processed successfully."}
+                    Your application and payment have been processed successfully.
                   </p>
                   <Link
                     href="/internship-cohort5"
@@ -255,9 +218,8 @@ const ApplyPage = () => {
                 </div>
               )}
 
-              {!paymentCompleted && !isScholarshipApp && (
+              {!paymentCompleted && (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Personal Info */}
                   <div>
                     <h3 className="text-lg font-semibold text-black dark:text-white mb-4 flex items-center gap-2">
                       <Mail className="h-5 w-5 text-titlebg" />
@@ -280,9 +242,7 @@ const ApplyPage = () => {
                         </div>
                       ))}
                       <div>
-                        <label className="block text-sm font-medium text-black dark:text-white mb-2">
-                          Email *
-                        </label>
+                        <label className="block text-sm font-medium text-black dark:text-white mb-2">Email *</label>
                         <input
                           type="email"
                           name="email"
@@ -293,9 +253,7 @@ const ApplyPage = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-black dark:text-white mb-2">
-                          Phone
-                        </label>
+                        <label className="block text-sm font-medium text-black dark:text-white mb-2">Phone</label>
                         <input
                           type="tel"
                           name="phone"
@@ -305,9 +263,7 @@ const ApplyPage = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-black dark:text-white mb-2">
-                          Country *
-                        </label>
+                        <label className="block text-sm font-medium text-black dark:text-white mb-2">Country *</label>
                         <select
                           name="country"
                           value={formData.country}
@@ -326,9 +282,7 @@ const ApplyPage = () => {
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-black dark:text-white mb-2">
-                          City *
-                        </label>
+                        <label className="block text-sm font-medium text-black dark:text-white mb-2">City *</label>
                         <input
                           type="text"
                           name="city"
@@ -341,7 +295,6 @@ const ApplyPage = () => {
                     </div>
                   </div>
 
-                  {/* Track Selection */}
                   <div>
                     <h3 className="text-lg font-semibold text-black dark:text-white mb-4 flex items-center gap-2">
                       <Sparkles className="h-5 w-5 text-titlebg" />
@@ -360,7 +313,7 @@ const ApplyPage = () => {
                         >
                           <div className="flex justify-between items-start mb-1">
                             <h4 className="font-semibold text-black dark:text-white text-sm">{track.name}</h4>
-                            <span className="text-titlebg font-bold text-sm">${track.feeUsd}</span>
+                            <span className="text-titlebg font-bold text-sm">${programFee}</span>
                           </div>
                           <p className="text-xs text-waterloo dark:text-manatee">{track.description}</p>
                         </div>
@@ -405,7 +358,6 @@ const ApplyPage = () => {
                     </div>
                   </div>
 
-                  {/* Motivation */}
                   <div>
                     <h3 className="text-lg font-semibold text-black dark:text-white mb-4 flex items-center gap-2">
                       <Target className="h-5 w-5 text-titlebg" />
@@ -422,91 +374,6 @@ const ApplyPage = () => {
                     />
                   </div>
 
-                  {/* Application Type */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-black dark:text-white mb-4 flex items-center gap-2">
-                      <Award className="h-5 w-5 text-titlebg" />
-                      Application Type
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <label
-                        className={`p-4 rounded-lg border-2 cursor-pointer ${
-                          formData.applicationType === "paid"
-                            ? "border-titlebg bg-titlebg/5"
-                            : "border-stroke dark:border-strokedark"
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="applicationType"
-                          value="paid"
-                          checked={formData.applicationType === "paid"}
-                          onChange={handleInputChange}
-                          className="sr-only"
-                        />
-                        <div className="font-semibold text-black dark:text-white">Paid Application</div>
-                        <p className="text-sm text-waterloo dark:text-manatee mt-1">
-                          Pay the program fee after registration
-                        </p>
-                      </label>
-                      <label
-                        className={`p-4 rounded-lg border-2 cursor-pointer ${
-                          formData.applicationType === "scholarship"
-                            ? "border-titlebg bg-titlebg/5"
-                            : "border-stroke dark:border-strokedark"
-                        } ${scholarshipSlots && !scholarshipSlots.available ? "opacity-50 cursor-not-allowed" : ""}`}
-                      >
-                        <input
-                          type="radio"
-                          name="applicationType"
-                          value="scholarship"
-                          checked={formData.applicationType === "scholarship"}
-                          onChange={handleInputChange}
-                          disabled={scholarshipSlots !== null && !scholarshipSlots.available}
-                          className="sr-only"
-                        />
-                        <div className="font-semibold text-black dark:text-white">Need-Based Scholarship</div>
-                        <p className="text-sm text-waterloo dark:text-manatee mt-1">
-                          {scholarshipSlots
-                            ? `${scholarshipSlots.remaining} of ${COHORT5_META.maxScholarships} slots remaining`
-                            : "Limited slots available"}
-                        </p>
-                      </label>
-                    </div>
-
-                    {formData.applicationType === "scholarship" && (
-                      <div className="mt-4 space-y-4 p-4 bg-alabaster dark:bg-blacksection rounded-lg border border-stroke dark:border-strokedark">
-                        <div>
-                          <label className="block text-sm font-medium text-black dark:text-white mb-2">
-                            Why are you applying for a scholarship? *
-                          </label>
-                          <textarea
-                            name="scholarshipReason"
-                            value={formData.scholarshipReason}
-                            onChange={handleInputChange}
-                            required
-                            rows={3}
-                            className="w-full px-4 py-3 border border-stroke dark:border-strokedark rounded-lg focus:ring-2 focus:ring-titlebg dark:bg-blacksection dark:text-white"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-black dark:text-white mb-2">
-                            Describe your financial need *
-                          </label>
-                          <textarea
-                            name="financialNeedStatement"
-                            value={formData.financialNeedStatement}
-                            onChange={handleInputChange}
-                            required
-                            rows={3}
-                            className="w-full px-4 py-3 border border-stroke dark:border-strokedark rounded-lg focus:ring-2 focus:ring-titlebg dark:bg-blacksection dark:text-white"
-                          />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Terms */}
                   <div className="flex items-start gap-3">
                     <input
                       type="checkbox"
@@ -517,11 +384,7 @@ const ApplyPage = () => {
                       className="mt-1 h-4 w-4 text-titlebg focus:ring-titlebg border-stroke rounded"
                     />
                     <label className="text-sm text-waterloo dark:text-manatee">
-                      I agree to the program terms.{" "}
-                      {formData.applicationType === "paid" && formData.trackId
-                        ? `Program fee: $${programFee} USD for ${selectedTrack?.name}.`
-                        : "Scholarship applications are subject to review and approval."}{" "}
-                      *
+                      I agree to the program terms. Program fee: ${programFee} USD for all tracks. *
                     </label>
                   </div>
 
@@ -538,9 +401,7 @@ const ApplyPage = () => {
                     ) : (
                       <>
                         <CheckCircle className="h-5 w-5" />
-                        {formData.applicationType === "scholarship"
-                          ? "Submit Scholarship Application"
-                          : "Register & Continue to Payment"}
+                        Register & Continue to Payment
                       </>
                     )}
                   </button>
@@ -549,7 +410,6 @@ const ApplyPage = () => {
             </div>
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-6">
             <div className="bg-white dark:bg-blacksection border border-stroke dark:border-strokedark rounded-lg p-6 shadow-solid-3">
               <h3 className="text-lg font-semibold text-black dark:text-white mb-4">Program Summary</h3>
@@ -568,21 +428,19 @@ const ApplyPage = () => {
                     <div className="text-waterloo dark:text-manatee">{COHORT5_META.durationWeeks} Weeks</div>
                   </div>
                 </div>
-                {selectedTrack && (
-                  <div className="flex items-center gap-3">
-                    <Target className="h-5 w-5 text-titlebg" />
-                    <div>
-                      <div className="font-medium text-black dark:text-white">Selected Track Fee</div>
-                      <div className="text-titlebg font-bold">${programFee} USD</div>
-                    </div>
+                <div className="flex items-center gap-3">
+                  <Target className="h-5 w-5 text-titlebg" />
+                  <div>
+                    <div className="font-medium text-black dark:text-white">Program Fee</div>
+                    <div className="text-titlebg font-bold">${programFee} USD (all tracks)</div>
                   </div>
-                )}
+                </div>
               </div>
             </div>
             <div className="bg-titlebg/10 border border-titlebg/20 rounded-lg p-6">
               <h3 className="font-semibold text-titlebg mb-3">Important Dates</h3>
               <ul className="space-y-2 text-xs text-titlebg">
-                <li>Applications: {COHORT5_META.applicationOpen} – {COHORT5_META.applicationClose}</li>
+                <li>Applications close: {COHORT5_META.applicationClose}</li>
                 <li>Midpoint Review: {COHORT5_META.midpointReview}</li>
                 <li>Capstone Week: {COHORT5_META.capstoneWeek}</li>
               </ul>

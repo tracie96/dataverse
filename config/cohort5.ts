@@ -5,16 +5,14 @@ export const COHORT5_META = {
   kickoffDate: 'Friday, July 18, 2026',
   endDate: 'Friday, October 10, 2026',
   applicationOpen: 'May 22, 2026',
-  applicationClose: 'July 11, 2026',
+  applicationClose: 'Friday, 28th August 2026',
   midpointReview: 'August 29, 2026',
   capstoneWeek: 'September 26 – October 4, 2026',
   nairaRate: 1500,
-  maxScholarships: 25,
+  programFeeUsd: 45,
 } as const;
 
 export type Cohort5TrackId =
-  | 'data-analytics-beginners'
-  | 'data-science-beginners'
   | 'data-analytics-intermediate'
   | 'ai-automation-business-analytics'
   | 'data-science-intermediate'
@@ -28,7 +26,7 @@ export type Cohort5Specialization =
 export interface Cohort5Track {
   id: Cohort5TrackId;
   name: string;
-  level: 'beginners' | 'intermediate' | 'advanced';
+  level: 'intermediate' | 'advanced';
   feeUsd: number;
   description: string;
   skills: string[];
@@ -37,41 +35,11 @@ export interface Cohort5Track {
 }
 
 export const COHORT5_TRACKS: Record<Cohort5TrackId, Cohort5Track> = {
-  'data-analytics-beginners': {
-    id: 'data-analytics-beginners',
-    name: 'Data Analytics Beginners',
-    level: 'beginners',
-    feeUsd: 45,
-    description: 'Structured training with project-based mentoring for newcomers to data analytics.',
-    skills: [
-      'Excel',
-      'Power BI',
-      'AI for Data Analytics',
-      'PostgreSQL',
-      'Introduction to Python for Data Analysis',
-      'Project Delivery',
-    ],
-    requiresSpecialization: false,
-  },
-  'data-science-beginners': {
-    id: 'data-science-beginners',
-    name: 'Data Science Beginners',
-    level: 'beginners',
-    feeUsd: 45,
-    description: 'Foundational data science skills with hands-on projects and mentor support.',
-    skills: [
-      'Python Fundamentals',
-      'Python for Data Analysis',
-      'Machine Learning Fundamentals and Deployment',
-      'Project Delivery / Capstone',
-    ],
-    requiresSpecialization: false,
-  },
   'data-analytics-intermediate': {
     id: 'data-analytics-intermediate',
     name: 'Data Analytics Intermediate',
     level: 'intermediate',
-    feeUsd: 30,
+    feeUsd: 45,
     description: 'Domain-specialized analytics for learners with prior experience.',
     skills: ['Healthcare Analytics', 'Financial Analytics', 'Agricultural Analytics'],
     requiresSpecialization: true,
@@ -97,7 +65,7 @@ export const COHORT5_TRACKS: Record<Cohort5TrackId, Cohort5Track> = {
     id: 'ai-automation-business-analytics',
     name: 'AI Automation & Business Analytics',
     level: 'intermediate',
-    feeUsd: 30,
+    feeUsd: 45,
     description: 'Build AI-powered workflows and automate business processes with n8n.',
     skills: [
       'Introduction to n8n',
@@ -110,7 +78,7 @@ export const COHORT5_TRACKS: Record<Cohort5TrackId, Cohort5Track> = {
     id: 'data-science-intermediate',
     name: 'Data Science Intermediate',
     level: 'intermediate',
-    feeUsd: 35,
+    feeUsd: 45,
     description: 'Advanced ML, deep learning, LLM applications, and cloud deployment.',
     skills: [
       'Applied Machine Learning',
@@ -126,7 +94,7 @@ export const COHORT5_TRACKS: Record<Cohort5TrackId, Cohort5Track> = {
     id: 'microsoft-fabric-data-engineering',
     name: 'Microsoft Fabric Data Engineering Associate',
     level: 'advanced',
-    feeUsd: 70,
+    feeUsd: 45,
     description: 'Enterprise data engineering on Microsoft Fabric with DP-700 exam preparation.',
     skills: [
       'Foundations of Microsoft Fabric',
@@ -141,7 +109,7 @@ export const COHORT5_TRACKS: Record<Cohort5TrackId, Cohort5Track> = {
 
 export const COHORT5_TIMELINE = [
   {
-    date: 'May 22 – July 11, 2026',
+    date: 'May 22 – Friday, 28th August 2026',
     activity: 'Application Open + Outreach Campaign',
     status: 'active' as const,
   },
@@ -167,12 +135,12 @@ export const COHORT5_TIMELINE = [
   },
 ];
 
-export function getTrackFeeUsd(trackId: Cohort5TrackId): number {
-  return COHORT5_TRACKS[trackId]?.feeUsd ?? 0;
+export function getTrackFeeUsd(_trackId?: Cohort5TrackId): number {
+  return COHORT5_META.programFeeUsd;
 }
 
-export function getTrackFeeNgn(trackId: Cohort5TrackId): number {
-  return getTrackFeeUsd(trackId) * COHORT5_META.nairaRate;
+export function getTrackFeeNgn(_trackId?: Cohort5TrackId): number {
+  return COHORT5_META.programFeeUsd * COHORT5_META.nairaRate;
 }
 
 export function getTrackById(trackId: string): Cohort5Track | undefined {
