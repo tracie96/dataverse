@@ -140,43 +140,76 @@ const InternshipCohort5Page = () => {
       </section>
 
       {/* Tracks */}
-      <section className="py-20 bg-white dark:bg-black">
+      <section className="py-20 bg-gradient-to-b from-alabaster via-white to-alabaster dark:from-black dark:via-blacksection dark:to-black">
         <div className="max-w-c-1390 mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-sectiontitle2 md:text-sectiontitle3 font-bold text-black dark:text-white mb-6">
+            <span className="inline-block mb-4 px-4 py-1.5 rounded-full text-sm font-medium bg-titlebg/10 text-titlebg border border-titlebg/20">
+              4 Specialized Tracks · $45 USD each
+            </span>
+            <h2 className="text-sectiontitle2 md:text-sectiontitle3 font-bold text-black dark:text-white mb-4">
               Course Tracks & Pricing
             </h2>
-            <p className="text-metatitle3 text-waterloo dark:text-manatee max-w-3xl mx-auto">
-              Four career-aligned tracks at a flat rate of $45 USD per track.
+            <p className="text-metatitle3 text-waterloo dark:text-manatee max-w-2xl mx-auto">
+              Pick the path that fits your goals. Every track includes mentorship, real-world projects, and career support.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {COHORT5_TRACK_LIST.map((track) => {
               const Icon = trackIcons[track.id] || ReadOutlined;
               return (
                 <div
                   key={track.id}
-                  className="group bg-white dark:bg-blacksection border border-stroke dark:border-strokedark rounded-xl p-6 hover:shadow-solid-7 transition-all hover:-translate-y-1"
+                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-stroke/50 dark:border-strokedark/50 bg-white/80 dark:bg-blacksection/80 backdrop-blur-sm p-6 lg:p-8 shadow-[0_4px_24px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(199,129,55,0.12)] dark:hover:shadow-[0_20px_40px_rgba(199,129,55,0.08)] hover:border-titlebg/30"
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-titlebg rounded-lg flex items-center justify-center">
-                      <Icon className="text-white" style={{ fontSize: 24 }} />
+                  <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-titlebg to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <div className="flex items-center gap-4">
+                      <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-titlebg to-titlebgdark shadow-lg shadow-titlebg/25 group-hover:scale-105 transition-transform duration-300">
+                        <Icon className="text-white" style={{ fontSize: 26 }} />
+                      </div>
+                      <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize bg-stroke/30 dark:bg-strokedark/50 text-waterloo dark:text-manatee">
+                        {track.level}
+                      </span>
                     </div>
-                    <span className="text-titlebg font-bold text-lg">${COHORT5_META.programFeeUsd}</span>
+                    <div className="text-right shrink-0">
+                      <div className="text-2xl font-bold text-titlebg leading-none">
+                        ${COHORT5_META.programFeeUsd}
+                      </div>
+                      <div className="text-[11px] text-waterloo dark:text-manatee mt-0.5 uppercase tracking-wide">
+                        USD
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-itemtitle2 font-bold text-black dark:text-white mb-2">{track.name}</h3>
-                  <p className="text-sm text-waterloo dark:text-manatee mb-4">{track.description}</p>
-                  <ul className="space-y-1">
-                    {track.skills.slice(0, 4).map((skill, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs text-waterloo dark:text-manatee">
-                        <CheckCircleOutlined className="text-titlebg mt-0.5 flex-shrink-0" style={{ fontSize: 12 }} />
-                        {skill}
-                      </li>
-                    ))}
-                    {track.skills.length > 4 && (
-                      <li className="text-xs text-titlebg">+{track.skills.length - 4} more modules</li>
-                    )}
-                  </ul>
+
+                  <h3 className="text-lg lg:text-xl font-bold text-black dark:text-white mb-2 group-hover:text-titlebg dark:group-hover:text-titlebg transition-colors duration-300">
+                    {track.name}
+                  </h3>
+                  <p className="text-sm text-waterloo dark:text-manatee leading-relaxed mb-5 flex-grow">
+                    {track.description}
+                  </p>
+
+                  <div className="pt-5 border-t border-stroke/40 dark:border-strokedark/40">
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-waterloo dark:text-manatee mb-3">
+                      What you&apos;ll cover
+                    </p>
+                    <ul className="space-y-2">
+                      {track.skills.slice(0, 4).map((skill, i) => (
+                        <li key={i} className="flex items-center gap-2.5 text-sm text-black/80 dark:text-white/80">
+                          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-titlebg/10">
+                            <CheckCircleOutlined className="text-titlebg" style={{ fontSize: 11 }} />
+                          </span>
+                          {skill}
+                        </li>
+                      ))}
+                      {track.skills.length > 4 && (
+                        <li className="pl-7 text-xs font-medium text-titlebg">
+                          +{track.skills.length - 4} more modules
+                        </li>
+                      )}
+                    </ul>
+                  </div>
                 </div>
               );
             })}
