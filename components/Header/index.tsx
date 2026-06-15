@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -36,34 +37,40 @@ const Header = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleStickyMenu);
-  });
+    return () => window.removeEventListener("scroll", handleStickyMenu);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = navigationOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [navigationOpen]);
 
   return (
     <header
-      className={`fixed left-0 top-0 z-50 w-full ${
-        stickyMenu
+      className={`fixed left-0 top-0 z-[9999] w-full ${
+        stickyMenu || navigationOpen
           ? "bg-white shadow transition duration-100 dark:bg-black"
           : "bg-white/80 backdrop-blur-sm dark:bg-black/80"
       }`}
     >
-      <div className="relative mx-auto max-w-c-1390 items-center justify-between px-4 md:px-8 xl:flex 2xl:px-0">
-        <div className="flex w-full items-center justify-between py-4 xl:w-1/4 xl:py-0">
-        <a href="/">
+      <div className="relative mx-auto flex w-full max-w-c-1390 items-center justify-between px-4 md:px-8 xl:flex 2xl:px-0">
+        <div className="flex w-full items-center justify-between py-2.5 sm:py-3 xl:w-1/4 xl:py-3">
+          <a href="/" className="shrink-0">
             <Image
               src="/images/logo/logo.png"
               alt="logo"
-              width={70.03}
-              height={30}
-              style={{width:'70%', maxWidth: '200px'}}
-              className="hidden dark:block"
+              width={140}
+              height={140}
+              className="h-9 w-auto object-contain dark:hidden sm:h-10 xl:h-16 xl:w-auto"
             />
             <Image
               src="/images/logo/logo.png"
               alt="logo"
-              width={70.03}
-              height={30}
-              style={{width:'70%', maxWidth: '200px'}}
-              className="w-full dark:hidden"
+              width={140}
+              height={140}
+              className="hidden h-9 w-auto object-contain dark:block sm:h-10 xl:h-16 xl:w-auto"
             />
           </a>
 
@@ -108,12 +115,15 @@ const Header = () => {
           {/* <!-- Hamburger Toggle BTN --> */}
         </div>
 
-        {/* Nav Menu Start   */}
+        {/* Nav Menu Start */}
         <div
-          className={`invisible absolute left-0 right-0 top-full h-0 w-full items-center justify-between bg-white dark:bg-blacksection xl:visible xl:static xl:flex xl:h-auto xl:w-full xl:bg-transparent xl:dark:bg-transparent ${
-            navigationOpen &&
-            "!visible mt-0 h-auto max-h-[400px] overflow-y-auto p-7.5 shadow-solid-5 xl:h-auto xl:p-0 xl:shadow-none"
-          }`}
+          className={cn(
+            "xl:flex xl:w-full xl:items-center xl:justify-between",
+            navigationOpen
+              ? "fixed inset-x-0 top-14 z-[9999] flex max-h-[calc(100dvh-3.5rem)] flex-col overflow-y-auto border-t border-stroke bg-white p-7.5 shadow-solid-5 dark:border-strokedark dark:bg-blacksection"
+              : "hidden",
+            "xl:static xl:max-h-none xl:flex-row xl:overflow-visible xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none xl:dark:bg-transparent",
+          )}
         >
           <nav>
             <ul className="flex flex-col gap-5 xl:flex-row xl:items-center xl:gap-10">
@@ -140,7 +150,11 @@ const Header = () => {
                       </button>
 
                       <ul
-                        className={`dropdown ${openDropdown === menuItem.id ? "flex" : ""}`}
+                        className={cn(
+                          "dropdown",
+                          openDropdown === menuItem.id &&
+                            "mt-3 !flex flex-col gap-3 pl-4 xl:mt-0 xl:pl-0",
+                        )}
                       >
                         {menuItem.submenu.map((item, key) => (
                           <li key={key} className="hover:text-primary">

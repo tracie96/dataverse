@@ -1,3 +1,9 @@
+"use client";
+
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import { Minus, Plus } from "lucide-react";
+
 type FaqData = {
   activeFaq: number;
   id: number;
@@ -8,55 +14,58 @@ type FaqData = {
 
 const FAQItem = ({ faqData }: { faqData: FaqData }) => {
   const { activeFaq, id, handleFaqToggle, quest, ans } = faqData;
+  const isOpen = activeFaq === id;
 
   return (
-    <>
-      <div className="flex flex-col border-b border-stroke last-of-type:border-none dark:border-strokedark">
-        <button
-          onClick={() => {
-            handleFaqToggle(id);
-          }}
-          className="flex cursor-pointer items-center justify-between px-6 py-5 text-metatitle3 font-medium text-black dark:text-white lg:px-9 lg:py-7.5"
-        >
+    <div
+      className={cn(
+        "overflow-hidden rounded-2xl border transition-colors duration-300",
+        isOpen
+          ? "border-primary/30 bg-white shadow-solid-5 dark:border-primary/20 dark:bg-blacksection"
+          : "border-stroke bg-white/80 dark:border-strokedark dark:bg-blacksection/80",
+      )}
+    >
+      <button
+        type="button"
+        onClick={() => handleFaqToggle(id)}
+        aria-expanded={isOpen}
+        className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-5 text-left lg:px-6 lg:py-6"
+      >
+        <span className="text-base font-semibold text-black dark:text-white sm:text-lg">
           {quest}
+        </span>
 
-          {activeFaq === id ? (
-            <svg
-              width="18"
-              height="4"
-              viewBox="0 0 18 4"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M17.1666 0.833374H10.1666H7.83331H0.833313V3.16671H7.83331H10.1666H17.1666V0.833374Z"
-                fill="currentColor"
-              />
-            </svg>
-          ) : (
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.83331 7.83337V0.833374H10.1666V7.83337H17.1666V10.1667H10.1666V17.1667H7.83331V10.1667H0.833313V7.83337H7.83331Z"
-                fill="currentColor"
-              />
-            </svg>
+        <span
+          className={cn(
+            "flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors duration-300",
+            isOpen
+              ? "bg-primary text-white"
+              : "bg-zumthor text-primary dark:bg-hoverdark",
           )}
-        </button>
-        <p
-          className={`border-t border-stroke px-6 py-5 dark:border-strokedark lg:px-9 lg:py-7.5 ${
-            activeFaq === id ? "block" : "hidden"
-          }`}
         >
-          {ans}
-        </p>
-      </div>
-    </>
+          {isOpen ? (
+            <Minus className="h-4 w-4" />
+          ) : (
+            <Plus className="h-4 w-4" />
+          )}
+        </span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+          >
+            <p className="border-t border-stroke px-5 py-4 text-sm leading-relaxed text-waterloo dark:border-strokedark dark:text-manatee lg:px-6 lg:py-5 sm:text-base">
+              {ans}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 

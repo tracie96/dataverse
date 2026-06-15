@@ -8,6 +8,7 @@ import FunFact from "@/components/FunFact";
 import Integration from "@/components/Integration";
 import CTA from "@/components/CTA";
 import FAQ from "@/components/FAQ";
+import ImpactSection from "@/components/Gallery/ImpactSection";
 import Pricing from "@/components/Pricing";
 import Contact from "@/components/Contact";
 import Blog from "@/components/Blog";
@@ -21,15 +22,16 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main>
+    <main className="w-full overflow-x-hidden">
       <Hero />
       {/* <Brands /> */}
       <Brands/>
       <Feature />
       {/* <About /> */}
       <CTA />
+      <ImpactSection />
       <FAQ />
-      <Testimonial />
+      {/* <Testimonial /> */}
       <Contact />
       <Blog />
     </main>

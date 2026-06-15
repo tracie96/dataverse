@@ -1,100 +1,88 @@
 "use client";
+
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { CircleHelp, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import FAQItem from "./FAQItem";
 import faqData from "./faqData";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4 },
+  },
+};
 
 const FAQ = () => {
   const [activeFaq, setActiveFaq] = useState(1);
 
   const handleFaqToggle = (id: number) => {
-    activeFaq === id ? setActiveFaq(0) : setActiveFaq(id);
+    setActiveFaq(activeFaq === id ? 0 : id);
   };
 
   return (
-    <>
-      {/* <!-- ===== FAQ Start ===== --> */}
-      <section className="overflow-hidden pb-20 lg:pb-25 xl:pb-30">
-        <div className="relative mx-auto max-w-c-1235 px-4 md:px-8 xl:px-0">
-          <div className="absolute -bottom-16 -z-1 h-full w-full">
-            <Image
-              fill
-              src="/images/shape/shape-dotted-light.svg"
-              alt="Dotted"
-              className="dark:hidden"
-            />
-            <Image
-              fill
-              src="/images/shape/shape-dotted-light.svg"
-              alt="Dotted"
-              className="hidden dark:block"
-            />
-          </div>
-          <div className="flex flex-wrap gap-8 md:flex-nowrap md:items-center xl:gap-32.5">
-            <motion.div
-              variants={{
-                hidden: {
-                  opacity: 0,
-                  x: -20,
-                },
+    <section className="relative px-4 py-16 md:px-8 lg:py-24">
+      <div className="relative mx-auto max-w-c-1390 2xl:px-0">
+        <div className="pointer-events-none absolute -left-20 top-1/4 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
+        <div className="pointer-events-none absolute -right-20 bottom-0 h-56 w-56 rounded-full bg-titlebg/5 blur-3xl" />
 
-                visible: {
-                  opacity: 1,
-                  x: 0,
-                },
-              }}
-              initial="hidden"
-              whileInView="visible"
-              transition={{ duration: 1, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="animate_left md:w-2/5 lg:w-1/2"
-            >
-              <span className="font-medium uppercase text-black dark:text-white">
-                OUR FAQS
+        <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-5 lg:pt-4"
+          >
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
+              <CircleHelp className="h-4 w-4" />
+              FAQs
+            </span>
+
+            <h2 className="text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl xl:text-sectiontitle3">
+              Frequently Asked{" "}
+              <span className="relative inline-block">
+                Questions
+                <span className="absolute -bottom-1 left-0 -z-1 h-3 w-full bg-primary/20 dark:bg-primary/30" />
               </span>
-              <h2 className="relative mb-6 text-3xl font-bold text-black dark:text-white xl:text-hero">
-                Frequently Asked
-                <span className="relative inline-block before:absolute before:bottom-2.5 before:left-0 before:-z-1 before:h-3 before:w-full before:bg-titlebg2 dark:before:bg-titlebgdark">
-                  Questions
-                </span>
-              </h2>
+            </h2>
 
-             
-            </motion.div>
+            <p className="mt-4 text-base leading-relaxed text-waterloo dark:text-manatee sm:text-lg">
+              Everything you need to know about DataVerse — from joining the
+              community to participating in events and getting support.
+            </p>
 
-            <motion.div
-              variants={{
-                hidden: {
-                  opacity: 0,
-                  x: 20,
-                },
+           
+          </motion.div>
 
-                visible: {
-                  opacity: 1,
-                  x: 0,
-                },
-              }}
-              initial="hidden"
-              whileInView="visible"
-              transition={{ duration: 1, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="animate_right md:w-3/5 lg:w-1/2"
-            >
-              <div className="rounded-lg bg-white shadow-solid-8 dark:border dark:border-strokedark dark:bg-blacksection">
-                {faqData.map((faq, key) => (
-                  <FAQItem
-                    key={key}
-                    faqData={{ ...faq, activeFaq, handleFaqToggle }}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          </div>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="flex flex-col gap-4 lg:col-span-7"
+          >
+            {faqData.map((faq) => (
+              <motion.div key={faq.id} variants={itemVariants}>
+                <FAQItem
+                  faqData={{ ...faq, activeFaq, handleFaqToggle }}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
-      </section>
-      {/* <!-- ===== FAQ End ===== --> */}
-    </>
+      </div>
+    </section>
   );
 };
 

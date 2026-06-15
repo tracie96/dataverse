@@ -13,6 +13,7 @@
     "@lottiefiles/dotlottie-react": "^0.12.1",
     "@lottiefiles/react-lottie-player": "^3.5.4",
     "@nextui-org/react": "^2.6.11",
+    "@phosphor-icons/react": "^2.1.10",
     "@stripe/react-stripe-js": "^3.9.0",
     "@stripe/stripe-js": "^7.8.0",
     "@supabase/supabase-js": "^2.53.0",

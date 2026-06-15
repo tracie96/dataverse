@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,7 +8,11 @@ import Lines from "@/components/Lines";
 import ScrollToTop from "@/components/ScrollToTop";
 import ThemeWrapper from "@/components/ThemeWrapper";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
+});
 
 // Force dynamic rendering to prevent SSR issues with client-side components
 export const dynamic = 'force-dynamic';
@@ -71,14 +75,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`dark:bg-black ${inter.className}`}>
+      <body className={`${montserrat.variable} ${montserrat.className} w-full overflow-x-hidden dark:bg-black`}>
         <ThemeWrapper>
-          <Lines />
-          <Header />
-          <ToasterContext />
-          {children}
-          <Footer />
-          <ScrollToTop />
+          {/* <Lines /> */}
+          <div className="w-full overflow-x-hidden">
+            <Header />
+            <ToasterContext />
+            {children}
+            <Footer />
+            <ScrollToTop />
+          </div>
         </ThemeWrapper>
       </body>
     </html>

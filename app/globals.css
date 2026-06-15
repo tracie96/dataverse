@@ -20,8 +20,12 @@
 }
 
 @layer base {
+  html {
+    @apply overflow-x-hidden;
+  }
+
   body {
-    @apply relative z-1 font-inter text-regular font-normal text-waterloo dark:text-manatee;
+    @apply relative z-1 w-full overflow-x-hidden font-sans text-regular font-normal text-waterloo dark:text-manatee;
   }
 }
 
@@ -41,6 +45,10 @@
 }
 
 @layer utilities {
+  .pt-below-header {
+    @apply pt-[5.25rem] sm:pt-28 md:pt-32 xl:pt-32;
+  }
+
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;

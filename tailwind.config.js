@@ -12,7 +12,8 @@ module.exports = {
   darkMode: "class",
   theme: {
     fontFamily: {
-      inter: ["Inter", "sans-serif"],
+      sans: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
+      montserrat: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
     },
     extend: {
       colors: {

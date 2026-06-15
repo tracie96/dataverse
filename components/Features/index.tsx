@@ -1,41 +1,40 @@
 "use client";
-import React from "react";
-import featuresData from "./featuresData";
-import SingleFeature from "./SingleFeature";
-import SectionHeader from "../Common/SectionHeader";
+
+import CardStack from "@/components/CardStack";
+import { motion } from "framer-motion";
+import { Compass } from "lucide-react";
+import { featuresStackCards } from "./featuresStackData";
 
 const Feature = () => {
   return (
-    <>
-      {/* <!-- ===== Features Start ===== --> */}
-      <section id="features" className="py-10 lg:py-15 xl:py-20">
-        <div className="mx-auto max-w-c-1315 px-4 md:px-8 xl:px-0">
-          {/* <!-- Section Title Start --> */}
-          <SectionHeader
-            headerInfo={{
-              title: "",
-              subtitle: "Who We Are",
-              description: `At DataVerse, we’re on a mission to transform Africa through the power of data. 
-              Imagine a future where technology fuels progress, improves lives, and causes growth across the continent.
-              Sure you can imagine that and that future isn't far fetched anymore, that future is now!
-              `,
-            }}
-          />
-          {/* <!-- Section Title End --> */}
+    <section id="features" className="relative w-full overflow-x-hidden px-4 py-16 md:px-8 lg:py-24">
+      <div className="relative mx-auto w-full min-w-0 max-w-c-1390 2xl:px-0">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto max-w-3xl text-center"
+        >
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
+            <Compass className="h-4 w-4" />
+            Who We Are
+          </span>
 
-          <div className="mt-12.5 grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:mt-15 lg:grid-cols-3 xl:mt-20 xl:gap-12.5">
-            {/* <!-- Features item Start --> */}
+          <h2 className="text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl xl:text-sectiontitle3">
+            Transforming Africa Through Data
+          </h2>
 
-            {featuresData.map((feature, key) => (
-              <SingleFeature feature={feature} key={key} />
-            ))}
-            {/* <!-- Features item End --> */}
-          </div>
-        </div>
-      </section>
+          <p className="mt-4 text-base leading-relaxed text-waterloo dark:text-manatee sm:text-lg">
+            At DataVerse, we&apos;re on a mission to transform Africa through
+            the power of data — where technology fuels progress, improves
+            lives, and drives growth across the continent. That future is here.
+          </p>
+        </motion.div>
 
-      {/* <!-- ===== Features End ===== --> */}
-    </>
+        <CardStack cards={featuresStackCards} />
+      </div>
+    </section>
   );
 };
 
