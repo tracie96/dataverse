@@ -7,7 +7,7 @@ import { featuresStackCards } from "./featuresStackData";
 
 const Feature = () => {
   return (
-    <section id="features" className="relative w-full overflow-x-hidden px-4 py-16 md:px-8 lg:py-24">
+    <section id="features" className="relative w-full px-4 py-16 md:px-8 lg:py-24">
       <div className="relative mx-auto w-full min-w-0 max-w-c-1390 2xl:px-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -32,7 +32,7 @@ const Feature = () => {
           </p>
         </motion.div>
 
-        <CardStack cards={featuresStackCards} />
+        <CardStack cards={featuresStackCards} scrollPerCard={70} />
       </div>
     </section>
   );

@@ -7,7 +7,7 @@ import {
   useScroll,
 } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export type StackCard = {
   id: string;
@@ -35,36 +35,16 @@ const themeStyles = {
   },
 };
 
-const getCardMotion = (
-  cardIndex: number,
-  activeIndex: number,
-  total: number,
-  reduceMotion: boolean,
-) => {
-  if (cardIndex > activeIndex) {
-    return {
-      y: 72,
-      scale: 0.94,
-      rotate: 0,
-      opacity: 0,
-      zIndex: 0,
-    };
+const getCardMotion = (cardIndex: number, activeIndex: number) => {
+  if (cardIndex === activeIndex) {
+    return { y: 0, scale: 1, opacity: 1, zIndex: 10 };
   }
 
-  const position = activeIndex - cardIndex;
+  if (cardIndex < activeIndex) {
+    return { y: -48, scale: 0.96, opacity: 0, zIndex: 0 };
+  }
 
-  return {
-    y: position * 18,
-    scale: 1 - position * 0.035,
-    rotate:
-      reduceMotion || position === 0
-        ? 0
-        : position === 1
-          ? 1.5
-          : -1.5,
-    opacity: position === 0 ? 1 : position === 1 ? 0.95 : 0.88,
-    zIndex: total - position,
-  };
+  return { y: 48, scale: 0.96, opacity: 0, zIndex: 0 };
 };
 
 type CardStackProps = {
@@ -76,15 +56,6 @@ type CardStackProps = {
 const CardStack = ({ cards, scrollPerCard = 80 }: CardStackProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 639px)");
-    const update = () => setIsMobile(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -92,10 +63,13 @@ const CardStack = ({ cards, scrollPerCard = 80 }: CardStackProps) => {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    const next = Math.min(
-      cards.length - 1,
-      Math.max(0, Math.floor(progress * cards.length)),
-    );
+    const next =
+      cards.length <= 1
+        ? 0
+        : Math.min(
+            cards.length - 1,
+            Math.max(0, Math.round(progress * (cards.length - 1))),
+          );
     setActiveIndex(next);
   });
 
@@ -104,35 +78,30 @@ const CardStack = ({ cards, scrollPerCard = 80 }: CardStackProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full overflow-x-hidden"
+      className="relative w-full"
       style={{ height: scrollHeight }}
       aria-label="Scroll to explore cards"
     >
-      <div className="sticky top-0 z-10 flex h-[100dvh] min-h-0 flex-col items-center justify-center overflow-x-hidden px-4 md:min-h-[560px] md:px-8">
+      <div className="sticky top-20 z-20 flex h-[calc(100dvh-5rem)] min-h-[420px] flex-col items-center justify-center px-4 md:top-24 md:min-h-[480px] md:px-8">
         <div className="relative mx-auto w-full min-w-0 max-w-4xl lg:max-w-5xl">
-          <div className="relative min-h-[360px] w-full overflow-hidden sm:min-h-[380px]">
+          <div className="relative min-h-[320px] w-full sm:min-h-[340px]">
             {cards.map((card, index) => {
               const Icon = card.icon;
               const theme = themeStyles[card.theme];
-              const cardMotion = getCardMotion(
-                index,
-                activeIndex,
-                cards.length,
-                isMobile,
-              );
-              const isTop = index === activeIndex;
+              const isActive = index === activeIndex;
 
               return (
                 <motion.div
                   key={card.id}
-                  aria-hidden={!isTop}
+                  aria-hidden={!isActive}
+                  initial={false}
+                  animate={getCardMotion(index, activeIndex)}
+                  transition={{ duration: 0.45, ease: "easeInOut" }}
                   className={cn(
-                    "absolute inset-x-0 top-4 w-full rounded-2xl border p-8 text-left shadow-solid-5 sm:p-10 lg:p-12",
+                    "absolute inset-x-0 top-0 w-full rounded-2xl border p-8 text-left shadow-solid-5 sm:p-10 lg:p-12",
                     theme.card,
-                    isTop && "shadow-solid-7",
+                    isActive ? "shadow-solid-7" : "pointer-events-none",
                   )}
-                  animate={cardMotion}
-                  transition={{ type: "spring", stiffness: 260, damping: 30 }}
                 >
                   <div
                     className={cn(
@@ -153,8 +122,7 @@ const CardStack = ({ cards, scrollPerCard = 80 }: CardStackProps) => {
 
                   <div
                     className={cn(
-                      "mt-6 h-0.5 rounded-full transition-all duration-300",
-                      isTop ? "w-12 opacity-40" : "w-8 opacity-20",
+                      "mt-6 h-0.5 w-12 rounded-full opacity-40",
                       theme.dot,
                     )}
                   />
@@ -165,9 +133,12 @@ const CardStack = ({ cards, scrollPerCard = 80 }: CardStackProps) => {
 
           <div className="mt-10 flex items-center justify-center gap-2">
             {cards.map((card, index) => (
-              <div
+              <button
                 key={card.id}
-                aria-label={`${card.title}${index === activeIndex ? " (current)" : ""}`}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                aria-label={`Go to ${card.title}`}
+                aria-current={index === activeIndex}
                 className={cn(
                   "h-2 rounded-full transition-all duration-300",
                   index === activeIndex
@@ -182,8 +153,11 @@ const CardStack = ({ cards, scrollPerCard = 80 }: CardStackProps) => {
 
           <div className="mt-5 flex flex-wrap justify-center gap-2 px-1">
             {cards.map((card, index) => (
-              <span
+              <button
                 key={card.id}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                aria-current={index === activeIndex}
                 className={cn(
                   "max-w-full truncate rounded-full px-3 py-1.5 text-xs font-medium transition-colors sm:px-4 sm:text-sm",
                   index === activeIndex
@@ -194,7 +168,7 @@ const CardStack = ({ cards, scrollPerCard = 80 }: CardStackProps) => {
                 )}
               >
                 {card.title}
-              </span>
+              </button>
             ))}
           </div>
 

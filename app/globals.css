@@ -21,11 +21,11 @@
 
 @layer base {
   html {
-    @apply overflow-x-hidden;
+    @apply overflow-x-clip;
   }
 
   body {
-    @apply relative z-1 w-full overflow-x-hidden font-sans text-regular font-normal text-waterloo dark:text-manatee;
+    @apply relative z-1 w-full overflow-x-clip font-sans text-regular font-normal text-waterloo dark:text-manatee;
   }
 }
 

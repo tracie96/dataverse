@@ -75,10 +75,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${montserrat.variable} ${montserrat.className} w-full overflow-x-hidden dark:bg-black`}>
+      <body className={`${montserrat.variable} ${montserrat.className} w-full dark:bg-black`}>
         <ThemeWrapper>
           {/* <Lines /> */}
-          <div className="w-full overflow-x-hidden">
+          <div className="w-full">
             <Header />
             <ToasterContext />
             {children}
