@@ -3,7 +3,7 @@ export const COHORT5_META = {
   name: 'Cohort 5.0',
   durationWeeks: 12,
   kickoffDate: 'Friday, July 18, 2026',
-  endDate: 'Friday, October 10, 2026',
+  endDate: 'Friday, 28th August 2026',
   applicationOpen: 'May 22, 2026',
   applicationClose: 'Friday, 28th August 2026',
   midpointReview: 'August 29, 2026',

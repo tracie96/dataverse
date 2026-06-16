@@ -1,21 +1,21 @@
 import { GalleryCategory } from "@/types/gallery";
 
 const cohortHistoryImages = [
-  { file: "1.png", group: "Cohort 5" },
-  { file: "2.png", group: "Cohort 5" },
-  { file: "3.png", group: "Cohort 5" },
-  { file: "4.png", group: "Cohort 4" },
-  { file: "5.png", group: "Cohort 4" },
-  { file: "6.jpg", group: "Cohort 4" },
-  { file: "7.jpeg", group: "Cohort 4" },
-  { file: "8.jpeg", group: "Cohort 3" },
-  { file: "9.jpeg", group: "Cohort 3" },
-  { file: "10.jpeg", group: "Cohort 3" },
-  { file: "11.png", group: "Cohort 3" },
-  { file: "12.png", group: "Cohort 2" },
-  { file: "13.png", group: "Cohort 2" },
-  { file: "14.png", group: "Cohort 1" },
-  { file: "15.png", group: "Cohort 1" },
+  { file: "1.2.png", group: "Cohort 2" },
+  { file: "2.2.png", group: "Cohort 2" },
+  { file: "3.2.png", group: "Cohort 2" },
+  { file: "4.2.png", group: "Cohort 2" },
+  { file: "5.2.png", group: "Cohort 2" },
+  { file: "6.3.1.jpg", group: "Cohort 3" },
+  { file: "7.3.jpeg", group: "Cohort 3" },
+  { file: "8.3.jpeg", group: "Cohort 3" },
+  { file: "9.3.jpeg", group: "Cohort 3" },
+  { file: "10.3.jpeg", group: "Cohort 3" },
+  { file: "11.4.png", group: "Cohort 4" },
+  { file: "12.4.png", group: "Cohort 4" },
+  { file: "13.4.png", group: "Cohort 4" },
+  { file: "14.4.png", group: "Cohort 4" },
+  { file: "15.4.png", group: "Cohort 4" },
 ];
 
 const testimonialImages = [
@@ -104,7 +104,7 @@ export const galleryCategories: GalleryCategory[] = [
     title: "Internship Cohort History",
     description:
       "A visual journey through every DataVerse internship cohort — from orientation to graduation and beyond.",
-    coverImage: "/images/cohort-history/1.png",
+    coverImage: "/images/cohort-history/1.2.png",
     type: "album",
     tag: "Internship",
     items: cohortHistoryImages.map(({ file, group }, index) => ({
@@ -120,14 +120,14 @@ export const galleryCategories: GalleryCategory[] = [
     title: "Enzy Royal College Partnership",
     description:
       "Partnering with Enzy Royal College to bring data literacy and technology education to the next generation.",
-    coverImage: "/images/cohort-history/6.jpg",
+    coverImage: "/images/cohort-history/6.3.1.jpg",
     coverVideo: "/images/enzy/1.mp4",
     type: "video",
     tag: "Partnership",
     items: [
       {
         id: "enzy-1",
-        src: "/images/cohort-history/6.jpg",
+        src: "/images/cohort-history/6.3.1.jpg",
         alt: "Enzy Royal College partnership video",
         caption: "Enzy Royal College partnership highlights",
         type: "video",

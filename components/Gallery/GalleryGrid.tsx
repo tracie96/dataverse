@@ -12,14 +12,16 @@ interface GalleryGridProps {
   items: GalleryItem[];
   groups?: string[];
   showFilters?: boolean;
+  initialGroup?: string;
 }
 
 const GalleryGrid = ({
   items,
   groups = [],
   showFilters = false,
+  initialGroup,
 }: GalleryGridProps) => {
-  const [activeGroup, setActiveGroup] = useState<string>("All");
+  const [activeGroup, setActiveGroup] = useState<string>(initialGroup || "All");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [activeVideo, setActiveVideo] = useState<GalleryItem | null>(null);
 

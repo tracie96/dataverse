@@ -97,7 +97,7 @@ const Cohort5AdminPage = () => {
   };
 
   const exportCSV = () => {
-    const headers = ["Name", "Email", "Track", "Specialization", "Fee USD", "Payment", "Method", "Date"];
+    const headers = ["Name", "Email", "Track", "Specialization", "Fee USD", "Payment", "Referral Code", "Method", "Date"];
     const rows = applications.map((a) => [
       `${a.first_name} ${a.last_name}`,
       a.email,
@@ -105,6 +105,7 @@ const Cohort5AdminPage = () => {
       a.specialization || "",
       a.program_fee_usd,
       a.payment_completed ? "Paid" : "Pending",
+      a.referral_code || "",
       a.payment_method || "",
       a.created_at,
     ]);
@@ -160,6 +161,9 @@ const Cohort5AdminPage = () => {
             <p className="text-gray-600 dark:text-gray-400">{applications.length} applications loaded</p>
           </div>
           <div className="flex gap-3">
+            <a href="/admin/partners" className="flex items-center gap-2 px-4 py-2 border rounded-lg text-sm">
+              Partners
+            </a>
             <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg">
               <Download className="h-4 w-4" /> Export CSV
             </button>
@@ -221,6 +225,7 @@ const Cohort5AdminPage = () => {
                   <th className="px-4 py-3 text-left">Email</th>
                   <th className="px-4 py-3 text-left">Track</th>
                   <th className="px-4 py-3 text-left">Fee</th>
+                  <th className="px-4 py-3 text-left">Referral</th>
                   <th className="px-4 py-3 text-left">Status</th>
                   <th className="px-4 py-3 text-left">Actions</th>
                 </tr>
@@ -232,6 +237,15 @@ const Cohort5AdminPage = () => {
                     <td className="px-4 py-3">{app.email}</td>
                     <td className="px-4 py-3">{COHORT5_TRACKS[app.track_id]?.name || app.track_id}</td>
                     <td className="px-4 py-3">${app.program_fee_usd}</td>
+                    <td className="px-4 py-3">
+                      {app.referral_code ? (
+                        <code className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+                          {app.referral_code}
+                        </code>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
                     <td className="px-4 py-3">
                       {app.payment_completed ? (
                         <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Paid</span>
@@ -261,6 +275,9 @@ const Cohort5AdminPage = () => {
                 <p><strong>Email:</strong> {selectedApp.email}</p>
                 <p><strong>Track:</strong> {COHORT5_TRACKS[selectedApp.track_id]?.name}</p>
                 {selectedApp.specialization && <p><strong>Specialization:</strong> {selectedApp.specialization}</p>}
+                {selectedApp.referral_code && (
+                  <p><strong>Referral Code:</strong> {selectedApp.referral_code}</p>
+                )}
                 <p><strong>Experience:</strong> {selectedApp.experience}</p>
                 <p><strong>Motivation:</strong> {selectedApp.motivation}</p>
               </div>

@@ -12,6 +12,7 @@ import {
 
 type PageProps = {
   params: { slug: string };
+  searchParams?: { group?: string };
 };
 
 export function generateStaticParams() {
@@ -31,7 +32,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
   };
 }
 
-export default function GalleryCategoryPage({ params }: PageProps) {
+export default function GalleryCategoryPage({ params, searchParams }: PageProps) {
   const category = getGalleryCategory(params.slug);
 
   if (!category) {
@@ -41,6 +42,8 @@ export default function GalleryCategoryPage({ params }: PageProps) {
   const groups = getGalleryGroups(category);
   const showFilters = category.slug === "internship-cohorts" && groups.length > 0;
   const heroVideo = category.coverVideo ?? category.items.find((i) => i.videoUrl)?.videoUrl;
+  const initialGroup =
+    searchParams?.group && groups.includes(searchParams.group) ? searchParams.group : undefined;
 
   return (
     <main className="min-h-screen pt-below-header pb-20 lg:pb-28">
@@ -97,6 +100,7 @@ export default function GalleryCategoryPage({ params }: PageProps) {
             items={category.items}
             groups={groups}
             showFilters={showFilters}
+            initialGroup={initialGroup}
           />
         </div>
       </div>

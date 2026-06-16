@@ -17,6 +17,7 @@ export interface Cohort5ApplicationForm {
   portfolio: string;
   linkedin: string;
   github: string;
+  referralCode: string;
   applicationType: ApplicationType;
   scholarshipReason: string;
   financialNeedStatement: string;
@@ -49,6 +50,8 @@ export interface Cohort5ApplicationRecord {
   payment_date?: string;
   transfer_name?: string;
   receipt_url?: string;
+  referral_code?: string;
+  partner_id?: string;
   created_at: string;
   updated_at: string;
 }

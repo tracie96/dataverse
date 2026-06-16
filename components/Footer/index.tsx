@@ -118,23 +118,23 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      href="/services"
+                      href="/partner/register"
                       className="inline-block text-base text-gray-700 hover:text-primary dark:text-gray-300"
                     >
-                      Our Services
+                      Join as a Partner
                     </a>
                   </li>
                   <li>
                     <a
-                      href="/projects"
+                      href="/gallery"
                       className="inline-block text-base text-gray-700 hover:text-primary dark:text-gray-300"
                     >
-                      Projects
+                      Gallery
                     </a>
                   </li>
                   <li>
                     <a
-                      href="/contact"
+                      href="/support"
                       className="inline-block text-base text-gray-700 hover:text-primary dark:text-gray-300"
                     >
                       Contact
@@ -167,18 +167,18 @@ const Footer = () => {
                 <ul className="space-y-3">
                   <li>
                     <a
-                      href="/blog"
+                      href="/research"
                       className="inline-block text-base text-gray-700 hover:text-primary dark:text-gray-300"
                     >
-                      Blog
+                      Research
                     </a>
                   </li>
                   <li>
                     <a
-                      href="/case-studies"
+                      href="/internship-cohort5"
                       className="inline-block text-base text-gray-700 hover:text-primary dark:text-gray-300"
                     >
-                      Case Studies
+                      Open Cohorts
                     </a>
                   </li>
                   <li>

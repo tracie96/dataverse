@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   ArrowLeft,
   Mail,
@@ -10,6 +11,7 @@ import {
   Target,
   CheckCircle,
   Sparkles,
+  Tag,
 } from "lucide-react";
 import Link from "next/link";
 import SmartPayment from "@/components/Payment/SmartPayment";
@@ -26,7 +28,8 @@ import {
 const programFee = getTrackFeeUsd();
 const nairaFee = getTrackFeeNgn();
 
-const ApplyPage = () => {
+function ApplyPageContent() {
+  const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -41,6 +44,7 @@ const ApplyPage = () => {
     portfolio: "",
     linkedin: "",
     github: "",
+    referralCode: "",
     agreeToTerms: false,
   });
 
@@ -49,8 +53,45 @@ const ApplyPage = () => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [applicationId, setApplicationId] = useState<string | null>(null);
   const [applicationSaved, setApplicationSaved] = useState(false);
+  const [referralStatus, setReferralStatus] = useState<"idle" | "valid" | "invalid" | "checking">("idle");
+  const [referralPartnerName, setReferralPartnerName] = useState("");
 
   const selectedTrack = formData.trackId ? COHORT5_TRACKS[formData.trackId] : null;
+
+  useEffect(() => {
+    const ref = searchParams.get("ref");
+    if (ref) {
+      setFormData((prev) => ({ ...prev, referralCode: ref.toUpperCase() }));
+      validateReferralCode(ref);
+    }
+  }, [searchParams]);
+
+  const validateReferralCode = async (code: string) => {
+    const trimmed = code.trim();
+    if (!trimmed) {
+      setReferralStatus("idle");
+      setReferralPartnerName("");
+      return true;
+    }
+
+    setReferralStatus("checking");
+    try {
+      const response = await fetch(`/api/referral/validate?code=${encodeURIComponent(trimmed)}`);
+      const result = await response.json();
+      if (response.ok && result.valid) {
+        setReferralStatus("valid");
+        setReferralPartnerName(result.partnerName || "");
+        return true;
+      }
+      setReferralStatus("invalid");
+      setReferralPartnerName("");
+      return false;
+    } catch {
+      setReferralStatus("invalid");
+      setReferralPartnerName("");
+      return false;
+    }
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -93,6 +134,14 @@ const ApplyPage = () => {
     if (!formData.agreeToTerms) {
       toast.error("Please agree to the terms and conditions");
       return;
+    }
+
+    if (formData.referralCode.trim()) {
+      const isValid = await validateReferralCode(formData.referralCode);
+      if (!isValid) {
+        toast.error("Please enter a valid referral code or leave the field empty");
+        return;
+      }
     }
 
     setIsSubmitting(true);
@@ -374,6 +423,38 @@ const ApplyPage = () => {
                     />
                   </div>
 
+                  <div>
+                    <h3 className="text-lg font-semibold text-black dark:text-white mb-4 flex items-center gap-2">
+                      <Tag className="h-5 w-5 text-titlebg" />
+                      Referral Code (Optional)
+                    </h3>
+                    <input
+                      type="text"
+                      name="referralCode"
+                      value={formData.referralCode}
+                      onChange={(e) => {
+                        const value = e.target.value.toUpperCase();
+                        setFormData((prev) => ({ ...prev, referralCode: value }));
+                        setReferralStatus("idle");
+                        setReferralPartnerName("");
+                      }}
+                      onBlur={() => validateReferralCode(formData.referralCode)}
+                      placeholder="e.g. DV-ABC123"
+                      className="w-full px-4 py-3 border border-stroke dark:border-strokedark rounded-lg focus:ring-2 focus:ring-titlebg dark:bg-blacksection dark:text-white uppercase"
+                    />
+                    {referralStatus === "checking" && (
+                      <p className="mt-2 text-sm text-waterloo dark:text-manatee">Validating code...</p>
+                    )}
+                    {referralStatus === "valid" && referralPartnerName && (
+                      <p className="mt-2 text-sm text-green-600 dark:text-green-400">
+                        Referred by {referralPartnerName}
+                      </p>
+                    )}
+                    {referralStatus === "invalid" && formData.referralCode.trim() && (
+                      <p className="mt-2 text-sm text-red-600 dark:text-red-400">Invalid referral code</p>
+                    )}
+                  </div>
+
                   <div className="flex items-start gap-3">
                     <input
                       type="checkbox"
@@ -464,5 +545,11 @@ const ApplyPage = () => {
     </div>
   );
 };
+
+const ApplyPage = () => (
+  <Suspense fallback={<div className="min-h-screen mt-[8rem] flex items-center justify-center">Loading...</div>}>
+    <ApplyPageContent />
+  </Suspense>
+);
 
 export default ApplyPage;

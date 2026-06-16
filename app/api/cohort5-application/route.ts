@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseServer } from '@/lib/supabase-server';
+import { validateReferralCode } from '@/lib/referral';
 import {
   COHORT5_META,
   COHORT5_TRACK_LIST,
@@ -8,18 +9,9 @@ import {
   type Cohort5TrackId,
 } from '@/config/cohort5';
 
-function getSupabase() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!;
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Missing Supabase environment variables');
-  }
-  return createClient(supabaseUrl, supabaseKey);
-}
-
 export async function POST(request: NextRequest) {
   try {
-    const supabase = getSupabase();
+    const supabase = getSupabaseServer();
     const body = await request.json();
     const {
       firstName,
@@ -35,6 +27,7 @@ export async function POST(request: NextRequest) {
       portfolio,
       linkedin,
       github,
+      referralCode,
     } = body;
 
     if (!firstName || !lastName || !email || !country || !city || !trackId || !experience || !motivation) {
@@ -51,6 +44,18 @@ export async function POST(request: NextRequest) {
         { error: 'Specialization is required for Data Analytics Intermediate track' },
         { status: 400 }
       );
+    }
+
+    let partnerId: string | null = null;
+    let storedReferralCode: string | null = null;
+
+    if (referralCode?.trim()) {
+      const validation = await validateReferralCode(supabase, referralCode);
+      if (!validation.valid) {
+        return NextResponse.json({ error: validation.error || 'Invalid referral code' }, { status: 400 });
+      }
+      partnerId = validation.partnerId || null;
+      storedReferralCode = validation.code || null;
     }
 
     const programFeeUsd = getTrackFeeUsd();
@@ -76,6 +81,8 @@ export async function POST(request: NextRequest) {
           scholarship_status: 'none',
           program_fee_usd: programFeeUsd,
           payment_completed: false,
+          referral_code: storedReferralCode,
+          partner_id: partnerId,
         },
       ])
       .select();
@@ -102,15 +109,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey =
-      process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY;
-
-    if (!supabaseUrl || !supabaseKey) {
-      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
-    }
-
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = getSupabaseServer();
     const email = new URL(request.url).searchParams.get('email');
 
     if (!email) {
