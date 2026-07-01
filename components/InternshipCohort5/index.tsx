@@ -186,7 +186,7 @@ const InternshipCohort5Page = () => {
           <SectionHeader
             badge="Program Overview"
             title="What to Expect"
-            description={`Cohort 5.0 runs from ${COHORT5_META.kickoffDate} through ${COHORT5_META.endDate}. Choose the track that matches your experience level and career goals — each with dedicated mentors, real-world African business projects, and career readiness support.`}
+            description={`Cohort 5.0 kicks off on ${COHORT5_META.kickoffDate} and runs for ${COHORT5_META.durationWeeks} weeks. Choose the track that matches your experience level and career goals — each with dedicated mentors, real-world African business projects, and career readiness support.`}
           />
 
           <motion.div
@@ -211,7 +211,7 @@ const InternshipCohort5Page = () => {
                   value: `${COHORT5_META.applicationOpen} – ${COHORT5_META.applicationClose}`,
                 },
                 { label: "Kick-off", value: COHORT5_META.kickoffDate },
-                { label: "Program End", value: COHORT5_META.endDate },
+                { label: "Application Ends", value: COHORT5_META.applicationClose },
               ].map((row) => (
                 <div
                   key={row.label}

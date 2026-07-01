@@ -23,8 +23,8 @@ export const featuredCohort = {
   subtitle: "Applications Now Open",
   description:
     "Join our 12-week immersive, project-based virtual internship across four specialized tracks — with real-world projects, mentorship, and career readiness support.",
-  kickoffDate: "Friday, July 18, 2026",
-  applicationClose: "Friday, 28th August 2026",
+  kickoffDate: "Saturday, 5th September 2026",
+  applicationClose: "Friday, 28th August, 2026",
   duration: "12 weeks",
   tracks: 4,
   image: "/images/llhama_event/4.jpg",

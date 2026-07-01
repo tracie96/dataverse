@@ -2,10 +2,9 @@ export const COHORT5_META = {
   id: 'cohort5',
   name: 'Cohort 5.0',
   durationWeeks: 12,
-  kickoffDate: 'Friday, July 18, 2026',
-  endDate: 'Friday, 28th August 2026',
+  kickoffDate: 'Saturday, 5th September 2026',
   applicationOpen: 'May 22, 2026',
-  applicationClose: 'Friday, 28th August 2026',
+  applicationClose: 'Friday, 28th August, 2026',
   midpointReview: 'August 29, 2026',
   capstoneWeek: 'September 26 – October 4, 2026',
   nairaRate: 1500,
@@ -109,7 +108,7 @@ export const COHORT5_TRACKS: Record<Cohort5TrackId, Cohort5Track> = {
 
 export const COHORT5_TIMELINE = [
   {
-    date: 'May 22 – Friday, 28th August 2026',
+    date: 'May 22 – Friday, 28th August, 2026',
     activity: 'Application Open + Outreach Campaign',
     status: 'active' as const,
   },
@@ -119,7 +118,7 @@ export const COHORT5_TIMELINE = [
     status: 'upcoming' as const,
   },
   {
-    date: 'July 18, 2026',
+    date: 'Saturday, 5th September 2026',
     activity: 'Cohort Kick-off (Orientation)',
     status: 'upcoming' as const,
   },
