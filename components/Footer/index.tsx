@@ -7,10 +7,26 @@ const Footer = () => {
   const [email, setEmail] = useState("");
   const [subscriptionStatus, setSubscriptionStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement newsletter subscription
-    setSubscriptionStatus("success");
+
+    try {
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      if (!response.ok) {
+        setSubscriptionStatus("error");
+      } else {
+        setSubscriptionStatus("success");
+        setEmail("");
+      }
+    } catch {
+      setSubscriptionStatus("error");
+    }
+
     setTimeout(() => setSubscriptionStatus("idle"), 3000);
   };
 

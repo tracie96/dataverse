@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { validateReferralCode } from '@/lib/referral';
 import {
-  COHORT5_META,
-  COHORT5_TRACK_LIST,
   COHORT5_TRACKS,
   getTrackFeeUsd,
+  type Cohort5Specialization,
   type Cohort5TrackId,
 } from '@/config/cohort5';
+import { getSystemeTagIdForApplication } from '@/config/systeme';
+import { syncApplicantToSysteme } from '@/lib/systeme';
 
 export async function POST(request: NextRequest) {
   try {
@@ -90,6 +91,23 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error('Supabase error:', error);
       return NextResponse.json({ error: 'Failed to save application: ' + error.message }, { status: 500 });
+    }
+
+    try {
+      const tagId = getSystemeTagIdForApplication(
+        trackId as Cohort5TrackId,
+        specialization as Cohort5Specialization | null
+      );
+
+      await syncApplicantToSysteme({
+        email: email.toLowerCase(),
+        firstName,
+        lastName,
+        phone: phone || null,
+        tagId,
+      });
+    } catch (systemeError) {
+      console.error('Systeme.io sync failed (application still saved):', systemeError);
     }
 
     return NextResponse.json({

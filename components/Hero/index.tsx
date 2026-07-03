@@ -9,8 +9,9 @@ import HeroSection from "./HeroSection";
 const Hero = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
 
-  const handleSubscribe = () => {
+  const handleSubscribe = async () => {
     if (!email.trim()) {
       message.warning({
         content: "Please enter your email address",
@@ -19,11 +20,31 @@ const Hero = () => {
       return;
     }
 
-    message.success({
-      content: "Email subscribed successfully",
-      style: { zIndex: 999999 },
-    });
-    setEmail("");
+    setIsSubscribing(true);
+    try {
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Subscription failed");
+      }
+
+      message.success({
+        content: "Email subscribed successfully",
+        style: { zIndex: 999999 },
+      });
+      setEmail("");
+    } catch {
+      message.error({
+        content: "Could not subscribe. Please try again.",
+        style: { zIndex: 999999 },
+      });
+    } finally {
+      setIsSubscribing(false);
+    }
   };
 
   return (
@@ -95,10 +116,11 @@ const Hero = () => {
         <button
           type="button"
           onClick={handleSubscribe}
+          disabled={isSubscribing}
           aria-label="Subscribe to newsletter"
-          className="shrink-0 rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-white transition hover:bg-primaryho"
+          className="shrink-0 rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-white transition hover:bg-primaryho disabled:opacity-60"
         >
-          Subscribe
+          {isSubscribing ? "Subscribing..." : "Subscribe"}
         </button>
       </div>
     </HeroSection>
