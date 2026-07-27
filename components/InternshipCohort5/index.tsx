@@ -272,7 +272,7 @@ const InternshipCohort5Page = () => {
                           ${COHORT5_META.originalProgramFeeUsd}
                         </span>
                         <span className="text-[11px] uppercase tracking-wide text-primary font-semibold">
-                          ${COHORT5_META.discountPercent}% off
+                          {COHORT5_META.discountPercent}% off
                         </span>
                       </div>
                       <div className="text-[11px] uppercase tracking-wide text-waterloo dark:text-manatee">

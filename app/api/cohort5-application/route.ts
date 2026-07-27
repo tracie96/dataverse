@@ -93,19 +93,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to save application: ' + error.message }, { status: 500 });
     }
 
+    let systemeSynced = false;
     try {
-      const tagId = getSystemeTagIdForApplication(
-        trackId as Cohort5TrackId,
-        specialization as Cohort5Specialization | null
-      );
+      if (!process.env.SYSTEME_IO_API_KEY) {
+        console.warn('SYSTEME_IO_API_KEY missing — applicant was not synced to Systeme.io');
+      } else {
+        const tagId = getSystemeTagIdForApplication(
+          trackId as Cohort5TrackId,
+          specialization as Cohort5Specialization | null
+        );
 
-      await syncApplicantToSysteme({
-        email: email.toLowerCase(),
-        firstName,
-        lastName,
-        phone: phone || null,
-        tagId,
-      });
+        const syncResult = await syncApplicantToSysteme({
+          email: email.toLowerCase(),
+          firstName,
+          lastName,
+          phone: phone || null,
+          tagId,
+        });
+        systemeSynced = Boolean(syncResult);
+      }
     } catch (systemeError) {
       console.error('Systeme.io sync failed (application still saved):', systemeError);
     }
@@ -115,6 +121,7 @@ export async function POST(request: NextRequest) {
       message: 'Application registered successfully. You can proceed to payment.',
       data: data[0],
       applicationId: data[0]?.id,
+      systemeSynced,
     });
   } catch (error) {
     console.error('Server error:', error);

@@ -465,9 +465,8 @@ function ApplyPageContent() {
                       className="mt-1 h-4 w-4 text-titlebg focus:ring-titlebg border-stroke rounded"
                     />
                     <label className="text-sm text-waterloo dark:text-manatee">
-                      I agree to the program terms. Program fee: ${programFee} USD for all tracks (${COHORT5_META.discountPercent}% off from $${
-                        COHORT5_META.originalProgramFeeUsd
-                      }). *
+                      I agree to the program terms. Program fee: ${programFee} USD for all tracks (
+                      {COHORT5_META.discountPercent}% off from ${COHORT5_META.originalProgramFeeUsd}). *
                     </label>
                   </div>
 
@@ -516,7 +515,7 @@ function ApplyPageContent() {
                   <div>
                     <div className="font-medium text-black dark:text-white">Program Fee</div>
                     <div className="text-titlebg font-bold">
-                      ${programFee} USD (all tracks) — ${COHORT5_META.discountPercent}% off
+                      ${programFee} USD (all tracks) — {COHORT5_META.discountPercent}% off
                     </div>
                   </div>
                 </div>
