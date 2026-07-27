@@ -8,7 +8,9 @@ export const COHORT5_META = {
   midpointReview: 'August 29, 2026',
   capstoneWeek: 'September 26 – October 4, 2026',
   nairaRate: 1500,
-  programFeeUsd: 45,
+  originalProgramFeeUsd: 45,
+  discountPercent: 25,
+  programFeeUsd: 35,
 } as const;
 
 export type Cohort5TrackId =
@@ -38,7 +40,7 @@ export const COHORT5_TRACKS: Record<Cohort5TrackId, Cohort5Track> = {
     id: 'data-analytics-intermediate',
     name: 'Data Analytics Intermediate',
     level: 'intermediate',
-    feeUsd: 45,
+    feeUsd: 35,
     description: 'Domain-specialized analytics for learners with prior experience.',
     skills: ['Healthcare Analytics', 'Financial Analytics', 'Agricultural Analytics'],
     requiresSpecialization: true,
@@ -64,7 +66,7 @@ export const COHORT5_TRACKS: Record<Cohort5TrackId, Cohort5Track> = {
     id: 'ai-automation-business-analytics',
     name: 'AI Automation & Business Analytics',
     level: 'intermediate',
-    feeUsd: 45,
+    feeUsd: 35,
     description: 'Build AI-powered workflows and automate business processes with n8n.',
     skills: [
       'Introduction to n8n',
@@ -77,7 +79,7 @@ export const COHORT5_TRACKS: Record<Cohort5TrackId, Cohort5Track> = {
     id: 'data-science-intermediate',
     name: 'Data Science Intermediate',
     level: 'intermediate',
-    feeUsd: 45,
+    feeUsd: 35,
     description: 'Advanced ML, deep learning, LLM applications, and cloud deployment.',
     skills: [
       'Applied Machine Learning',
@@ -93,7 +95,7 @@ export const COHORT5_TRACKS: Record<Cohort5TrackId, Cohort5Track> = {
     id: 'microsoft-fabric-data-engineering',
     name: 'Microsoft Fabric Data Engineering Associate',
     level: 'advanced',
-    feeUsd: 45,
+    feeUsd: 35,
     description: 'Enterprise data engineering on Microsoft Fabric with DP-700 exam preparation.',
     skills: [
       'Foundations of Microsoft Fabric',

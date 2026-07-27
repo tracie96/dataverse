@@ -215,7 +215,7 @@ function ApplyPageContent() {
                 >
                   <h3 className="text-lg font-semibold text-titlebg mb-4 flex items-center gap-2">
                     <Target className="h-5 w-5" />
-                    Payment Required — ${programFee} USD
+                    Payment Required — ${programFee} USD (${COHORT5_META.discountPercent}% off)
                   </h3>
                   <p className="text-sm text-waterloo dark:text-manatee mb-4">
                     Complete payment of ${programFee} USD (₦{nairaFee.toLocaleString()} NGN) for{" "}
@@ -465,7 +465,9 @@ function ApplyPageContent() {
                       className="mt-1 h-4 w-4 text-titlebg focus:ring-titlebg border-stroke rounded"
                     />
                     <label className="text-sm text-waterloo dark:text-manatee">
-                      I agree to the program terms. Program fee: ${programFee} USD for all tracks. *
+                      I agree to the program terms. Program fee: ${programFee} USD for all tracks (${COHORT5_META.discountPercent}% off from $${
+                        COHORT5_META.originalProgramFeeUsd
+                      }). *
                     </label>
                   </div>
 
@@ -513,7 +515,9 @@ function ApplyPageContent() {
                   <Target className="h-5 w-5 text-titlebg" />
                   <div>
                     <div className="font-medium text-black dark:text-white">Program Fee</div>
-                    <div className="text-titlebg font-bold">${programFee} USD (all tracks)</div>
+                    <div className="text-titlebg font-bold">
+                      ${programFee} USD (all tracks) — ${COHORT5_META.discountPercent}% off
+                    </div>
                   </div>
                 </div>
               </div>

@@ -100,7 +100,10 @@ const benefits = [
 const stats = [
   { value: String(COHORT5_META.durationWeeks), label: "Weeks Duration" },
   { value: String(COHORT5_TRACK_LIST.length), label: "Specialized Tracks" },
-  { value: `$${COHORT5_META.programFeeUsd}`, label: "Flat Program Fee" },
+  {
+    value: `$${COHORT5_META.programFeeUsd}`,
+    label: `${COHORT5_META.discountPercent}% Discounted Program Fee`,
+  },
 ];
 
 const InternshipCohort5Page = () => {
@@ -234,7 +237,7 @@ const InternshipCohort5Page = () => {
       <section className="px-4 py-16 md:px-8 lg:py-24">
         <div className="mx-auto max-w-c-1390 2xl:px-0">
           <SectionHeader
-            badge={`${COHORT5_TRACK_LIST.length} Tracks · $${COHORT5_META.programFeeUsd} USD each`}
+            badge={`${COHORT5_TRACK_LIST.length} Tracks · $${COHORT5_META.programFeeUsd} USD each · ${COHORT5_META.discountPercent}% off`}
             title="Course Tracks & Pricing"
             description="Pick the path that fits your goals. Every track includes mentorship, real-world projects, and career support."
           />
@@ -263,6 +266,14 @@ const InternshipCohort5Page = () => {
                     <div className="text-right">
                       <div className="text-2xl font-bold text-primary">
                         ${COHORT5_META.programFeeUsd}
+                      </div>
+                      <div className="mt-1 flex items-baseline justify-end gap-2">
+                        <span className="text-[11px] line-through text-waterloo dark:text-manatee opacity-70">
+                          ${COHORT5_META.originalProgramFeeUsd}
+                        </span>
+                        <span className="text-[11px] uppercase tracking-wide text-primary font-semibold">
+                          ${COHORT5_META.discountPercent}% off
+                        </span>
                       </div>
                       <div className="text-[11px] uppercase tracking-wide text-waterloo dark:text-manatee">
                         USD
