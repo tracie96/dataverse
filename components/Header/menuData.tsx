@@ -9,9 +9,15 @@ const menuData: Menu[] = [
   },
   {
     id: 2,
-    title: "Our Initiative",
+    title: "Initiative",
     newTab: false,
     path: "/about",
+  },
+  {
+    id: 2.3,
+    title: "AI Literacy",
+    newTab: false,
+    path: "/ai-literacy",
   },
   {
     id: 2.5,

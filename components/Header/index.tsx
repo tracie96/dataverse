@@ -126,14 +126,14 @@ const Header = () => {
           )}
         >
           <nav>
-            <ul className="flex flex-col gap-5 xl:flex-row xl:items-center xl:gap-10">
+            <ul className="flex flex-col gap-5 xl:flex-row xl:items-center xl:gap-5 2xl:gap-8">
               {menuData.map((menuItem, key) => (
                 <li key={key} className={menuItem.submenu && "group relative"}>
                   {menuItem.submenu ? (
                     <>
                       <button
                         onClick={() => toggleDropdown(menuItem.id)}
-                        className="flex cursor-pointer items-center justify-between gap-3 hover:text-primary"
+                        className="flex cursor-pointer items-center justify-between gap-1.5 whitespace-nowrap text-sm hover:text-primary 2xl:gap-2 2xl:text-base"
                       >
                         {menuItem.title}
                         <span>
@@ -169,11 +169,12 @@ const Header = () => {
                     <Link
                       href={`${menuItem.path}`}
                       onClick={handleMenuItemClick}
-                      className={
+                      className={cn(
+                        "whitespace-nowrap text-sm 2xl:text-base",
                         pathUrl === menuItem.path
                           ? "text-primary hover:text-primary"
-                          : "hover:text-primary"
-                      }
+                          : "hover:text-primary",
+                      )}
                     >
                       {menuItem.title}
                     </Link>
@@ -183,12 +184,12 @@ const Header = () => {
             </ul>
           </nav>
 
-          <div className="mt-7 flex items-center gap-6 xl:mt-0">
+          <div className="mt-7 flex items-center gap-4 xl:mt-0 xl:shrink-0">
             <ThemeToggler />
 
             <Link
               href="https://www.linkedin.com/company/dataverseafrica/"
-              className="flex items-center justify-center rounded-full bg-primary px-7.5 py-2.5 text-regular text-white duration-300 ease-in-out "
+              className="flex items-center justify-center whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-sm text-white duration-300 ease-in-out 2xl:px-7.5 2xl:text-regular"
             >
               Join The Community 🔥
             </Link>
