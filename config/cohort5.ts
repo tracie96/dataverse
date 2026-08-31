@@ -5,6 +5,7 @@ export const COHORT5_META = {
   kickoffDate: 'Saturday, 5th September 2026',
   applicationOpen: 'May 22, 2026',
   applicationClose: 'Friday, 28th August, 2026',
+  applicationsOpen: false,
   midpointReview: 'August 29, 2026',
   capstoneWeek: 'September 26 – October 4, 2026',
   nairaRate: 1500,
@@ -112,7 +113,7 @@ export const COHORT5_TIMELINE = [
   {
     date: 'May 22 – Friday, 28th August, 2026',
     activity: 'Application Open + Outreach Campaign',
-    status: 'active' as const,
+    status: 'completed' as const,
   },
   {
     date: 'June 6 – July 4, 2026',
@@ -135,6 +136,10 @@ export const COHORT5_TIMELINE = [
     status: 'upcoming' as const,
   },
 ];
+
+export function areCohort5ApplicationsOpen(): boolean {
+  return COHORT5_META.applicationsOpen;
+}
 
 export function getTrackFeeUsd(_trackId?: Cohort5TrackId): number {
   return COHORT5_META.programFeeUsd;

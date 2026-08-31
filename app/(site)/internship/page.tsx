@@ -30,8 +30,8 @@ export default function InternshipPage() {
           </h1>
 
           <p className="mt-4 text-base leading-relaxed text-waterloo dark:text-manatee sm:text-lg">
-            Browse every internship cohort — open the current program to apply, or explore past
-            cohorts to see how our community has grown.
+            Browse every internship cohort — explore current and past programs to see how our
+            community has grown.
           </p>
 
           {openCohort && (

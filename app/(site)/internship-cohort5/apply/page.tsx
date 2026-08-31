@@ -17,6 +17,7 @@ import Link from "next/link";
 import SmartPayment from "@/components/Payment/SmartPayment";
 import toast from "react-hot-toast";
 import {
+  areCohort5ApplicationsOpen,
   COHORT5_META,
   COHORT5_TRACK_LIST,
   COHORT5_TRACKS,
@@ -176,6 +177,48 @@ function ApplyPageContent() {
       setIsSubmitting(false);
     }
   };
+
+  if (!areCohort5ApplicationsOpen()) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-900 mt-[8rem]">
+        <div className="bg-titlebg text-white py-4 md:py-6">
+          <div className="max-w-c-1390 mx-auto px-4">
+            <Link
+              href="/internship-cohort5"
+              className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Cohort 5.0
+            </Link>
+            <h1 className="text-xl md:text-2xl font-bold mt-3 md:mt-4">Apply for Cohort 5.0</h1>
+          </div>
+        </div>
+
+        <div className="max-w-c-1390 mx-auto px-4 py-12">
+          <div className="mx-auto max-w-xl rounded-lg border border-stroke bg-white p-8 text-center shadow-solid-3 dark:border-strokedark dark:bg-blacksection">
+            <h2 className="text-2xl font-bold text-black dark:text-white">Applications Closed</h2>
+            <p className="mt-4 text-waterloo dark:text-manatee">
+              Applications for Cohort 5.0 closed on {COHORT5_META.applicationClose}. The program
+              kicks off on {COHORT5_META.kickoffDate}.
+            </p>
+            <p className="mt-3 text-sm text-waterloo dark:text-manatee">
+              Questions? Contact us at{" "}
+              <a href="mailto:info@dataverseafrica.org" className="text-titlebg hover:underline">
+                info@dataverseafrica.org
+              </a>
+            </p>
+            <Link
+              href="/internship-cohort5"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-titlebg px-6 py-3 text-sm font-medium text-white hover:bg-titlebgdark"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Cohort 5.0
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 mt-[8rem]">

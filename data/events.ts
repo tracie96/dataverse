@@ -20,15 +20,15 @@ export const llamaEventImages: EventGalleryImage[] = [
 
 export const featuredCohort = {
   title: "Internship Cohort 5.0",
-  subtitle: "Applications Now Open",
+  subtitle: "Applications Closed",
   description:
-    "Join our 12-week immersive, project-based virtual internship across four specialized tracks — with real-world projects, mentorship, and career readiness support.",
+    "Our 12-week immersive, project-based virtual internship across four specialized tracks — with real-world projects, mentorship, and career readiness support.",
   kickoffDate: "Saturday, 5th September 2026",
   applicationClose: "Friday, 28th August, 2026",
   duration: "12 weeks",
   tracks: 4,
   image: "/images/llhama_event/4.jpg",
   imageAlt: "DataVerse cohort learning session in a tech workshop",
-  applyHref: "/internship-cohort5/apply",
+  applicationsOpen: false,
   detailsHref: "/internship-cohort5",
 };

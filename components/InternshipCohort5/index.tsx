@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import {
+  areCohort5ApplicationsOpen,
   COHORT5_META,
   COHORT5_TIMELINE,
   COHORT5_TRACK_LIST,
@@ -107,6 +108,8 @@ const stats = [
 ];
 
 const InternshipCohort5Page = () => {
+  const applicationsOpen = areCohort5ApplicationsOpen();
+
   return (
     <div className="overflow-hidden bg-white dark:bg-black">
       {/* Hero */}
@@ -123,7 +126,7 @@ const InternshipCohort5Page = () => {
           >
             <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
               <GraduationCap className="h-4 w-4" />
-              Cohort 5.0 · Applications Open
+              Cohort 5.0 · {applicationsOpen ? "Applications Open" : "Applications Closed"}
             </span>
 
             <h1 className="text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl xl:text-sectiontitle3">
@@ -139,12 +142,18 @@ const InternshipCohort5Page = () => {
             </p>
 
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Link href="/internship-cohort5/apply">
-                <Button size="lg" className="group gap-2">
-                  Apply Now
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Button>
-              </Link>
+              {applicationsOpen ? (
+                <Link href="/internship-cohort5/apply">
+                  <Button size="lg" className="group gap-2">
+                    Apply Now
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </Button>
+                </Link>
+              ) : (
+                <p className="rounded-lg border border-stroke bg-zumthor/50 px-6 py-3 text-sm font-medium text-waterloo dark:border-strokedark dark:bg-blacksection dark:text-manatee">
+                  Applications closed on {COHORT5_META.applicationClose}
+                </p>
+              )}
               <a
                 href="https://chat.whatsapp.com/HPfkfv0m1jSLCsmocAzgxQ"
                 target="_blank"
@@ -418,20 +427,31 @@ const InternshipCohort5Page = () => {
                 <Mail className="h-5 w-5" />
               </div>
               <h2 className="text-2xl font-bold text-black dark:text-white sm:text-3xl">
-                Ready to Apply?
+                {applicationsOpen ? "Ready to Apply?" : "Applications Closed"}
               </h2>
               <p className="mt-3 text-sm text-waterloo dark:text-manatee sm:text-base">
-                Applications close {COHORT5_META.applicationClose}. Join Cohort
-                5.0 and accelerate your tech career in Africa.
+                {applicationsOpen ? (
+                  <>
+                    Applications close {COHORT5_META.applicationClose}. Join Cohort
+                    5.0 and accelerate your tech career in Africa.
+                  </>
+                ) : (
+                  <>
+                    Applications for Cohort 5.0 closed on {COHORT5_META.applicationClose}.
+                    The program kicks off on {COHORT5_META.kickoffDate}.
+                  </>
+                )}
               </p>
-              <div className="mt-6">
-                <Link href="/internship-cohort5/apply">
-                  <Button size="lg" className="gap-2">
-                    Apply for Cohort 5.0
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-              </div>
+              {applicationsOpen && (
+                <div className="mt-6">
+                  <Link href="/internship-cohort5/apply">
+                    <Button size="lg" className="gap-2">
+                      Apply for Cohort 5.0
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
+              )}
               <p className="mt-5 text-sm text-waterloo dark:text-manatee">
                 Questions?{" "}
                 <a

@@ -82,7 +82,7 @@ const EventsPage = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-black/20" />
                 <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-titlebg px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
-                  Now Open
+                  {featuredCohort.applicationsOpen ? "Now Open" : "Closed"}
                 </span>
               </div>
 
@@ -118,19 +118,32 @@ const EventsPage = () => {
                 </div>
 
                 <p className="mt-4 text-sm text-waterloo dark:text-manatee">
-                  Applications close{" "}
-                  <span className="font-medium text-black dark:text-white">
-                    {featuredCohort.applicationClose}
-                  </span>
+                  {featuredCohort.applicationsOpen ? (
+                    <>
+                      Applications close{" "}
+                      <span className="font-medium text-black dark:text-white">
+                        {featuredCohort.applicationClose}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      Applications closed on{" "}
+                      <span className="font-medium text-black dark:text-white">
+                        {featuredCohort.applicationClose}
+                      </span>
+                    </>
+                  )}
                 </p>
 
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <Link href={featuredCohort.applyHref}>
-                    <Button size="lg" className="group gap-2">
-                      Apply Now
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                    </Button>
-                  </Link>
+                  {featuredCohort.applicationsOpen && (
+                    <Link href="/internship-cohort5/apply">
+                      <Button size="lg" className="group gap-2">
+                        Apply Now
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                      </Button>
+                    </Link>
+                  )}
                   <Link href={featuredCohort.detailsHref}>
                     <Button size="lg" variant="outline">
                       View Program Details

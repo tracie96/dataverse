@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { validateReferralCode } from '@/lib/referral';
 import {
+  areCohort5ApplicationsOpen,
   COHORT5_TRACKS,
   getTrackFeeUsd,
   type Cohort5Specialization,
@@ -11,6 +12,13 @@ import { getSystemeTagIdForApplication } from '@/config/systeme';
 import { syncApplicantToSysteme } from '@/lib/systeme';
 
 export async function POST(request: NextRequest) {
+  if (!areCohort5ApplicationsOpen()) {
+    return NextResponse.json(
+      { error: 'Applications for Cohort 5.0 are now closed.' },
+      { status: 403 }
+    );
+  }
+
   try {
     const supabase = getSupabaseServer();
     const body = await request.json();
