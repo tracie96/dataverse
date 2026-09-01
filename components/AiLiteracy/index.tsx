@@ -174,7 +174,6 @@ const AiLiteracyPage = () => {
               controls
               playsInline
               preload="metadata"
-              poster="/images/cohort-history/6.3.1.jpg"
               className="aspect-video w-full object-cover"
             >
               Your browser does not support the video tag.
