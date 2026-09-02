@@ -336,7 +336,7 @@ const InternshipCohort5Page = () => {
           <div className="mx-auto mt-12 max-w-2xl space-y-4">
             {COHORT5_TIMELINE.map((item, index) => {
               const TimelineIcon = timelineIcons[index] ?? Trophy;
-              const isActive = item.status === "active";
+              const isCompleted = item.status === "completed";
               return (
                 <motion.div
                   key={item.activity}
@@ -348,7 +348,7 @@ const InternshipCohort5Page = () => {
                 >
                   <div
                     className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${
-                      isActive
+                      isCompleted
                         ? "bg-primary text-white"
                         : "bg-zumthor text-waterloo dark:bg-black/40 dark:text-manatee"
                     }`}
@@ -360,9 +360,9 @@ const InternshipCohort5Page = () => {
                       <h3 className="font-semibold text-black dark:text-white">
                         {item.activity}
                       </h3>
-                      {isActive && (
+                      {isCompleted && (
                         <span className="rounded-full border border-primary/20 bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
-                          Active Now
+                          Completed
                         </span>
                       )}
                     </div>
